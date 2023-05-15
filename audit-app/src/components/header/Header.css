@@ -1,0 +1,36 @@
+.header {
+  min-width: 1920px;
+  height: 90px;
+  background-color: #645D5D;
+  display: flex;
+  justify-content: space-between;
+}
+
+ul {
+  list-style-type: none;
+  padding: 25px 0 0 54px;
+  display: flex;
+}
+
+li {
+  font-family: 'Montserrat';
+  font-size: 24px;
+  line-height: 29px;
+  cursor: pointer;
+}
+
+.SiteAudit {
+  color: #FFFFFF;
+}
+
+.LagerAudit {
+  margin-left: 43px;
+  color: #9196A1;
+}
+
+.AvatarImg {
+  width: 50px;
+  height: 50px;
+  margin: 20px 22px 0px 0px;
+  cursor: pointer;
+}

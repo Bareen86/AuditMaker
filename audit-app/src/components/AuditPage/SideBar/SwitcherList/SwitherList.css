@@ -1,0 +1,12 @@
+.switcherSubItem{
+  display: flex;
+  margin-left: 20px;
+}
+
+.SwitcherList {
+  margin-top: 48px;
+}
+
+.SwitcherList p {
+  font-family: 'Montserrat', sans-serif;
+}

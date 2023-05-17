@@ -3,7 +3,7 @@ import Switch from "@mui/material/Switch";
 import "./SubSwitcher.css";
 
 interface SwitchesProps {
-  subArray: Data
+  subSwitcherData: Data;
 }
 
 interface Data {
@@ -16,10 +16,11 @@ interface Data {
 }
 
 export default function SubSwitcher(props: SwitchesProps) {
+
   return (
     <div className='subItems'>
-      <Switch defaultChecked={props.subArray.isActive} />
-      <p>{props.subArray.title}</p>
+      <Switch defaultChecked={props.subSwitcherData.isActive} />
+      <p>{props.subSwitcherData.title}</p>
     </div>
   )
 }

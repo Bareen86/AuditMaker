@@ -6,36 +6,56 @@ import "./TextRedactor.css";
 function TextRedactor() {
     const [value, setValue] = useState("");
 
-    return <ReactQuill
-    value={value}
-    placeholder="Введите текст."
-    modules={TextRedactor.modules}
-    formats={TextRedactor.formats}
-    />;
+    return (
+        <div className="textRedactor">
+            <CustomToolbar />
+            <ReactQuill
+                placeholder="Введите текст."
+                modules={TextRedactor.modules}
+                formats={TextRedactor.formats}
+            />
+        </div>
+    );
 }
 
-const fontStyles = {
-  roboto: {
-    fontFamily: 'Roboto, sans-serif',
-  },
-  arial: {
-    fontFamily: 'Arial, sans-serif',
-  },
-};
 
-TextRedactor.modules = {
-  toolbar: [
-    [{header: [1,2,3,4,5,6], font: []}],
-    [{ font: [] }],
-    [{size: ["medium", "small", "large"]}],
-    ["bold", "italic", "underline", "strike", "blockquote",],
-    [{list: "ordered"}, {list: "bullet"}],
-    ["link", "image"],
-    ["clean"],
-    ["code-block"]
-  ]
-};
+const CustomToolbar = () => (
+  <div id="toolbar">
+    <select className="ql-font">
+      <option value="arial" selected>
+        Arial
+      </option>
+      <option value="comic-sans">Comic Sans</option>
+      <option value="courier-new">Courier new</option>
+      <option value="georgia">Georgia</option>
+      <option value="helvetica">Helvetica</option>
+      <option value="lucida">Lucida</option>
+    </select>
+    <select className="ql-header">
+            <option value="1"></option>
+            <option value="2"></option>
+            <option value="3"></option>
+            <option value="4"></option>
+            <option selected></option>
+        </select>
+    <select className="ql-size">
+      <option value="extra-small">13</option>
+      <option value="small">14</option>
+      <option value="medium" selected>
+        18
+      </option>
+      <option value="large">20</option>
+    </select>
+    <select className="ql-align" />
+  </div>
+);
 
+// Add sizes to whitelist and register them
+const Size = Quill.import("formats/size");
+Size.whitelist = ["extra-small", "small", "medium", "large"];
+Quill.register(Size, true);
+
+// Add fonts to whitelist and register them
 const Font = Quill.import("formats/font");
 Font.whitelist = [
   "arial",
@@ -47,28 +67,42 @@ Font.whitelist = [
 ];
 Quill.register(Font, true);
 
+TextRedactor.modules = {
+  toolbar: {
+    container: "#toolbar",
 
-
+  }
+};
 
 TextRedactor.formats = [
-  "header",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "link",
-  "image",
-  "code-block",
-  "font",
-  ...Object.keys(fontStyles),
+    "header",
+    "font",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "color",
+    'align'
 ];
 
 
-
-
-
 export default TextRedactor;
+
+// const fontStyles = {
+//   roboto: {
+//     fontFamily: 'Roboto, sans-serif',
+//   },
+//   arial: {
+//     fontFamily: 'Arial, sans-serif',
+//   },
+// };
+
+
+

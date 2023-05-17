@@ -8,7 +8,7 @@ export default function Header({}: Props) {
         <div className="header">
             <div className="NavList">
                 <ul>
-                    <li className="SiteAudit">Аудит сайта</li>
+                    <li className="SiteAudit">Аудит отеля</li>
                     <li className="LagerAudit">Аудит лагеря</li>
                 </ul>
             </div>

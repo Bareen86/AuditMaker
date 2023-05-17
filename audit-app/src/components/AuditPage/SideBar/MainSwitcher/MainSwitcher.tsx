@@ -4,41 +4,35 @@ import "./MainSwitcher.css";
 import SubSwitcher from "../SubSwitcher/SubSwitcher";
 
 interface SwitchesProps {
-    data: Data;
-    subArray: Data[];
+    mainSwitcher: mainSwitcherData;
+    subSwitches: subSwitcherData[];
 }
 
-interface Data {
+interface mainSwitcherData {
     id: number;
     title: string;
+}
+
+interface subSwitcherData {
+    id: number;
+    title: string;
+    description: string;
     isActive: boolean;
-    description?: string;
-   isSubSwitcher?: boolean;
-    subSwitcherId?: number;
+    mainSwitcherId: number;
 }
 
 export default function MainSwitcher(props: SwitchesProps) {
-    const [switch1, setSwitch1] = useState<boolean>(!props.data.isActive);
-
-    function handleSwitch() {
-        console.log(switch1);
-        setSwitch1(!switch1);
-    }
 
     return (
         <div className="mainItemWrap">
-           <div className="mainItem">
-                <Switch
-                    onChange={handleSwitch}
-                    defaultChecked={props.data.isActive}
-                />
-                <p>{props.data.title}</p>
-           </div>
+            <p>{props.mainSwitcher.title}</p>
             <div className="subItem">
-                {props.subArray.map((sub) => {
-                    return <SubSwitcher subArray={sub} />;
+                {props.subSwitches.map((sub) => {
+                    return <SubSwitcher  key={sub.id} subSwitcherData={sub} />;
                 })}
             </div>
         </div>
     );
 }
+
+    // const [activeSwitch, setActiveSwitch] = useState<boolean>(!props.data.isActive);

@@ -3,31 +3,48 @@ import "./SwitherList.css";
 import MainSwitcher from "../MainSwitcher/MainSwitcher";
 
 interface SwitchesProps {
-    data: Data[];
+    mainSwitches: mainSwitcherData[];
+    subSwitches: subSwitcherData[];
 }
 
-interface Data {
+interface mainSwitcherData {
     id: number;
     title: string;
-    isActive: boolean;
-    description?:string;
-    isSubSwitcher?:boolean;
-    subSwitcherId?: number;
 }
 
-export default function SwitcherList({ data }: SwitchesProps) {
+interface subSwitcherData {
+    id: number;
+    title: string;
+    description: string;
+    isActive: boolean;
+    mainSwitcherId: number;
+}
 
-    function AssignSubSwitcherToMain(item: Data) {
-         return data.filter((obj) => {
-         return item.id === obj.subSwitcherId
-   })}
+export default function SwitcherList(props: SwitchesProps) {
+
+    function AssignSubSwitcherToMain(item: mainSwitcherData){
+        return props.subSwitches.filter((obj) => {
+            return item.id === obj.mainSwitcherId
+        })
+    }
 
     return (
         <div className="SwitcherList">
-            {data.map((obj) => {
+            {props.mainSwitches.map((obj) => {
                 const SubArray = AssignSubSwitcherToMain(obj)
-               return ( !obj.isSubSwitcher && <MainSwitcher data={obj}  subArray={SubArray} key={obj.id}    />) 
-            })}
+                return (<MainSwitcher mainSwitcher={obj}  subSwitches={SubArray} key={obj.id}    />) 
+            })}     
         </div>
     );
 }
+
+//     function AssignSubSwitcherToMain(item: Data) {
+//          return data.filter((obj) => {
+//          return item.id === obj.subSwitcherId
+//    })}
+
+
+//    {data.map((obj) => {
+//     const SubArray = AssignSubSwitcherToMain(obj)
+//    return ( !obj.isSubSwitcher && <MainSwitcher data={obj}  subArray={SubArray} key={obj.id}    />) 
+//     })}

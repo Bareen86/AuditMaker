@@ -50,3 +50,10 @@
 .ql-editor {
   min-height: 712px;
 }
+
+.savePDF {
+  padding: 10px;
+  background-color: #DECF9B;
+  margin-top: 29px;
+  border-radius: 20px !important;
+}

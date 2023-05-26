@@ -1,9 +1,9 @@
 import React from "react";
-import "./Header.css";
+import "./header.css";
 
 type Props = {};
 
-export default function Header({}: Props) {
+export default function CiteHeader({}: Props) {
     return (
         <div className="header">
             <div className="NavList">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SwitcherList from "./SwitcherList/SwitcherList";
-import "./SideBar.css";
+import "./sideBar.css";
 
 interface SwitchesProps {
     mainSwitches: mainSwitcherData[];

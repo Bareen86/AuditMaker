@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./SwitherList.css";
+import "./switherList.css";
 import MainSwitcher from "../MainSwitcher/MainSwitcher";
 
 interface SwitchesProps {
@@ -37,14 +37,3 @@ export default function SwitcherList(props: SwitchesProps) {
         </div>
     );
 }
-
-//     function AssignSubSwitcherToMain(item: Data) {
-//          return data.filter((obj) => {
-//          return item.id === obj.subSwitcherId
-//    })}
-
-
-//    {data.map((obj) => {
-//     const SubArray = AssignSubSwitcherToMain(obj)
-//    return ( !obj.isSubSwitcher && <MainSwitcher data={obj}  subArray={SubArray} key={obj.id}    />) 
-//     })}

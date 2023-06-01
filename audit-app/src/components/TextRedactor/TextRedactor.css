@@ -1,5 +1,31 @@
 #editorjs {
-  background-color: bisque;
   width: 1212px;
   min-height: 700px;
+}
+
+.editorWrapper{
+  border:1px solid black;
+}
+
+.textRedactor{
+  display: flex;
+  flex-direction: column;
+}
+
+.backToAudits {
+  width: auto;
+  height: 36.5px;
+}
+
+.buttonsBlock{
+  margin-top: 29px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.saveButtonsBlock{
+  display: flex;
+  width: 367px;
+  justify-content: space-between;
 }

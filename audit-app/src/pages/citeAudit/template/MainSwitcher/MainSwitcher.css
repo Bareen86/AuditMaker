@@ -1,0 +1,20 @@
+.mainItemWrap{
+  display: flex;
+  flex-direction: column;
+}
+
+.switchItem p{
+  margin-top: -4px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.mainItem {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.subItem {
+  margin: 10px 0 10px 0;
+}

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import CiteHeader from "../header/CiteHeader";
+import CiteHeader from "../../components/header/CiteHeader";
 import SideBar from "./template/SideBar";
-import TextRedactor from "../TextRedactor/TextRedactor";
-import "./auditPage.css";
+import TextRedactor from "../../components/TextRedactor/TextRedactor";
+import "./CampAuditPage.css";
 
 type Props = {};
 
-export default function AuditPage({}: Props) {
+export default function CampAuditPage({}: Props) {
     const [mainSwitches, setMainSwitches] = useState<
         {
             id: number;
@@ -68,7 +68,6 @@ export default function AuditPage({}: Props) {
 
     return (
         <>
-            <CiteHeader />
             <div className="contentWrapper">
                 <SideBar mainSwitches={mainSwitches} subSwitches={subSwitches} />
                 <TextRedactor />

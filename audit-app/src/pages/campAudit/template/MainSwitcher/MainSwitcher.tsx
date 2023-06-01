@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Switch from "@mui/material/Switch";
-import "./mainSwitcher.css";
+import "./MainSwitcher.css";
 import SubSwitcher from "../SubSwitcher/SubSwitcher";
 
 interface SwitchesProps {

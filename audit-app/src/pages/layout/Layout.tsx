@@ -9,7 +9,7 @@ export default function Layout() {
                 <div className="NavList">
                     <ul>
                         <li className="first_li">
-                            <NavLink className="nav-bar-link" style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}} to="/CiteAudit">Аудит Сайта</NavLink>
+                            <NavLink className="nav-bar-link" style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}} to="/HotelAudit">Аудит Отеля</NavLink>
                         </li>
                         <li>
                             <NavLink className="nav-bar-link" style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}} to="/CampAudit">Аудит Лагеря</NavLink>

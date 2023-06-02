@@ -50,7 +50,6 @@ function TextRedactor() {
     const handlePdfPrint = useReactToPrint({
             content: () => componentRef.current,
             documentTitle: "pdfTitle",
-            // onAfterPrint: () => alert("Print success"),
         });
 
     return (

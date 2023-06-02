@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import CiteHeader from "../../components/header/CiteHeader";
+import CiteHeader from "../../components/navbar/Navbar";
 import SideBar from "./template/SideBar";
 import TextRedactor from "../../components/TextRedactor/TextRedactor";
 import "./CampAuditPage.css";

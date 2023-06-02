@@ -1,7 +1,7 @@
 .header {
   min-width: 1920px;
   height: 90px;
-  background-color: #645D5D;
+  background-color: #FFFFFF;
   display: flex;
   justify-content: space-between;
 }
@@ -19,6 +19,10 @@ li {
   cursor: pointer;
 }
 
+.first_li {
+  margin-right: 50px;
+}
+
 .SiteAudit {
   color: #FFFFFF;
 }
@@ -33,4 +37,14 @@ li {
   height: 50px;
   margin: 20px 22px 0px 0px;
   cursor: pointer;
+}
+
+.NavList {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-bar-link{
+  color: #414c59;
+  text-decoration: none;
 }

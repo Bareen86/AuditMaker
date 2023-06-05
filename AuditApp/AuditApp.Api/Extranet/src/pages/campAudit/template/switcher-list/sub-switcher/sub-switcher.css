@@ -1,0 +1,7 @@
+.sub-items{
+  margin-left: 26px;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

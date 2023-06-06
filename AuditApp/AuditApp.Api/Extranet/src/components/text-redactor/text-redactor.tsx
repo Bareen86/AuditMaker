@@ -3,13 +3,11 @@ import "./text-redactor.css";
 import { useReactToPrint } from "react-to-print";
 import EditorJS from "@editorjs/editorjs";
 import Button from '@mui/material/Button';
-//@ts-ignore
-import Header from "@editorjs/header";
-//@ts-ignore
-import ImageTool from "@editorjs/image";
-//@ts-ignore
+import axios from "axios";
+const Header = require('@editorjs/header');
 const FontSize = require("editorjs-inline-font-size-tool");
 const FontFamily = require("editorjs-inline-font-family-tool");
+const ImageTool = require('@editorjs/image')
 
 function TextRedactor() {
     const ejInstance = useRef<EditorJS>();
@@ -31,8 +29,39 @@ function TextRedactor() {
                 fontFamily: FontFamily,
                 image: {
                     class: ImageTool,
-                    config: {
-                        byUrl: 'http://localhost:3000/', // Your endpoint that provides uploading by Url
+                    config  :{
+                        uploader : {
+                            async uploadByFile(file:any){
+                                const formData = new FormData();
+                                formData.append("file", file);
+                                const response = await axios.post(
+                                    'http://localhost:5175/api/Image/UploadImage',
+                                    formData,
+                                    {
+                                        headers: {
+                                            "Content-Type": "multipart/form-data",
+                                        },
+                                        withCredentials: false,
+                                    }
+                                );
+
+                                if(response.data.success === 1){
+                                    return response.data;
+                                }
+                            },
+                            // async uploadByUrl(url:any){
+                            //     const response = await axios.post(
+                            //         'http://localhost:5001/api/image/createByUrl',
+                            //         {
+                            //             url,
+                            //         }
+                            //     );
+
+                            //     if(response.data.success === 1){
+                            //         return response.data;
+                            //     }
+                            // },
+                        }
                     }
                 }
             },

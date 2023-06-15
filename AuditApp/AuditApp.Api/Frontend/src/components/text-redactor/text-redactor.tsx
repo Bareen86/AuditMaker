@@ -35,7 +35,7 @@ function TextRedactor() {
                                 const formData = new FormData();
                                 formData.append("file", file);
                                 const response = await axios.post(
-                                    'http://localhost:5175/api/Image/UploadImage',
+                                    'http://localhost:5175/api/images/UploadImage',
                                     formData,
                                     {
                                         headers: {

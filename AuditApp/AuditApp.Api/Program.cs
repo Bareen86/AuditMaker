@@ -7,11 +7,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSpaStaticFiles(configuration => { configuration.RootPath = "Extranet/build"; });
+builder.Services.AddSpaStaticFiles(configuration => { configuration.RootPath = "Frontend/build"; });
 
 var provider  = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();
 builder.Services.AddSingleton(configuration.GetSection("StaticFilesPath").Get<FileStorageConfiguration>());
+builder.Services.AddSingleton(configuration.GetSection("StaticFilesPath").Get<AppConfiguration>());
 
 var app = builder.Build();
 
@@ -26,7 +27,7 @@ app.UseSpaStaticFiles();
 
 app.UseSpa(spa =>
 {
-    spa.Options.SourcePath = "Extranet";
+    spa.Options.SourcePath = "Frontend";
 });
 
 app.UseAuthorization();

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace AuditApp.Application.Settings
 {
-    public class FileStorageConfiguration
+    public class AppConfiguration
     {
-        public string StoragePath { get; set; }
-        
+        public string ApplicationUrl { get; set; }
     }
 }

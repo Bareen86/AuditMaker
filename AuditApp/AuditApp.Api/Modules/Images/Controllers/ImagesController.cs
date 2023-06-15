@@ -1,4 +1,6 @@
-﻿using AuditApp.Application.Settings;
+﻿using AuditApp.Application.FileStorage;
+using AuditApp.Application.Settings;
+using AuditApp.Extranet.Modules.Images.Extentions;
 using AuditApp.Extranet.Modules.Images.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -14,13 +16,19 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
             failure,
             success,
         }
+
         private readonly FileStorageConfiguration _staticFilesPath;
         private readonly AppConfiguration _appConfiguration;
+        private readonly IFileStorage _fileStorage;
 
-        public ImagesController(FileStorageConfiguration staticFilesPath, AppConfiguration appConfiguration)
+        public ImagesController(
+            FileStorageConfiguration staticFilesPath,
+            AppConfiguration appConfiguration,
+            IFileStorage fileStorage)
         {
             _staticFilesPath = staticFilesPath;
             _appConfiguration = appConfiguration;
+            _fileStorage = fileStorage;
         }
 
         [HttpGet("{filename}")]
@@ -46,18 +54,13 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
             var extension = "." + file.FileName.Split('.').Last();
             string fileName = DateTime.Now.Ticks.ToString() + extension;
             string filePath = Path.Combine(_staticFilesPath.StoragePath, "Images", fileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
+            var bytes = await file.GetBytes();
+
+            _fileStorage.UploadFile(bytes, filePath, fileName);
 
             string ImageUrl = _appConfiguration.ApplicationUrl + "images/" + fileName;
-
-            GetImageResult result = new GetImageResult();
-            result.Success = (int)ResponceStatus.success;
-            ImageFile imageFile = new();
-            imageFile.Url = ImageUrl;
-            result.File = imageFile;
+            GetImageResult responce = new GetImageResult();
+            var result = responce.GetResponce((int)ResponceStatus.success, ImageUrl);
             return Ok(result);
         }
     }

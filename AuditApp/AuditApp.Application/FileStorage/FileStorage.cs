@@ -8,19 +8,13 @@ namespace AuditApp.Application.FileStorage
 {
     public interface IFileStorage
     {
-        void UploadFile(string filePath, string fileName);
-        void FileResponce(string filePath, string fileName);
+        void UploadFile(byte[] bytes, string filePath, string fileName);      
     }
     public class FileStorage : IFileStorage
     {
-        public void FileResponce(string filePath, string fileName)
+        public  void UploadFile(byte[] bytes, string filePath, string fileName)
         {
-            
-        }
-
-        public void UploadFile(string filePath, string fileName)
-        {
-            
+            System.IO.File.WriteAllBytes(filePath, bytes);
         }
     }
 }

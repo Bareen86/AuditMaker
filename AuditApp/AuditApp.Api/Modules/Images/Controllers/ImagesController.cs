@@ -35,7 +35,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         public async Task<IActionResult> Get([FromRoute] string fileName)
         {
             string filePath = Path.Combine(_staticFilesPath.StoragePath, "Images", fileName);
-
+            
             if (System.IO.File.Exists(filePath))
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(filePath);

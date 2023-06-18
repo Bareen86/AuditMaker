@@ -14,7 +14,6 @@ builder.Services.AddApplication();
 var provider  = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();
 builder.Services.AddSingleton(configuration.GetSection("StaticFilesPath").Get<FileStorageConfiguration>());
-builder.Services.AddSingleton(configuration.GetSection("StaticFilesPath").Get<AppConfiguration>());
 
 var app = builder.Build();
 

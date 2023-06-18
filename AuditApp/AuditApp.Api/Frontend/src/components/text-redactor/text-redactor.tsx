@@ -35,7 +35,7 @@ function TextRedactor() {
                                 const formData = new FormData();
                                 formData.append("file", file);
                                 const response = await axios.post(
-                                    'http://localhost:5175/api/images/UploadImage',
+                                    '/api/images/upload-image',
                                     formData,
                                     {
                                         headers: {
@@ -49,6 +49,7 @@ function TextRedactor() {
                                     return response.data;
                                 }
                             },
+                            //http://localhost:5175
                             // async uploadByUrl(url:any){
                             //     const response = await axios.post(
                             //         'http://localhost:5001/api/image/createByUrl',

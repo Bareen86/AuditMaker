@@ -29,3 +29,10 @@
   width: 367px;
   justify-content: space-between;
 }
+
+.image-tool__caption,
+.ce-popover-item[data-item-name="withBorder"],
+.ce-popover-item[data-item-name="withBackground"],
+.ce-popover-item[data-item-name="stretched"] {
+display: none;
+}

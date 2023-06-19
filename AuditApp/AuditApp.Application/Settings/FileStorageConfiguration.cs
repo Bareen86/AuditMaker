@@ -8,7 +8,7 @@ namespace AuditApp.Application.Settings
 {
     public class FileStorageConfiguration
     {
-        public string StoragePath { get; set; }
+        public string BasePath { get; set; }
         
     }
 }

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditApp.Extranet", "AuditA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuditApp.Application", "AuditApp.Application\AuditApp.Application.csproj", "{A6F8B57D-0788-420F-8EC9-8B9E4E994CB4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuditApp.Infrastructure", "AuditApp.Infrastructure\AuditApp.Infrastructure.csproj", "{C75CA572-80BE-4133-9A28-8990277C660F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A6F8B57D-0788-420F-8EC9-8B9E4E994CB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6F8B57D-0788-420F-8EC9-8B9E4E994CB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6F8B57D-0788-420F-8EC9-8B9E4E994CB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C75CA572-80BE-4133-9A28-8990277C660F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C75CA572-80BE-4133-9A28-8990277C660F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C75CA572-80BE-4133-9A28-8990277C660F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C75CA572-80BE-4133-9A28-8990277C660F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

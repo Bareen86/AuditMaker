@@ -1,19 +1,19 @@
 using AuditApp.Application;
 using AuditApp.Application.Settings;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+using AuditApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddInfrastructure();
 builder.Services.AddSpaStaticFiles(configuration => { configuration.RootPath = "Frontend/build"; });
 builder.Services.AddApplication();
 
 var provider  = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();
-builder.Services.AddSingleton(configuration.GetSection("StaticFilesPath").Get<FileStorageConfiguration>());
+builder.Services.AddSingleton(configuration.GetSection("StorageConfiguration").Get<FileStorageConfiguration>());
 
 var app = builder.Build();
 

@@ -1,10 +1,6 @@
-﻿using AuditApp.Application.FileStorage;
+﻿using AuditApp.Application.ImageResolving;
+using AuditApp.Application.ImageSaving;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AuditApp.Application
 {
@@ -12,7 +8,8 @@ namespace AuditApp.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddFileStorage();
+            services.AddImageSaver();
+            services.AddImageResolver();
             return services;
         }
     }

@@ -1,11 +1,9 @@
-﻿using AuditApp.Application.FileStorage;
-using AuditApp.Application.Settings;
+﻿using AuditApp.Application.ImageResolving;
+using AuditApp.Application.ImageSaving;
+using AuditApp.Extranet.Modules.Images.Dtos;
 using AuditApp.Extranet.Modules.Images.Extentions;
 using AuditApp.Extranet.Modules.Images.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace AuditApp.Extranet.Modules.Images.Controllers
 {
@@ -13,28 +11,21 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
     [ApiController]
     public class ImagesController : ControllerBase
     {
-        enum ResponceStatus
-        {
-            failure,
-            success,
-        }
-
-        private readonly FileStorageConfiguration _staticFilesPath;
-        private readonly IFileStorage _fileStorage;
+        private readonly IImageResolver _imageResolver;
+        private readonly IImageSaver _imageSaver;
 
         public ImagesController(
-            FileStorageConfiguration staticFilesPath,
-            IFileStorage fileStorage)
+            IImageResolver imageResolver,
+            IImageSaver imageSaver)
         {
-            _staticFilesPath = staticFilesPath;
-            _fileStorage = fileStorage;
+            _imageResolver = imageResolver;
+            _imageSaver = imageSaver;
         }
 
         [HttpGet("{filename}")]
         public async Task<IActionResult> Get([FromRoute] string fileName)
         {
-            string filePath = Path.Combine(_staticFilesPath.StoragePath, "Images", fileName);
-            
+            string filePath = _imageResolver.GetImagePath(fileName);
             if (System.IO.File.Exists(filePath))
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(filePath);
@@ -51,14 +42,12 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
             var extension = "." + file.FileName.Split('.').Last();
-            string fileName = DateTime.Now.Ticks.ToString() + extension;
-            string filePath = Path.Combine(_staticFilesPath.StoragePath, "Images", fileName);
             var bytes = await file.GetBytes();
-            var domainName = Request.Scheme + "://" + Request.Host.Value; 
-            _fileStorage.UploadFile(bytes, filePath, fileName);
-            string ImageUrl = domainName + "/api/images/" + fileName;
+            var domainName = Request.Scheme + "://" + Request.Host.Value;
+            _imageSaver.SaveImage(bytes, extension);
+            string ImageUrl = domainName + "/api/images/" + _imageSaver.GetFileName();
             GetImageResult responce = new GetImageResult();
-            var result = responce.GetResponce((int)ResponceStatus.success, ImageUrl);
+            var result = responce.GetResponce(ResponceStatus.Success, ImageUrl);
             return Ok(result);
         }
     }

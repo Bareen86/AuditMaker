@@ -1,13 +1,9 @@
-﻿namespace AuditApp.Extranet.Modules.Images.Dtos
+﻿using static AuditApp.Extranet.Modules.Images.Dtos.ResponseStatusEnum;
+
+namespace AuditApp.Extranet.Modules.Images.Dtos
 {
     public class ResponseDto
     {
-        public ResponceStatus ResponceStatus { get; set; }
-    }
-
-    public enum ResponceStatus
-    {
-        Failure = 0,
-        Success = 1,
+        public ResponseStatus ResponceStatus { get; set; }
     }
 }

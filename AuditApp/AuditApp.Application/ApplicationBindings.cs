@@ -8,8 +8,8 @@ namespace AuditApp.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddImageSaver();
-            services.AddImageResolver();
+            services.AddTemplateImageSaving();
+            services.AddTemplateImageResolving();
             return services;
         }
     }

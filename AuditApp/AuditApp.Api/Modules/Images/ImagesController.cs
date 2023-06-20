@@ -1,9 +1,10 @@
 ﻿using AuditApp.Application.ImageResolving;
 using AuditApp.Application.ImageSaving;
-using AuditApp.Extranet.Modules.Images.Dtos;
+using AuditApp.Extranet.Modules.Images.Builder;
 using AuditApp.Extranet.Modules.Images.Extentions;
 using AuditApp.Extranet.Modules.Images.Models;
 using Microsoft.AspNetCore.Mvc;
+using static AuditApp.Extranet.Modules.Images.Dtos.ResponseStatusEnum;
 
 namespace AuditApp.Extranet.Modules.Images.Controllers
 {
@@ -23,31 +24,28 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         }
 
         [HttpGet("{filename}")]
-        public async Task<IActionResult> Get([FromRoute] string fileName)
+        public async Task<IActionResult> GetImage([FromRoute] string filename)
         {
-            string filePath = _imageResolver.GetImagePath(fileName);
-            if (System.IO.File.Exists(filePath))
+            var imageToGet = _imageResolver.GetImage(filename);
+            if (imageToGet != null)
             {
-                byte[] bytes = System.IO.File.ReadAllBytes(filePath);
-                var extension = fileName.Split('.').Last();
-                return File(bytes, $"image/{extension}");
+                return File(imageToGet.Bytes, imageToGet.ContentType);
             }
             else
             {
-                return NotFound();
+                return NotFound("Такой фотографии нет");
             }
         }
 
         [HttpPost("upload-image")]
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
-            var extension = "." + file.FileName.Split('.').Last();
-            var bytes = await file.GetBytes();
+            var imageToSave = ImageBuilder.Build(file);
             var domainName = Request.Scheme + "://" + Request.Host.Value;
-            _imageSaver.SaveImage(bytes, extension);
-            string ImageUrl = domainName + "/api/images/" + _imageSaver.GetFileName();
+            _imageSaver.SaveImage(imageToSave.Bytes, imageToSave.Extension);
+            string ImageUrl = domainName + "/api/images/" + _imageSaver.GetImageName();
             GetImageResult responce = new GetImageResult();
-            var result = responce.GetResponce(ResponceStatus.Success, ImageUrl);
+            var result = GetImageResult.GetResponse(ResponseStatus.Success, ImageUrl);
             return Ok(result);
         }
     }

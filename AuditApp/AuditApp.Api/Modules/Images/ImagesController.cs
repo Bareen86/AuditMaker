@@ -44,7 +44,6 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
             var domainName = Request.Scheme + "://" + Request.Host.Value;
             _imageSaver.SaveImage(imageToSave.Bytes, imageToSave.Extension);
             string ImageUrl = domainName + "/api/images/" + _imageSaver.GetImageName();
-            GetImageResult responce = new GetImageResult();
             var result = GetImageResult.GetResponse(ResponseStatus.Success, ImageUrl);
             return Ok(result);
         }

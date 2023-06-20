@@ -41,8 +41,8 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         {
             var imageToSave = ImageBuilder.Build(file);
             _imageSaver.SaveImage(imageToSave.Bytes, imageToSave.Extension);
-            string ImageUrl = "/api/images/" + _imageSaver.GetImageName();
-            var result = GetImageResult.GetResponse(ResponseStatus.Success, ImageUrl);
+            string imageUrl = "/api/images/" + _imageSaver.GetImageName();
+            var result = GetImageResult.GetResponse(ResponseStatus.Success, imageUrl);
             return Ok(result);
         }
     }

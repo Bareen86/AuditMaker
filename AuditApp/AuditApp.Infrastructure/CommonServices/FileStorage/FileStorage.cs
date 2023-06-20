@@ -15,8 +15,7 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage
 
     internal class FileStorage : IFileStorage
     {
-        public FileStorageConfiguration _fileStorageConfiguration { get; set; }
-        private string _fileName;
+        private readonly FileStorageConfiguration _fileStorageConfiguration;
         public FileStorage(FileStorageConfiguration fileStorageConfiguration)
         {
             _fileStorageConfiguration = fileStorageConfiguration;

@@ -3,15 +3,14 @@ using AuditApp.Extranet.Modules.Images.Models;
 
 namespace AuditApp.Extranet.Modules.Images.Builder
 {
-    public class ImageBuilder
+    public interface IImageBuilder
     {
-        public IImageSaver _imageSaver { get; set; }
-        public ImageBuilder(IImageSaver imageSaver)
-        {
-            _imageSaver = imageSaver;
-        }
+        ImageToSave Build(IFormFile formFile);
+    }
 
-        public static ImageToSave Build(IFormFile formFile)
+    internal class ImageBuilder : IImageBuilder
+    {
+        public ImageToSave Build(IFormFile formFile)
         {
             using (var ms = new MemoryStream())
             {

@@ -1,5 +1,6 @@
 using AuditApp.Application;
 using AuditApp.Application.Settings;
+using AuditApp.Extranet.Modules.Images.Builder;
 using AuditApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure();
 builder.Services.AddSpaStaticFiles(configuration => { configuration.RootPath = "Frontend/build"; });
 builder.Services.AddApplication();
+builder.Services.AddImageBuilder();
 
 var provider  = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();

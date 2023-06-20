@@ -11,7 +11,6 @@ namespace AuditApp.Extranet.Modules.Images.Builder
             _imageSaver = imageSaver;
         }
 
-
         public static ImageToSave Build(IFormFile formFile)
         {
             using (var ms = new MemoryStream())
@@ -25,7 +24,7 @@ namespace AuditApp.Extranet.Modules.Images.Builder
                     FileName = fileName,
                     Bytes = fileBytes,
                     Extension = "." + fileName.Split('.').Last(),
-            };
+                };
             }
         }
     }

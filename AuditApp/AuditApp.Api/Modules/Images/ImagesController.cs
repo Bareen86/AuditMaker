@@ -1,7 +1,6 @@
 ﻿using AuditApp.Application.ImageResolving;
 using AuditApp.Application.ImageSaving;
 using AuditApp.Extranet.Modules.Images.Builder;
-using AuditApp.Extranet.Modules.Images.Extentions;
 using AuditApp.Extranet.Modules.Images.Models;
 using Microsoft.AspNetCore.Mvc;
 using static AuditApp.Extranet.Modules.Images.Dtos.ResponseStatusEnum;
@@ -41,9 +40,8 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
             var imageToSave = ImageBuilder.Build(file);
-            var domainName = Request.Scheme + "://" + Request.Host.Value;
             _imageSaver.SaveImage(imageToSave.Bytes, imageToSave.Extension);
-            string ImageUrl = domainName + "/api/images/" + _imageSaver.GetImageName();
+            string ImageUrl = "/api/images/" + _imageSaver.GetImageName();
             var result = GetImageResult.GetResponse(ResponseStatus.Success, ImageUrl);
             return Ok(result);
         }

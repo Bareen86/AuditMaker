@@ -9,8 +9,7 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage
 {
     public interface IFileStorage
     {
-        string GetFileName();
-        void UploadFile(byte[] bytes, string extension);
+        void UploadFile(byte[] bytes, string fileName);
         ImageToGet GetFile(string fileName);
     }
 
@@ -23,17 +22,10 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage
             _fileStorageConfiguration = fileStorageConfiguration;
         }
 
-        public void UploadFile(byte[] bytes, string extension)
+        public void UploadFile(byte[] bytes, string fileName)
         {
-            string fileName = DateTime.Now.Ticks.ToString() + extension;
-            _fileName = fileName;
             string filePath = Path.Combine(_fileStorageConfiguration.BasePath, "Images", fileName);
             File.WriteAllBytes(filePath, bytes);
-        }
-
-        public string GetFileName()
-        {
-            return _fileName;
         }
 
         public ImageToGet GetFile(string fileName)

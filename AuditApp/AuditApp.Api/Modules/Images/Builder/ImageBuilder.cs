@@ -17,13 +17,13 @@ namespace AuditApp.Extranet.Modules.Images.Builder
             {
                 formFile.CopyToAsync(ms);
                 var fileBytes = ms.ToArray();
-                var fileName = formFile.FileName;
+                string fileName = DateTime.Now.Ticks.ToString() + "." + formFile.FileName.Split(".").Last();
 
                 return new ImageToSave
                 {
-                    FileName = fileName,
+                    Uri = "/api/images/" + fileName,
                     Bytes = fileBytes,
-                    Extension = "." + fileName.Split('.').Last(),
+                    FileName = fileName
                 };
             }
         }

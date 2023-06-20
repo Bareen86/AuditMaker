@@ -7,8 +7,7 @@ namespace AuditApp.Application.ImageSaving
 {
     public interface IImageSaver
     {
-        void SaveImage(byte[] bytes, string extension);
-        string GetImageName();
+        void SaveImage(byte[] bytes, string fileName);
     }
     internal class ImageSaver : IImageSaver
     {
@@ -19,14 +18,9 @@ namespace AuditApp.Application.ImageSaving
             _fileStorage = fileStorage;
         }
 
-        public string GetImageName()
+        public void SaveImage(byte[] bytes, string fileName)
         {
-            return _fileStorage.GetFileName();
-        }
-
-        public void SaveImage(byte[] bytes, string extension)
-        {
-            _fileStorage.UploadFile(bytes, extension);
+            _fileStorage.UploadFile(bytes, fileName);
         }
     }
 }

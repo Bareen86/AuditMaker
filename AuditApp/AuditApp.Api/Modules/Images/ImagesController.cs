@@ -40,9 +40,8 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
             var imageToSave = ImageBuilder.Build(file);
-            _imageSaver.SaveImage(imageToSave.Bytes, imageToSave.Extension);
-            string imageUrl = "/api/images/" + _imageSaver.GetImageName();
-            var result = GetImageResult.GetResponse(ResponseStatus.Success, imageUrl);
+            _imageSaver.SaveImage(imageToSave.Bytes, imageToSave.FileName);
+            var result = GetImageResult.GetResponse(ResponseStatus.Success, imageToSave.Uri);
             return Ok(result);
         }
     }

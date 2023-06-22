@@ -18,8 +18,8 @@ namespace AuditApp.Application.ImageResolving
 
         public ResolvedImage GetImage(string fileName)
         {
-            string ImagePath = Path.Combine("Images", fileName);
-            return _fileStorage.GetFile(ImagePath).Map();
+            string imagePath = Path.Combine("Images", fileName);
+            return _fileStorage.GetFile(imagePath).Map();
         }
     }
 }

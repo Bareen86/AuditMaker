@@ -33,7 +33,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
             ResolvedImage resolvedImage = _imageResolver.GetImage(filename);
             if (resolvedImage != null)
             {
-                return File(resolvedImage.Bytes, $"image/{filename.Split(".").Last()}");
+                return File(resolvedImage.Bytes, $"image/{resolvedImage.extansion}");
             }
             else
             {
@@ -44,7 +44,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         [HttpPost("upload-image")]
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
-            var imageToSave = _imageBuilder.Build(file);
+            ImageToSave imageToSave = _imageBuilder.Build(file);
             var saveResult = _imageSaver.SaveImage(imageToSave);
             var result = saveResult.Map();
             return Ok(result);

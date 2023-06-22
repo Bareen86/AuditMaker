@@ -13,7 +13,8 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage.Mappers
         {
             return new ResolvedImage
             {
-                Bytes = fileToGet.Bytes,
+                extansion = fileToGet.Extansion,
+                Bytes = fileToGet.Bytes
             };
         }
     }

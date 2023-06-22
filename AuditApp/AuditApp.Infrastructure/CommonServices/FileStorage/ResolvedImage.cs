@@ -10,5 +10,6 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage
     {
         public byte[] Bytes { get; set; }
         public string ContentType { get; set; }
+        public string extansion { get; set; }
     }
 }

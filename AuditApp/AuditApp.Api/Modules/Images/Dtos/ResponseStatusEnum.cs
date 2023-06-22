@@ -2,7 +2,7 @@
 {
     public class ResponseStatusEnum
     {
-        public enum ResponseStatus
+        public enum GetImageStatus
         {
             Failure = 0,
             Success = 1,

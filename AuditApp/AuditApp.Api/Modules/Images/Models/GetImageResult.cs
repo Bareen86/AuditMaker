@@ -6,7 +6,7 @@ namespace AuditApp.Extranet.Modules.Images.Models
 {
     public class GetImageResult
     {
-        public ResponseStatus Success { get; set; }
+        public GetImageStatus Success { get; set; }
         public ImageFile File { get; set; }
     }
 }

@@ -16,11 +16,10 @@ namespace AuditApp.Extranet.Modules.Images.Builder
             {
                 formFile.CopyToAsync(ms);
                 var fileBytes = ms.ToArray();
-                string fileName = DateTime.Now.Ticks.ToString() + "." + formFile.FileName.Split(".").Last();
-
+                string fileName = Guid.NewGuid().ToString() + "." + formFile.FileName.Split(".").Last();
                 return new ImageToSave
                 {
-                    Uri = "/api/images/" + fileName,
+                    Uri = "",
                     Bytes = fileBytes,
                     FileName = fileName
                 };

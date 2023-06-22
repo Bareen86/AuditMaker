@@ -1,29 +1,26 @@
-﻿using AuditApp.Application.Settings;
-using AuditApp.Infrastructure.CommonServices.FileStorage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AuditApp.Infrastructure.CommonServices.FileStorage;
+using AuditApp.Infrastructure.CommonServices.FileStorage.Mappers;
 
 namespace AuditApp.Application.ImageResolving
 {
     public interface IImageResolver
     {
-        ImageToGet GetImage(string fileName);
+        ResolvedImage GetImage(string fileName);
     }
     internal class ImageResolver : IImageResolver
     {
-        public IFileStorage _fileStorage { get; set; }
+        private readonly IFileStorage _fileStorage;
+
         public ImageResolver(IFileStorage fileStorage)
         {
             _fileStorage = fileStorage;
         }       
 
-        public ImageToGet GetImage(string fileName)
+        public ResolvedImage GetImage(string fileName)
         {
-            ImageToGet image = new ImageToGet();
-            return image = _fileStorage.GetFile(fileName);
+            string ImagePath = Path.Combine("Images", fileName);
+            FileToGet fileToGet = _fileStorage.GetFile(ImagePath);
+            return _fileStorage.GetFile(ImagePath).Map();
         }
     }
 }

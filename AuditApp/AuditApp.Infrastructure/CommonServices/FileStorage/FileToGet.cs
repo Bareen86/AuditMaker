@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuditApp.Infrastructure.CommonServices.FileStorage
 {
-    public class ImageToGet
+    public class FileToGet
     {
         public byte[] Bytes { get; set; }
         public string ContentType { get; set; }

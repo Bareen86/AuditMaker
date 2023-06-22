@@ -33,7 +33,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
             ResolvedImage resolvedImage = _imageResolver.GetImage(filename);
             if (resolvedImage != null)
             {
-                return File(resolvedImage.Bytes, resolvedImage.ContentType);
+                return File(resolvedImage.Bytes, $"image/{filename.Split(".").Last()}");
             }
             else
             {

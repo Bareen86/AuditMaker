@@ -19,7 +19,6 @@ namespace AuditApp.Application.ImageResolving
         public ResolvedImage GetImage(string fileName)
         {
             string ImagePath = Path.Combine("Images", fileName);
-            FileToGet fileToGet = _fileStorage.GetFile(ImagePath);
             return _fileStorage.GetFile(ImagePath).Map();
         }
     }

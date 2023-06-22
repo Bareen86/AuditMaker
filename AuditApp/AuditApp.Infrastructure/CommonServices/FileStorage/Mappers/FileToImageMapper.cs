@@ -14,7 +14,6 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage.Mappers
             return new ResolvedImage
             {
                 Bytes = fileToGet.Bytes,
-                ContentType = fileToGet.ContentType,
             };
         }
     }

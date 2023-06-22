@@ -38,8 +38,7 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage
                 var extension = fileName.Split('.').Last();
                 return new FileToGet
                 {
-                    Bytes = bytes,
-                    ContentType = $"image/{extension}"
+                    Bytes = bytes
                 };
             }
             else

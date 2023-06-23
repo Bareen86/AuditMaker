@@ -1,5 +1,4 @@
-﻿using AuditApp.Application.ImageSaving;
-using AuditApp.Extranet.Modules.Images.Models;
+﻿using AuditApp.Extranet.Modules.Images.Models;
 
 namespace AuditApp.Extranet.Modules.Images.Builder
 {

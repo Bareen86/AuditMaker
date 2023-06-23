@@ -1,7 +1,4 @@
-﻿
-
-using AuditApp.Application.Settings;
-using AuditApp.Extranet.Modules.Images.Models;
+﻿using AuditApp.Extranet.Modules.Images.Models;
 using AuditApp.Infrastructure.CommonServices.FileStorage;
 
 namespace AuditApp.Application.ImageSaving

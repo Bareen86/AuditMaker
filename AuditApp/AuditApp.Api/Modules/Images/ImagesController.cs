@@ -5,7 +5,6 @@ using AuditApp.Extranet.Modules.Images.Mappers;
 using AuditApp.Extranet.Modules.Images.Models;
 using AuditApp.Infrastructure.CommonServices.FileStorage;
 using Microsoft.AspNetCore.Mvc;
-using static AuditApp.Extranet.Modules.Images.Dtos.ResponseStatusEnum;
 
 namespace AuditApp.Extranet.Modules.Images.Controllers
 {
@@ -33,7 +32,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
             ResolvedImage resolvedImage = _imageResolver.GetImage(filename);
             if (resolvedImage != null)
             {
-                return File(resolvedImage.Bytes, $"image/{resolvedImage.extansion}");
+                return File(resolvedImage.Bytes, $"image/{resolvedImage.Extansion}");
             }
             else
             {

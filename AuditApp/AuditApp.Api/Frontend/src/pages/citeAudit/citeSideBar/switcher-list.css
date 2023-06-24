@@ -1,0 +1,17 @@
+.switcher-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 48px;
+}
+
+.switcher-list p {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.template-item {
+  margin-left: 26px;
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

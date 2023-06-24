@@ -1,7 +1,9 @@
 import * as UserActionCreators from './user';
 import * as TodoActionCreators from './todo';
+import * as TemplateActionCreators from './template'
 
 export default {
   ...TodoActionCreators,
-  ...UserActionCreators
+  ...UserActionCreators,
+  ...TemplateActionCreators
 }

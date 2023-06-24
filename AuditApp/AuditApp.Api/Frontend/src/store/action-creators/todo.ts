@@ -21,4 +21,4 @@ export const fetchTodos = (page = 1, limit = 10) => {
 
 export function setTodoPage(page: number) : TodoAction {
   return {type: TodoActionTypes.FETCH_TODOS_PAGE, payload: page}
-}
+} 

@@ -1,16 +1,23 @@
 import "./switcher-list.css";
-import { TemplateItemGroup } from "../../models/template-model";
 import { Switch } from "@mui/material";
+import React, { useEffect } from 'react'
+import { useTypedSelector } from "../../../hooks/use-typed-selector";
+import { fetchTemplate } from "../../../store/action-creators/template";
+import { useActions } from "../../../hooks/use-action";
 
-interface SwitchesProps {
-    TemplateItemGroup: TemplateItemGroup[];
-}
-
-export default function SwitcherGroupList(props: SwitchesProps) {
+export default function CiteSwitcherGroupList() {
+    
+    const { template } = useTypedSelector(state => state.template)
+    const {users} = useTypedSelector(state => state.user)
+    const  {fetchTemplate} = useActions();
+    
+    useEffect(() => {
+        fetchTemplate();
+    }, [])
 
     return (
         <div className="switcher-list">
-            {props.TemplateItemGroup.map((temlpateItemGroup) =>
+            {template.map((temlpateItemGroup) =>
                 <div className="" key={temlpateItemGroup.id}>
                     <p>{temlpateItemGroup.title}</p>
                     {

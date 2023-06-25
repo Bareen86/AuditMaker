@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TextRedactor from "../../components/text-redactor/text-redactor";
 import "./camp-audit-page.css";
 import CampSideBar from "./campSideBar/camp-side-bar";
+import EditorJS from "@editorjs/editorjs";
 
 type Props = {};
 
 export default function CampAuditPage({}: Props) {
 
+    const EditorRef = useRef<EditorJS>();
+    console.log(EditorRef.current + "CampRender") 
     return (
         <>
             <div className="content-wrapper">
-                <CampSideBar name="Аудит лагеря"/>
-                <TextRedactor />
+                <CampSideBar editorRef={EditorRef} name="Аудит лагеря"/>
+                <TextRedactor editorRef={EditorRef} />
             </div>
         </>
     );

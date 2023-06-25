@@ -1,15 +1,24 @@
 import "./switcher-list.css";
 import { Switch } from "@mui/material";
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useTypedSelector } from "../../../hooks/use-typed-selector";
 import { fetchTemplate } from "../../../store/action-creators/template";
 import { useActions } from "../../../hooks/use-action";
+import EditorJS from "@editorjs/editorjs";
 
-export default function CiteSwitcherGroupList() {
+interface SwithcherProps {
+    editorRef : React.MutableRefObject<EditorJS | undefined>
+}
+
+export default function CiteSwitcherGroupList({editorRef}: SwithcherProps) {
     
     const { template } = useTypedSelector(state => state.template)
-    const {users} = useTypedSelector(state => state.user)
+
     const  {fetchTemplate} = useActions();
+    function AddTextToEditor () {
+        console.log(editorRef.current);
+        editorRef.current?.blocks.insert("paragraph", {text : "egor"})
+    }
     
     useEffect(() => {
         fetchTemplate();
@@ -28,7 +37,9 @@ export default function CiteSwitcherGroupList() {
                         </div> 
                     )}
                 </div>
-            )}   
+            )}
+            <button onClick={AddTextToEditor}>Click me plssssssssssssssssss</button>   
         </div>
+        
     );
 }

@@ -5,12 +5,16 @@ import { fetchTemplate } from "../../../store/action-creators/template";
 import { useTypedSelector } from "../../../hooks/use-typed-selector";
 import { fetchUsers } from "../../../store/action-creators/user";
 import { useActions } from "../../../hooks/use-action";
+import EditorJS from "@editorjs/editorjs";
 
-export default function CampSwitcherGroupList() {
+interface SwithcherProps {
+    editorRef : React.MutableRefObject<EditorJS | undefined>
+}
+
+export default function CampSwitcherGroupList({editorRef} : SwithcherProps) {
 
     const { template } = useTypedSelector(state => state.template)
-    const {users} = useTypedSelector(state => state.user)
-    const  {fetchTemplate} = useActions();
+    const  {fetchTemplate} = useActions()
     
     useEffect(() => {
         fetchTemplate();

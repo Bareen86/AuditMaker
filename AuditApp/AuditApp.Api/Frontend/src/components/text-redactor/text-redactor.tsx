@@ -9,13 +9,16 @@ const FontSize = require("editorjs-inline-font-size-tool");
 const FontFamily = require("editorjs-inline-font-family-tool");
 const ImageTool = require('@editorjs/image')
 
-function TextRedactor() {
-    const ejInstance = useRef<EditorJS>();
+interface RedactorText {
+    editorRef : React.MutableRefObject<EditorJS | undefined>
+}
+
+function TextRedactor({editorRef}: RedactorText) {
     const initEditor = () => {
         const editor = new EditorJS({
             holder: "editorjs",
             onReady: () => {
-                ejInstance.current = editor;
+                editorRef.current = editor;
             },
             autofocus: true,
             onChange: async () => {
@@ -69,6 +72,8 @@ function TextRedactor() {
         });
     };
 
+    console.log(editorRef.current);
+
     useEffect(() => {
         initEditor();
     }, []);
@@ -91,7 +96,7 @@ function TextRedactor() {
                 </div>  
                 <div className="saveButtonsBlock">
                     <Button className="savePdfButton" onClick={() => {
-                        ejInstance.current?.toolbar.close()
+                        editorRef.current?.toolbar.close()
                         handlePdfPrint();
                     }} variant="contained">
                         Сохранить в PDF

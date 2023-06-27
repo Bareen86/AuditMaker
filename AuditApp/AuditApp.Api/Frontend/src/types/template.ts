@@ -19,7 +19,7 @@ export interface TemplateItem{
 
 export enum TemplateActionType {
   FETCH_TEMPLATE = "FETCH_TEMPLATE",
-  FETCH_TEMPLATE_TO_REDACTOR = "FETCH_TEMPLATE_TO_REDACTOR"
+  UPDATE_TEMPLATE_ITEM = "UPDATE_TEMPLATE_ITEM"
 }
 
 interface FetchTemplateAction {
@@ -28,9 +28,9 @@ interface FetchTemplateAction {
   
 }
 
-interface SetTemplateItemState {
-  type: TemplateActionType.FETCH_TEMPLATE_TO_REDACTOR,
-  payload: TemplateItemGroup[]
+interface UpdateTemplateItemAction {
+  type: TemplateActionType.UPDATE_TEMPLATE_ITEM,
+  payload: TemplateItem
 }
 
-export type TemplateAction = FetchTemplateAction | SetTemplateItemState
+export type TemplateAction = FetchTemplateAction | UpdateTemplateItemAction

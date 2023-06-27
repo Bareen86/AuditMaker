@@ -2,6 +2,11 @@ import { useDispatch } from "react-redux";
 import { TemplateAction, TemplateActionType } from "../../types/template";
 import {Dispatch}  from "redux";
 
+
+// export function UpdateTemplateItemIsActiveField() : TemplateAction {
+//     return {type : TemplateActionType.UPDATE_TEMPLATE_ITEM, payload: {}}
+// }
+        
 export function fetchTemplate()  {
   return async (dispatch: Dispatch<TemplateAction>) => {
     dispatch({type: TemplateActionType.FETCH_TEMPLATE, payload: [
@@ -17,7 +22,7 @@ export function fetchTemplate()  {
                   isActive : false
               },
               {
-                  id : 1,
+                  id : 2,
                   title : "Логотип текста не оформлен текстом",
                   description :
                   "Рекомендуем оформить название гостиницы в логотопе или продублировать название рядом с логотипом. Сейчас название отеля в логотипе оформлено" +

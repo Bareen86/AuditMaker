@@ -20,7 +20,7 @@ function TextRedactor({editorRef}: RedactorText) {
             onReady: () => {
                 editorRef.current = editor;
             },
-            autofocus: true,
+            autofocus: false,
             onChange: async () => {
                 let content = await editor.saver.save();
 
@@ -72,7 +72,10 @@ function TextRedactor({editorRef}: RedactorText) {
         });
     };
 
-    console.log(editorRef.current);
+    // Функция, которая отправляет сохраненные данные из редактора на сервер.
+    function printSaveData(){
+        console.log("Данные сохранены")
+    }
 
     useEffect(() => {
         initEditor();
@@ -83,6 +86,7 @@ function TextRedactor({editorRef}: RedactorText) {
     const handlePdfPrint = useReactToPrint({
             content: () => componentRef.current,
             documentTitle: "pdfTitle",
+            onAfterPrint: printSaveData
         });
 
     return (

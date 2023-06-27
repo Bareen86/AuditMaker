@@ -8,11 +8,12 @@ export const templateReducer = (state = initialState, action: TemplateAction) : 
   switch (action.type){
     case TemplateActionType.FETCH_TEMPLATE:
       return {...state, template: action.payload}
-    case TemplateActionType.FETCH_TEMPLATE_TO_REDACTOR:
-      return {...state, template : action.payload}
+    case TemplateActionType.UPDATE_TEMPLATE_ITEM:
+      return {...state}
     default:
       return state;
   }
 }
+
 
 

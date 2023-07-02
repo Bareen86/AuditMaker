@@ -1,52 +1,30 @@
 import { useDispatch } from "react-redux";
-import { TemplateAction, TemplateActionType } from "../../types/template";
+import { TemplateAction, TemplateActionType, TemplateItemGroup } from "../../types/template";
 import {Dispatch}  from "redux";
 
+  function setTemplateItemIsActiveFiled(template: TemplateItemGroup[],groupId: number, itemId: number) : TemplateItemGroup[]  {
+    const updatedTemplate = template.map((group) => {
+        if (group.id === groupId) {
+          group.TemplateGroup = group.TemplateGroup.map((item) => {
+                if (item.id === itemId) {
+                    return { ...item, isActive: !item.isActive };
+                }
+                return item;
+            });
+        }
+        return group;
+    });
+    return updatedTemplate;
+  }
 
-// export function UpdateTemplateItemIsActiveField() : TemplateAction {
-//     return {type : TemplateActionType.UPDATE_TEMPLATE_ITEM, payload: {}}
-// }
+
+export function UpdateTemplateItemIsActiveField(template: TemplateItemGroup[],itemId: number, groupId: number) : TemplateAction {
+    const updatedTemplate = setTemplateItemIsActiveFiled(template, itemId, groupId)
+    return {type : TemplateActionType.UPDATE_TEMPLATE, payload: updatedTemplate}
+}
         
 export function fetchTemplate()  {
   return async (dispatch: Dispatch<TemplateAction>) => {
-    dispatch({type: TemplateActionType.FETCH_TEMPLATE, payload: [
-      {
-          id : 1,
-          title : "Главная страница",
-          TemplateGroup : [
-              {
-                  id : 1,
-                  title : "Главное меню - основной элемент  навигации по сайту",
-                  description : "Главное меню - основной элемент навигации по сайту. Оно должно быть максимально удобным, чтобы пользователь добрался до любого раздела сайта.",
-                  order: 1,
-                  isActive : false
-              },
-              {
-                  id : 2,
-                  title : "Логотип текста не оформлен текстом",
-                  description :
-                  "Рекомендуем оформить название гостиницы в логотопе или продублировать название рядом с логотипом. Сейчас название отеля в логотипе оформлено" +
-                  "картинкой. Поисковые системы не индексируют текст на изображении, это затрудняет поиск отеля по бизнес-запросу(названию отеля) в Google и Яндексе.",
-                  order: 2,
-                  isActive : false
-              }
-          ],
-          order : 1,
-      },
-      {
-          id : 2,
-          title : "Страница номера и цены",
-          TemplateGroup : [
-              {
-                  id : 1,
-                  title : "Названия номеров на английсом языке",
-                  description : "Укажите названия номеров на английском языке",
-                  order: 1,
-                  isActive : false
-              }
-          ],
-          order : 2,
-      }
-    ]})
+    dispatch({type: TemplateActionType.FETCH_TEMPLATE, payload: []})
   }
 }

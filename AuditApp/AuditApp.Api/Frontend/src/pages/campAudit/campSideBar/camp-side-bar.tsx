@@ -1,10 +1,10 @@
-import SwitcherGroupList from "./camp-switcher-list";
+import CampSwitcherGroupList from "./camp-switcher-list";
 import "./camp-side-bar.css";
 import EditorJS from "@editorjs/editorjs";
 
 interface SwitchesProps {
     name: string;
-    editorRef : React.MutableRefObject<EditorJS | undefined>
+    editorRef : React.MutableRefObject<EditorJS | null>
 }
 
 export default function CampSideBar({editorRef, name}: SwitchesProps) { 
@@ -13,7 +13,7 @@ export default function CampSideBar({editorRef, name}: SwitchesProps) {
         <div className="side-bar">    
             <p className="side-bar-p">{name}</p> 
             <hr></hr>       
-            <SwitcherGroupList editorRef={editorRef}/>
+            <CampSwitcherGroupList editorRef={editorRef}/>
         </div>  
     );
 }

@@ -12,8 +12,17 @@ export default function TestPage() {
         fetchTemplate();
     }, [])
 
+    function AddTemplateToEditor() {
+        template.map((templateGroup) =>
+            templateGroup.TemplateGroup.map((item) => {
+                if (item.isActive) {
+                    console.log(templateGroup.id, item.id);
+                }
+            })
+        );
+    }
+
     function setTemplateItemIsActiveFiled(itemId: number, groupId: number)  {
-      // const updatedTemplate = template.map((GroupItem => GroupItem.id == 1 ? GroupItem.TemplateGroup.map((templateItem => templateItem.id  == 1 ? {...templateItem, isActive : !templateItem.isActive} : templateItem)) : GroupItem));
 
       const updatedTemplate = template.map((item) => {
           if (item.id === itemId) {
@@ -28,6 +37,7 @@ export default function TestPage() {
       });
 
       console.log(updatedTemplate);
+      console.log(template)
     }
 
     

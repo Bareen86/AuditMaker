@@ -10,108 +10,14 @@ const FontFamily = require("editorjs-inline-font-family-tool");
 const ImageTool = require('@editorjs/image')
 
 interface RedactorText {
-    editorRef : React.MutableRefObject<EditorJS | undefined>
+    editorRef : React.MutableRefObject<EditorJS | null>,
 }
 
 function TextRedactor({editorRef}: RedactorText) {
-    const initEditor = () => {
-        const editor = new EditorJS({
-            holder: "editorjs",
-            onReady: () => {
-                editorRef.current = editor;
-            },
-            autofocus: false,
-            onChange: async () => {
-                let content = await editor.saver.save();
-
-                console.log(content);
-            },
-            tools: {
-                header: Header,
-                fontSize: FontSize,
-                fontFamily: FontFamily,
-                image: {
-                    class: ImageTool,
-                    config  :{
-                        uploader : {
-                            async uploadByFile(file:any){
-                                const formData = new FormData();
-                                formData.append("file", file);
-                                const response = await axios.post(
-                                    '/api/images/upload-image',
-                                    formData,
-                                    {
-                                        headers: {
-                                            "Content-Type": "multipart/form-data",
-                                        },
-                                        withCredentials: false,
-                                    }
-                                );
-
-                                if(response.data.success === 1){
-                                    return response.data;
-                                }
-                            },
-                            //http://localhost:5175
-                            // async uploadByUrl(url:any){
-                            //     const response = await axios.post(
-                            //         'http://localhost:5001/api/image/createByUrl',
-                            //         {
-                            //             url,
-                            //         }
-                            //     );
-
-                            //     if(response.data.success === 1){
-                            //         return response.data;
-                            //     }
-                            // },
-                        }
-                    }
-                }
-            },
-        });
-    };
-
-    // Функция, которая отправляет сохраненные данные из редактора на сервер.
-    function printSaveData(){
-        console.log("Данные сохранены")
-    }
-
-    useEffect(() => {
-        initEditor();
-    }, []);
-
-    const componentRef = useRef(null);
     
-    const handlePdfPrint = useReactToPrint({
-            content: () => componentRef.current,
-            documentTitle: "pdfTitle",
-            onAfterPrint: printSaveData
-        });
 
     return (
-        <div className="textRedactor">
-            <div className="editorWrapper">
-                <div ref={componentRef} id="editorjs"></div>
-            </div>
-            <div className="buttonsBlock">
-                <div className="backToAudits">
-                    <Button variant="outlined">Вернуться к аудитам</Button> 
-                </div>  
-                <div className="saveButtonsBlock">
-                    <Button className="savePdfButton" onClick={() => {
-                        editorRef.current?.toolbar.close()
-                        handlePdfPrint();
-                    }} variant="contained">
-                        Сохранить в PDF
-                    </Button>
-                    <Button variant="contained">
-                        Сохранить аудит
-                    </Button>
-                    
-                </div>
-            </div>
-        </div>
+        <></>
     );
 }
 export default TextRedactor;

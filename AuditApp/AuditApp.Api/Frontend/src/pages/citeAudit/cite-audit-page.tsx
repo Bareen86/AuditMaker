@@ -1,24 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import TextRedactor from "../../components/text-redactor/text-redactor";
+import { useRef } from "react";
 import "./cite-audit-page.css";
-import { TemplateItemGroup } from "../../types/template";
-import { useTypedSelector } from "../../hooks/use-typed-selector";
-import CiteSideBar from "./citeSideBar/side-bar";
+import CiteSwitcherGroupList from "./citeSideBar/cite-switcher-list";
 import EditorJS from "@editorjs/editorjs";
 
+export default function CiteAuditPage() {
 
-type Props = {};
-
-export default function CiteAuditPage({}: Props) {
-    
-    const  EditorRef = useRef<EditorJS>();  
+    const EditorRef = useRef<EditorJS>(null);
 
     return (
-        <>
-            <div className="content-wrapper">
-                <CiteSideBar editorRef={EditorRef} name="Аудит сайта" />
-                <TextRedactor editorRef={EditorRef} />
-            </div>
-        </>
+        <div className="content-wrapper">
+            <CiteSwitcherGroupList editorRef={EditorRef} />
+        </div>
     );
 }

@@ -8,7 +8,7 @@ import { useActions } from "../../../hooks/use-action";
 import EditorJS from "@editorjs/editorjs";
 
 interface SwithcherProps {
-    editorRef : React.MutableRefObject<EditorJS | undefined>
+    editorRef : React.MutableRefObject<EditorJS | null>
 }
 
 export default function CampSwitcherGroupList({editorRef} : SwithcherProps) {

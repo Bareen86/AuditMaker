@@ -8,8 +8,8 @@ type Props = {};
 
 export default function CampAuditPage({}: Props) {
 
-    const EditorRef = useRef<EditorJS>();
-    console.log(EditorRef.current + "CampRender") 
+    const EditorRef = useRef<EditorJS>(null);
+
     return (
         <>
             <div className="content-wrapper">

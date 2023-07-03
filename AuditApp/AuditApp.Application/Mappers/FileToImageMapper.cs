@@ -9,12 +9,12 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage.Mappers
 {
     public static class FileToImageMapper
     {
-        public static ResolvedImage Map(this ImageToGet fileToGet)
+        public static ResolvedImage Map(this ImageToGet imageToGet)
         {
             return new ResolvedImage
             {
-                Extansion = fileToGet.Extansion,
-                Bytes = fileToGet.Bytes
+                Extansion = imageToGet.Extansion,
+                Bytes = imageToGet.Bytes
             };
         }
     }

@@ -6,7 +6,7 @@ import { useActions } from "../../../hooks/use-action";
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
-import { TemplateItemGroup } from "../../../types/template";
+import { TemplateItem, TemplateItemGroup } from "../../../types/template";
 import { group } from "console";
 import { isTemplateExpression } from "typescript";
 const Header = require('@editorjs/header');
@@ -88,7 +88,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                 if (item.isActive) {
                     editorRef.current?.blocks.insert("paragraph", {
                         text: item.description,
-                    })
+                    }, 1, undefined, false, false, item.id)
                     console.log(templateGroup.id, item.id);
                 }
             })
@@ -96,46 +96,15 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
     }
 
     async function findActiveItem(groupOrder: number, itemOrder: number) {
-                // let currentBlockIndex = 0
-                // const GroupActiveItemsArray = template.filter(group => group.order === groupOrder)[0].TemplateGroup.filter(templateItem => templateItem.isActive);
-                // const moreOrderActiveItemInGroup = GroupActiveItemsArray.some(templateItem => templateItem.order > itemOrder)
-                // const firstItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
-                // // присвоить более высокому активному итему
-                // if (moreOrderActiveItemInGroup){
-                // // Получение первого активного итема
-                //     const firstItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
-                //     console.log(firstItem)
-                //     //@ts-ignore
-                //     const itemId = await getBlockIdByContent(firstItem?.description);
-                //     console.log(itemId)
-                //     //@ts-ignore
-                //     currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
-                // }
-                // // присвоить первое значение первого объекта из некст группы
-                //  else{
-                //     const nextFirstActiveTemplateItem = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
-                //     const firstActiveItem = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
-                //     //@ts-ignore
-                //     const itemId = await getBlockIdByContent(firstItem?.description);
-                //     console.log(itemId)
-                //     //@ts-ignore    
-                //     currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
-                // }
-                let checkIfAnyNextItemsGroupActive: boolean = false;
-                let checkIfAnyCurrentItemsGroupActive: boolean = false;
-                template.map((group) => {
-                    group.TemplateGroup.map((item) => {
-                        if (group.order > groupOrder && item.isActive) {
-                            checkIfAnyNextItemsGroupActive = true;
-                        }
-                        if (groupOrder === group.order && item.isActive) {
-                            checkIfAnyCurrentItemsGroupActive = true;
-                        }
-                    });
-                });
-                console.log(checkIfAnyNextItemsGroupActive);
-                console.log(checkIfAnyCurrentItemsGroupActive)   
-      }
+        editorRef.current?.blocks.insert("paragraph", {
+            text: "item.description"
+        },1 ,1 ,false , false, "egor")
+    }
+
+    function GetId(item: TemplateItem) : string | undefined {
+        const itemId = editorRef.current?.blocks.getById(item.id);
+        return itemId?.id;
+    }
 
     async function  GetPositionIndexOfTemplateItem(groupOrder: number, itemOrder: number,  templateItemDescription: string) {
         
@@ -163,9 +132,9 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                 // присвоить более высокому активному итему
                 if (moreOrderActiveItemInGroup){
                 // Получение первого активного итема
-                    const firstItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
+                    const firstActiveItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
                     //@ts-ignore
-                    const itemId = await getBlockIdByContent(firstItem?.description);
+                    const itemId = GetId(firstActiveItem);
                     //@ts-ignore
                     currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
                 }
@@ -174,7 +143,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                     const nextFirstActiveTemplateItem = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
                     const firstActiveItem = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
                     //@ts-ignore
-                    const itemId = await getBlockIdByContent(firstActiveItem?.description);
+                    const itemId = GetId(firstActiveItem)
                     //@ts-ignore
                     currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
                 }   
@@ -186,7 +155,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                 const nextFirstActiveTemplateItem = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
                 const firstActiveItem = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
                 //@ts-ignore
-                const itemId = await getBlockIdByContent(firstActiveItem?.description);
+                const itemId = GetId(firstActiveItem);
                 //@ts-ignore
                 currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
             }
@@ -200,26 +169,22 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
             // присвоить более высокому активному итему
             if (moreOrderActiveItemInGroup){
             // Получение первого активного итема
-                const firstItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
+                const firstActiveItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
                 //@ts-ignore
-                const itemId = await getBlockIdByContent(firstItem?.description);
+                const itemId = GetId(firstActiveItem);
                 //@ts-ignore
                 currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
             }
-            // присвоить первое значение первого объекта из некст группы
+            // присвоить последний индекс блока в редакторе
              else{
-                const nextFirstActiveTemplateItem = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
-                const firstActiveItem = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
                 //@ts-ignore
-                const itemId = await getBlockIdByContent(firstActiveItem?.description);
-                //@ts-ignore
-                currentBlockIndex = editorRef.current?.blocks.getBlocksCount() - 1;
+                currentBlockIndex = editorRef.current?.blocks.getBlocksCount();
             } 
         }
         return  currentBlockIndex;
     }
 
-    function AddTemplateItemToEditor(groupId:number, itemId:number, itemPosition: number){
+    function AddTemplateItemToEditor(groupId:number, itemId: string, itemPosition: number){
         //@ts-ignore
         const position = editorRef.current?.blocks.getBlocksCount() - 1; // Получение текущего блока тектса(по массиву блоков)
         template.map((group) => {
@@ -228,47 +193,27 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                     if (item.id === itemId && item.isActive ) {
                         editorRef.current?.blocks.insert("paragraph", {
                             text: item.description
-                        },3, itemPosition)
+                        },3, itemPosition, true, false, item.id)
                     }
                 })
             }
         })
     }
 
-    async function UpdateTemplateField(template: TemplateItemGroup[], groupId:number, itemId:number, groupOrder : number, itemOrder : number, templateItemDescription: string, templateItemIsActive: boolean){
-        UpdateTemplateItemIsActiveField(template, groupId, itemId);
-        const itemPosition = await GetPositionIndexOfTemplateItem(groupOrder, itemOrder, templateItemDescription);
-        AddTemplateItemToEditor(groupId, itemId, itemPosition);
-        
-    }
-
-    async function BlockList(){
-        const data = await getBlockIdByContent("Тестовый текст номер с Учётом последовательности номер 2.2");
-        console.log(data)
-        console.log("получение последнего индекса")
-        //@ts-ignore
-        const position = editorRef.current?.blocks.getBlocksCount() - 1; // Получение текущего блока тектса(по массиву блоков)
-        console.log(position)
-        //@ts-ignore
-        const currentBlockIndex = editorRef.current?.blocks.getBlockIndex(data);
-        console.log(currentBlockIndex)
-
-        editorRef.current?.blocks.insert("paragraph", {
-            text: "egor"
-        },3, 4)
-    }
-
-    async function getBlockIdByContent(content: string) {
-        //@ts-ignore
-        let editorData = await editorRef.current.saver.save();
-        for (let i = 0; i < editorData.blocks.length; i++) {
-          const block = editorData.blocks[i];
-          if (block.data.text.includes(content)) {
-            return block.id;
-          }
+    async function UpdateTemplateField(template: TemplateItemGroup[], groupId:number, itemId:string, groupOrder : number, itemOrder : number, templateItemDescription: string, templateItemIsActive: boolean){
+        // Добавление пукнта
+        if (!templateItemIsActive){
+            UpdateTemplateItemIsActiveField(template, groupId, itemId);
+            const itemPosition = await GetPositionIndexOfTemplateItem(groupOrder, itemOrder, templateItemDescription);
+            AddTemplateItemToEditor(groupId, itemId, itemPosition);
         }
-        return -1;
-      }
+        // Удаление пункта  
+        else {
+            UpdateTemplateItemIsActiveField(template, groupId, itemId);
+            const currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
+            editorRef.current?.blocks.delete(currentBlockIndex)
+        }
+    }
       
     useEffect(() => {
         if (!editorRef.current){

@@ -22,7 +22,7 @@ export default function TestPage() {
         );
     }
 
-    function setTemplateItemIsActiveFiled(itemId: number, groupId: number)  {
+    function setTemplateItemIsActiveFiled(itemId: number, groupId: string)  {
 
       const updatedTemplate = template.map((item) => {
           if (item.id === itemId) {
@@ -45,7 +45,7 @@ export default function TestPage() {
   return (
       <>
           <div>test-page---------------ssss</div>
-          <button  onClick={() => setTemplateItemIsActiveFiled(1,2)}>egor</button>
+          <button>egor</button>
       </>
   );
 }

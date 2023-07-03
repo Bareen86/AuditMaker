@@ -1,4 +1,5 @@
-﻿using AuditApp.Infrastructure.CommonServices.FileStorage;
+﻿using AuditApp.Application;
+using AuditApp.Infrastructure.CommonServices.FileStorage;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AuditApp.Infrastructure

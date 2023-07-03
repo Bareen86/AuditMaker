@@ -45,7 +45,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         {
             ImageToSave imageToSave = _imageBuilder.Build(file);
             var saveResult = _imageSaver.SaveImage(imageToSave);
-            var result = saveResult.Map();
+            GetImageResult result = saveResult.Map();
             return Ok(result);
         }
     }

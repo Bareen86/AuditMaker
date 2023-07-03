@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { TemplateAction, TemplateActionType, TemplateItemGroup } from "../../types/template";
 import {Dispatch}  from "redux";
 
-  function setTemplateItemIsActiveFiled(template: TemplateItemGroup[],groupId: number, itemId: number) : TemplateItemGroup[]  {
+  function setTemplateItemIsActiveFiled(template: TemplateItemGroup[],groupId: number, itemId: string) : TemplateItemGroup[]  {
     const updatedTemplate = template.map((group) => {
         if (group.id === groupId) {
           group.TemplateGroup = group.TemplateGroup.map((item) => {
@@ -18,8 +18,8 @@ import {Dispatch}  from "redux";
   }
 
 
-export function UpdateTemplateItemIsActiveField(template: TemplateItemGroup[],itemId: number, groupId: number) : TemplateAction {
-    const updatedTemplate = setTemplateItemIsActiveFiled(template, itemId, groupId)
+export function UpdateTemplateItemIsActiveField(template: TemplateItemGroup[],groupId: number, itemId: string) : TemplateAction {
+    const updatedTemplate = setTemplateItemIsActiveFiled(template, groupId,  itemId)
     return {type : TemplateActionType.UPDATE_TEMPLATE, payload: updatedTemplate}
 }
         

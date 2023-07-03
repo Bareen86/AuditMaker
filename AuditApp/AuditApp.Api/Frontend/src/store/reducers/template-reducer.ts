@@ -8,14 +8,14 @@ const initialState : TemplateAll = {
         order : 1,
         TemplateGroup : [
             {
-                id : 1,
+                id : "ShadowDemon",
                 title : "Главное меню - основной элемент  навигации по сайту",
                 description : "Главное меню - основной элемент навигации по сайту. Оно должно быть максимально удобным, чтобы пользователь добрался до любого раздела сайта.",
                 order: 1,
                 isActive : false
             },
             {
-                id : 2,
+                id : "ShadowFiend",
                 title : "Логотип текста не оформлен текстом",
                 description :
                 "Рекомендуем оформить название гостиницы в логотипе или продублировать название рядом с логотипом. Сейчас название отеля в логотипе оформлено " +
@@ -24,7 +24,7 @@ const initialState : TemplateAll = {
                 isActive : false
             },
             {
-                id : 3,
+                id : "DimaSlark",
                 title : "Тестовый текст номер 1",
                 description : "Тестовый текст номер 1.1",
                 order: 3,
@@ -38,21 +38,21 @@ const initialState : TemplateAll = {
         order : 2,
         TemplateGroup : [
             {
-                id : 1,
+                id : "Fn",
                 title : "Названия номеров на английсом языке",
                 description : "Укажите названия номеров на английском языке",
                 order: 1,
                 isActive : false
             },
             {
-                id : 2,
+                id : "Broodmother",
                 title : "Тестовый текст номер с Учётом последовательности номер 2.1",
                 description : "Тестовый текст номер с Учётом последовательности номер 2.1",
                 order: 2,
                 isActive : false
             },
             {
-                id : 3,
+                id : "Beastmaster",
                 title : "Тестовый текст номер с Учётом последовательности номер 2.2",
                 description : "Тестовый текст номер с Учётом последовательности номер 2.2",
                 order: 3,
@@ -66,21 +66,21 @@ const initialState : TemplateAll = {
         order : 3,
         TemplateGroup : [
             {
-                id : 1,
+                id : "DrowRanger",
                 title : "Тестовый текст номер с Учётом последовательности номер 3.1",
                 description : "Тестовый текст номер с Учётом последовательности номер 3.1",
                 order: 1,
                 isActive : false
             },
             {
-                id : 2,
+                id : "DarkWillow",
                 title : "Тестовый текст номер с Учётом последовательности номер 3.2",
                 description : "Тестовый текст номер с Учётом последовательности номер 3.2",
                 order: 2,
                 isActive : false
             },
             {
-                id : 3,
+                id : "DragonKnight",
                 title : "Тестовый текст номер с Учётом последовательности номер 3.3",
                 description : "Тестовый текст номер с Учётом последовательности номер 3.3",
                 order: 3,

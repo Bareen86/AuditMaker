@@ -10,7 +10,7 @@ export interface TemplateItemGroup{
 }
 
 export interface TemplateItem{
-  id : number,
+  id : string,
   title : string,
   description : string,
   order: number,

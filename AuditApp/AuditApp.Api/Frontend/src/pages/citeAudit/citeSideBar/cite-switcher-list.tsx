@@ -101,14 +101,15 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
         );
     }
     function getCurrentBlockIndex(item: TemplateItem){
-        const itemId = getId(item);
+        const itemId = editorRef.current?.blocks.getById(item.id);
         //@ts-ignore
         return editorRef.current?.blocks.getBlockIndex(itemId);
     }
 
-    function getId(item: TemplateItem) : string | undefined {
+    function getId(item: TemplateItem) {
         const itemId = editorRef.current?.blocks.getById(item.id);
         return itemId?.id;
+        
     }
 
     function  getPositionIndexOfTemplateItem(groupOrder: number, itemOrder: number) : number {
@@ -144,7 +145,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                 // присвоить первое значение первого объекта из некст группы
                  else{
                     const nextFirstActiveTemplateItem = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
-                    const firstActiveItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
+                    const firstActiveItem = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
                     //@ts-ignore
                     currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
                 }   

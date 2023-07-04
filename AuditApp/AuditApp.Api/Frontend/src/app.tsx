@@ -5,8 +5,6 @@ import CampAuditPage from "./pages/campAudit/camp-audit-page";
 import Layout from "./pages/layout/layout";
 import UserList from "./components/user-list";
 import TodoList from "./components/todo-list";
-import TestPage from "./pages/testPage/test-page";
-
 
 function App() {
 
@@ -22,7 +20,6 @@ function App() {
                         <Route path="*" element={<h1>Resource not found</h1>}/>
                         <Route path="user" element={<UserList/>}/>
                         <Route path="todos" element={<TodoList/>}/>
-                        <Route path="test"  element={<TestPage/>}/>
                     </Route>    
                 </Routes>
             </BrowserRouter>

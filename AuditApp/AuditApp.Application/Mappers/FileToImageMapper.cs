@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AuditApp.Infrastructure.CommonServices.FileStorage.Mappers
+﻿namespace AuditApp.Infrastructure.CommonServices.FileStorage.Mappers
 {
     public static class FileToImageMapper
     {
-        public static ResolvedImage Map(this ImageToGet imageToGet)
+        public static ResolvedImage Map(this FileToGet imageToGet)
         {
             return new ResolvedImage
             {
-                Extansion = imageToGet.Extansion,
+                Extension = imageToGet.Extension,
                 Bytes = imageToGet.Bytes
             };
         }

@@ -1,6 +1,4 @@
-﻿using AuditApp.Extranet.Modules.Images.Models;
-
-namespace AuditApp.Application.ImageSaving
+﻿namespace AuditApp.Application.ImageSaving
 {
     public interface IImageSaver
     {

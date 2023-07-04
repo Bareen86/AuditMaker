@@ -18,6 +18,8 @@ interface CiteProps {
     editorRef : React.MutableRefObject<EditorJS | null>
 }
 
+enum ResponseStatus { Failure, Success };
+
 export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps, ref:any) {
     
     function initEditor(){
@@ -25,7 +27,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
             holder: "editorjs",
             onReady: () => {
                 editorRef.current = editor;
-                OnInitAddTemplateToEditor()
+                onInitAddTemplateToEditor()
             },
             autofocus: false,
             onChange: async () => {
@@ -54,7 +56,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                                         withCredentials: false,
                                     }
                                 );
-                                if(response.data.success === 1){
+                                if(response.data.success === ResponseStatus.Success){
                                     return response.data;
                                 }
                             }
@@ -82,25 +84,34 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
         console.log(editorRef.current)
     }
 
-    function OnInitAddTemplateToEditor() {
+    function onInitAddTemplateToEditor() : void {
+
+        const config : number = 1;
+        const noIndex : undefined = undefined;
+        const needToFocus : boolean = false;
+        const needToReplace : boolean = false;
         template.map((templateGroup) =>
             templateGroup.TemplateGroup.map((item) => {
                 if (item.isActive) {
                     editorRef.current?.blocks.insert("paragraph", {
                         text: item.description,
-                    }, 1, undefined, false, false, item.id)
-                    console.log(templateGroup.id, item.id);
+                    }, config, noIndex, needToFocus, needToReplace, item.id)
                 }
             })
         );
     }
+    function getCurrentBlockIndex(item: TemplateItem){
+        const itemId = getId(item);
+        //@ts-ignore
+        return editorRef.current?.blocks.getBlockIndex(itemId);
+    }
 
-    function GetId(item: TemplateItem) : string | undefined {
+    function getId(item: TemplateItem) : string | undefined {
         const itemId = editorRef.current?.blocks.getById(item.id);
         return itemId?.id;
     }
 
-    async function  GetPositionIndexOfTemplateItem(groupOrder: number, itemOrder: number,  templateItemDescription: string) {
+    function  getPositionIndexOfTemplateItem(groupOrder: number, itemOrder: number) : number {
         
         let currentBlockIndex: number = 0;
         let checkIfAnyNextItemsGroupActive : boolean = false;
@@ -128,18 +139,14 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                 // Получение первого активного итема
                     const firstActiveItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
                     //@ts-ignore
-                    const itemId = GetId(firstActiveItem);
-                    //@ts-ignore
-                    currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
+                    currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
                 }
                 // присвоить первое значение первого объекта из некст группы
                  else{
                     const nextFirstActiveTemplateItem = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
-                    const firstActiveItem = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
+                    const firstActiveItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
                     //@ts-ignore
-                    const itemId = GetId(firstActiveItem)
-                    //@ts-ignore
-                    currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
+                    currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
                 }   
             }
             // и текущая группа не активна
@@ -149,9 +156,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                 const nextFirstActiveTemplateItem = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
                 const firstActiveItem = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
                 //@ts-ignore
-                const itemId = GetId(firstActiveItem);
-                //@ts-ignore
-                currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
+                currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
             }
         }
 
@@ -164,10 +169,8 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
             if (moreOrderActiveItemInGroup){
             // Получение первого активного итема
                 const firstActiveItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
-                //@ts-ignore
-                const itemId = GetId(firstActiveItem);
-                //@ts-ignore
-                currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
+               //@ts-ignore
+                currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
             }
             // присвоить последний индекс блока в редакторе
              else{
@@ -178,7 +181,10 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
         return  currentBlockIndex;
     }
 
-    function AddTemplateItemToEditor(groupId:number, itemId: string, itemPosition: number){
+    function addTemplateItemToEditor(groupId:number, itemId: string, itemPosition: number){
+        const config : number = 1;
+        const needToFocus : boolean = true;
+        const needToReplace : boolean = false;
         //@ts-ignore
         const position = editorRef.current?.blocks.getBlocksCount() - 1; // Получение текущего блока тектса(по массиву блоков)
         template.map((group) => {
@@ -187,24 +193,24 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                     if (item.id === itemId && item.isActive ) {
                         editorRef.current?.blocks.insert("paragraph", {
                             text: item.description
-                        },3, itemPosition, true, false, item.id)
+                        },config, itemPosition, needToFocus, needToReplace, item.id)
                     }
                 })
             }
         })
     }
 
-    async function UpdateTemplateField(template: TemplateItemGroup[], groupId:number, itemId:string, groupOrder : number, itemOrder : number, templateItemDescription: string, templateItemIsActive: boolean){
+    function updateTemplateField(template: TemplateItemGroup[], group:TemplateItemGroup, item:TemplateItem){
         // Добавление пукнта
-        if (!templateItemIsActive){
-            UpdateTemplateItemIsActiveField(template, groupId, itemId);
-            const itemPosition = await GetPositionIndexOfTemplateItem(groupOrder, itemOrder, templateItemDescription);
-            AddTemplateItemToEditor(groupId, itemId, itemPosition);
+        if (!item.isActive){
+            UpdateTemplateItemIsActiveField(template, group.id, item.id);
+            const itemPosition = getPositionIndexOfTemplateItem(group.order, item.order);
+            addTemplateItemToEditor(group.id, item.id, itemPosition);
         }
         // Удаление пункта  
         else {
-            UpdateTemplateItemIsActiveField(template, groupId, itemId);
-            const currentBlockIndex = editorRef.current?.blocks.getBlockIndex(itemId);
+            UpdateTemplateItemIsActiveField(template, group.id, item.id);
+            const currentBlockIndex = editorRef.current?.blocks.getBlockIndex(item.id);
             editorRef.current?.blocks.delete(currentBlockIndex)
         }
     }
@@ -227,8 +233,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                             {temlpateItemGroup.TemplateGroup.map(
                                 (templateItem) => (
                                     <div className="template-item" key={templateItem.id}>
-                                        <Switch onClick={() => UpdateTemplateField(template, temlpateItemGroup.id, templateItem.id, temlpateItemGroup.order,
-                                             templateItem.order, templateItem.description, templateItem.isActive)} checked={templateItem.isActive}/>
+                                        <Switch onClick={() => updateTemplateField(template, temlpateItemGroup, templateItem)} checked={templateItem.isActive}/>
                                         <p>{templateItem.title}</p>
                                     </div>
                                 )

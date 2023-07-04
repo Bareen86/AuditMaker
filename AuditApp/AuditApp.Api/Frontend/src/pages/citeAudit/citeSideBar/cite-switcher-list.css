@@ -27,7 +27,7 @@
 }
 
 #editorjs {
-  width: 1212px;
+  min-width: 712px;
   min-height: 700px;
 }
 

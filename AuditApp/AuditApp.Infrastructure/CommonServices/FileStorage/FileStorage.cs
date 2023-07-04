@@ -1,6 +1,5 @@
 ﻿using AuditApp.Application;
 using AuditApp.Application.Settings;
-using AuditApp.Extranet.Modules.Images.Models;
 
 namespace AuditApp.Infrastructure.CommonServices.FileStorage
 {
@@ -20,17 +19,17 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage
             File.WriteAllBytes(filePath, imageToSave.Bytes);
         }
 
-        public ImageToGet GetFile(string fileName)
+        public FileToGet GetFile(string fileName)
         {
             string filePath = Path.Combine(_fileStorageConfiguration.BasePath, fileName);
             if (System.IO.File.Exists(filePath))
             {
                 byte[] bytes = System.IO.File.ReadAllBytes(filePath);
                 var extension = fileName.Split('.').Last();
-                return new ImageToGet
+                return new FileToGet
                 {
                     Bytes = bytes,
-                    Extansion = extension
+                    Extension = extension
                 };
             }
             else

@@ -25,7 +25,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
             holder: "editorjs",
             onReady: () => {
                 editorRef.current = editor;
-                AddTemplateToEditor()
+                OnInitAddTemplateToEditor()
             },
             autofocus: false,
             onChange: async () => {
@@ -82,7 +82,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
         console.log(editorRef.current)
     }
 
-    function AddTemplateToEditor() {
+    function OnInitAddTemplateToEditor() {
         template.map((templateGroup) =>
             templateGroup.TemplateGroup.map((item) => {
                 if (item.isActive) {
@@ -93,12 +93,6 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                 }
             })
         );
-    }
-
-    async function findActiveItem(groupOrder: number, itemOrder: number) {
-        editorRef.current?.blocks.insert("paragraph", {
-            text: "item.description"
-        },1 ,1 ,false , false, "egor")
     }
 
     function GetId(item: TemplateItem) : string | undefined {
@@ -219,7 +213,6 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
         if (!editorRef.current){
             initEditor();
         }
-        AddTemplateToEditor()
     }, [])
 
     return (
@@ -234,16 +227,14 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
                             {temlpateItemGroup.TemplateGroup.map(
                                 (templateItem) => (
                                     <div className="template-item" key={templateItem.id}>
-                                        <Switch onClick={() => UpdateTemplateField(template, temlpateItemGroup.id, templateItem.id, temlpateItemGroup.order, templateItem.order, templateItem.description, templateItem.isActive)} checked={templateItem.isActive}/>
+                                        <Switch onClick={() => UpdateTemplateField(template, temlpateItemGroup.id, templateItem.id, temlpateItemGroup.order,
+                                             templateItem.order, templateItem.description, templateItem.isActive)} checked={templateItem.isActive}/>
                                         <p>{templateItem.title}</p>
                                     </div>
                                 )
                             )}
                         </div>
                     ))}
-                    <button onClick={() => findActiveItem(1, 1)}>
-                        Get BlockArrayLength
-                    </button>
                 </div>
             </div>
 

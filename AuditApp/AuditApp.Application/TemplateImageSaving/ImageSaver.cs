@@ -2,7 +2,7 @@
 {
     public interface IImageSaver
     {
-        ImageToSave SaveImage(ImageToSave imageToSave);
+        FileToSave SaveImage(FileToSave imageToSave);
     }
     internal class ImageSaver : IImageSaver
     {
@@ -13,11 +13,11 @@
             _fileStorage = fileStorage;
         }
 
-        public ImageToSave SaveImage(ImageToSave imageToSave)
+        public FileToSave SaveImage(FileToSave fileToSave)
         {
-            imageToSave.Uri = "/api/images/" + imageToSave.FileName;
-            _fileStorage.UploadFile(imageToSave);
-            return imageToSave;
+            fileToSave.Uri = "/api/images/" + fileToSave.FileName;
+            _fileStorage.UploadFile(fileToSave, "Images");
+            return fileToSave;
         }
     }
 }

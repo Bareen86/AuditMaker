@@ -13,9 +13,9 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage
             _fileStorageConfiguration = fileStorageConfiguration;
         }
 
-        public void UploadFile(ImageToSave imageToSave)
+        public void UploadFile(FileToSave imageToSave, string TypeOfFileToSave)
         {
-            string filePath = Path.Combine(_fileStorageConfiguration.BasePath, "Images", imageToSave.FileName);
+            string filePath = Path.Combine(_fileStorageConfiguration.BasePath, TypeOfFileToSave, imageToSave.FileName);
             File.WriteAllBytes(filePath, imageToSave.Bytes);
         }
 

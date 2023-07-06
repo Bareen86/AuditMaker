@@ -4,19 +4,19 @@ namespace AuditApp.Extranet.Modules.Images.Builder
 {
     public interface IImageBuilder
     {
-        ImageToSave Build(IFormFile formFile);
+        FileToSave Build(IFormFile formFile);
     }
 
     internal class ImageBuilder : IImageBuilder
     {
-        public ImageToSave Build(IFormFile formFile)
+        public FileToSave Build(IFormFile formFile)
         {
             using (var ms = new MemoryStream())
             {
                 formFile.CopyToAsync(ms);
                 var fileBytes = ms.ToArray();
                 string fileName = Guid.NewGuid().ToString() + "." + formFile.FileName.Split(".").Last();
-                return new ImageToSave
+                return new FileToSave
                 {
                     Uri = "",
                     Bytes = fileBytes,

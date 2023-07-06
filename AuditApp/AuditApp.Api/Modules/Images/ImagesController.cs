@@ -43,7 +43,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         [HttpPost("upload-image")]
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
-            ImageToSave imageToSave = _imageBuilder.Build(file);
+            FileToSave imageToSave = _imageBuilder.Build(file);
             var saveResult = _imageSaver.SaveImage(imageToSave);
             GetImageResult result = saveResult.Map();
             return Ok(result);

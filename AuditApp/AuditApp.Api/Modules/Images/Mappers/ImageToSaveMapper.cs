@@ -5,7 +5,7 @@ namespace AuditApp.Extranet.Modules.Images.Mappers
 {
     public static class ImageToSaveMapper
     {
-        public static GetImageResult Map(this ImageToSave imageToSave)
+        public static GetImageResult Map(this FileToSave imageToSave)
         {
             ImageFile imageFile = new(imageToSave.Uri);
             return new GetImageResult

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { UserAction, UserActionTypes } from "../../types/user"
 import {Dispatch}  from "redux";
 import { TodoAction, TodoActionTypes } from "../../types/todo";
 import { type } from "os";
@@ -21,4 +20,4 @@ export const fetchTodos = (page = 1, limit = 10) => {
 
 export function setTodoPage(page: number) : TodoAction {
   return {type: TodoActionTypes.FETCH_TODOS_PAGE, payload: page}
-}
+} 

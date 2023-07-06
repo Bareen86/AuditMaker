@@ -1,14 +1,8 @@
-﻿
-
-using AuditApp.Application.Settings;
-using AuditApp.Extranet.Modules.Images.Models;
-using AuditApp.Infrastructure.CommonServices.FileStorage;
-
-namespace AuditApp.Application.ImageSaving
+﻿namespace AuditApp.Application.ImageSaving
 {
     public interface IImageSaver
     {
-        ImageToSave SaveImage(ImageToSave imageToSave);
+        FileToSave SaveImage(FileToSave imageToSave);
     }
     internal class ImageSaver : IImageSaver
     {
@@ -19,11 +13,11 @@ namespace AuditApp.Application.ImageSaving
             _fileStorage = fileStorage;
         }
 
-        public ImageToSave SaveImage(ImageToSave imageToSave)
+        public FileToSave SaveImage(FileToSave fileToSave)
         {
-            imageToSave.Uri = "/api/images/" + imageToSave.FileName;
-            _fileStorage.UploadFile(imageToSave);
-            return imageToSave;
+            fileToSave.Uri = "/api/images/" + fileToSave.FileName;
+            _fileStorage.UploadFile(fileToSave, "Images");
+            return fileToSave;
         }
     }
 }

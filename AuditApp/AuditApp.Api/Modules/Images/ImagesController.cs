@@ -5,7 +5,6 @@ using AuditApp.Extranet.Modules.Images.Mappers;
 using AuditApp.Extranet.Modules.Images.Models;
 using AuditApp.Infrastructure.CommonServices.FileStorage;
 using Microsoft.AspNetCore.Mvc;
-using static AuditApp.Extranet.Modules.Images.Dtos.ResponseStatusEnum;
 
 namespace AuditApp.Extranet.Modules.Images.Controllers
 {
@@ -33,7 +32,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
             ResolvedImage resolvedImage = _imageResolver.GetImage(filename);
             if (resolvedImage != null)
             {
-                return File(resolvedImage.Bytes, $"image/{resolvedImage.extansion}");
+                return File(resolvedImage.Bytes, $"image/{resolvedImage.Extension}");
             }
             else
             {
@@ -44,9 +43,9 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         [HttpPost("upload-image")]
         public async Task<IActionResult> UploadImage(IFormFile file)
         {
-            ImageToSave imageToSave = _imageBuilder.Build(file);
+            FileToSave imageToSave = _imageBuilder.Build(file);
             var saveResult = _imageSaver.SaveImage(imageToSave);
-            var result = saveResult.Map();
+            GetImageResult result = saveResult.Map();
             return Ok(result);
         }
     }

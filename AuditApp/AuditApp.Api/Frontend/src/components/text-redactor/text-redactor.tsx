@@ -9,100 +9,15 @@ const FontSize = require("editorjs-inline-font-size-tool");
 const FontFamily = require("editorjs-inline-font-family-tool");
 const ImageTool = require('@editorjs/image')
 
-function TextRedactor() {
-    const ejInstance = useRef<EditorJS>();
-    const initEditor = () => {
-        const editor = new EditorJS({
-            holder: "editorjs",
-            onReady: () => {
-                ejInstance.current = editor;
-            },
-            autofocus: true,
-            onChange: async () => {
-                let content = await editor.saver.save();
+interface RedactorText {
+    editorRef : React.MutableRefObject<EditorJS | null>,
+}
 
-                console.log(content);
-            },
-            tools: {
-                header: Header,
-                fontSize: FontSize,
-                fontFamily: FontFamily,
-                image: {
-                    class: ImageTool,
-                    config  :{
-                        uploader : {
-                            async uploadByFile(file:any){
-                                const formData = new FormData();
-                                formData.append("file", file);
-                                const response = await axios.post(
-                                    '/api/images/upload-image',
-                                    formData,
-                                    {
-                                        headers: {
-                                            "Content-Type": "multipart/form-data",
-                                        },
-                                        withCredentials: false,
-                                    }
-                                );
-
-                                if(response.data.success === 1){
-                                    return response.data;
-                                }
-                            },
-                            //http://localhost:5175
-                            // async uploadByUrl(url:any){
-                            //     const response = await axios.post(
-                            //         'http://localhost:5001/api/image/createByUrl',
-                            //         {
-                            //             url,
-                            //         }
-                            //     );
-
-                            //     if(response.data.success === 1){
-                            //         return response.data;
-                            //     }
-                            // },
-                        }
-                    }
-                }
-            },
-        });
-    };
-
-    useEffect(() => {
-        initEditor();
-    }, []);
-
-    const componentRef = useRef(null);
+function TextRedactor({editorRef}: RedactorText) {
     
-    const handlePdfPrint = useReactToPrint({
-            content: () => componentRef.current,
-            documentTitle: "pdfTitle",
-        });
 
     return (
-        <div className="textRedactor">
-            <div className="editorWrapper">
-                <div ref={componentRef} id="editorjs"></div>
-            </div>
-            <div className="buttonsBlock">
-                <div className="backToAudits">
-                    <Button variant="outlined">Вернуться к аудитам</Button> 
-                </div>  
-                <div className="saveButtonsBlock">
-                    <Button className="savePdfButton" onClick={() => {
-                        ejInstance.current?.toolbar.close()
-                        handlePdfPrint();
-                    }} variant="contained">
-                        Сохранить в PDF
-                    </Button>
-                    <Button variant="contained">
-                        Сохранить аудит
-                    </Button>
-                    
-                </div>
-            </div>
-        </div>
+        <></>
     );
 }
 export default TextRedactor;

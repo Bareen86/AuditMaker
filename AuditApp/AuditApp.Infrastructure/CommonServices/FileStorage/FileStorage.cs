@@ -1,18 +1,8 @@
-﻿using AuditApp.Application.Settings;
-using AuditApp.Extranet.Modules.Images.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AuditApp.Application;
+using AuditApp.Application.Settings;
 
 namespace AuditApp.Infrastructure.CommonServices.FileStorage
 {
-    public interface IFileStorage
-    {
-        void UploadFile(ImageToSave imageToSave);
-        FileToGet GetFile(string fileName);
-    }
 
     internal class FileStorage : IFileStorage
     {
@@ -23,9 +13,9 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage
             _fileStorageConfiguration = fileStorageConfiguration;
         }
 
-        public void UploadFile(ImageToSave imageToSave)
+        public void UploadFile(FileToSave imageToSave, string TypeOfFileToSave)
         {
-            string filePath = Path.Combine(_fileStorageConfiguration.BasePath, "Images", imageToSave.FileName);
+            string filePath = Path.Combine(_fileStorageConfiguration.BasePath, TypeOfFileToSave, imageToSave.FileName);
             File.WriteAllBytes(filePath, imageToSave.Bytes);
         }
 
@@ -39,7 +29,7 @@ namespace AuditApp.Infrastructure.CommonServices.FileStorage
                 return new FileToGet
                 {
                     Bytes = bytes,
-                    Extansion = extension
+                    Extension = extension
                 };
             }
             else

@@ -1,7 +1,6 @@
 using AuditApp.Application;
 using AuditApp.Application.Settings;
 using AuditApp.Extranet.Modules.Images;
-using AuditApp.Extranet.Modules.Images.Builder;
 using AuditApp.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

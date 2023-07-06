@@ -1,5 +1,4 @@
-﻿using AuditApp.Infrastructure.CommonServices.FileStorage;
-using AuditApp.Infrastructure.CommonServices.FileStorage.Mappers;
+﻿using AuditApp.Infrastructure.CommonServices.FileStorage.Mappers;
 
 namespace AuditApp.Application.ImageResolving
 {

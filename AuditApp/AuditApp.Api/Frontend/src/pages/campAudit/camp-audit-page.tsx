@@ -3,6 +3,7 @@ import TextRedactor from "../../components/text-redactor/text-redactor";
 import "./camp-audit-page.css";
 import CampSideBar from "./campSideBar/camp-side-bar";
 import EditorJS from "@editorjs/editorjs";
+import { Outlet } from "react-router-dom";
 
 type Props = {};
 
@@ -15,7 +16,9 @@ export default function CampAuditPage({}: Props) {
             <div className="content-wrapper">
                 <CampSideBar editorRef={EditorRef} name="Аудит лагеря"/>
                 <TextRedactor editorRef={EditorRef} />
+                <Outlet />
             </div>
+            
         </>
     );
 }

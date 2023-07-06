@@ -3,7 +3,6 @@ import { Switch } from "@mui/material";
 import React, { useEffect } from 'react'
 import { fetchTemplate } from "../../../store/action-creators/template";
 import { useTypedSelector } from "../../../hooks/use-typed-selector";
-import { fetchUsers } from "../../../store/action-creators/user";
 import { useActions } from "../../../hooks/use-action";
 import EditorJS from "@editorjs/editorjs";
 
@@ -14,7 +13,6 @@ interface SwithcherProps {
 export default function CampSwitcherGroupList({editorRef} : SwithcherProps) {
 
     const { template } = useTypedSelector(state => state.template)
-    const  {fetchTemplate} = useActions()
     
     useEffect(() => {
         fetchTemplate();

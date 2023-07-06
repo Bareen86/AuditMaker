@@ -9,6 +9,7 @@ import { useReactToPrint } from "react-to-print";
 import { TemplateItem, TemplateItemGroup } from "../../../types/template";
 import { group } from "console";
 import { isTemplateExpression } from "typescript";
+import { Outlet } from "react-router-dom";
 const Header = require('@editorjs/header');
 const FontSize = require("editorjs-inline-font-size-tool");
 const FontFamily = require("editorjs-inline-font-family-tool");
@@ -20,7 +21,7 @@ interface CiteProps {
 
 enum ResponseStatus { Failure, Success };
 
-export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps, ref:any) {
+export default function CiteSwitcherGroupList({editorRef} : CiteProps, ref:any) {
     
     function initEditor(){
         const editor = new EditorJS({
@@ -77,10 +78,10 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
     const handlePdfPrint = useReactToPrint({
         content: () => componentRef.current,
         documentTitle: "pdfTitle",
-        onAfterPrint: printSaveData
+        onAfterPrint: saveData
     });
 
-    function printSaveData(){
+    function saveData(){
         console.log(editorRef.current)
     }
 
@@ -103,13 +104,72 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
     function getCurrentBlockIndex(item: TemplateItem){
         const itemId = editorRef.current?.blocks.getById(item.id);
         //@ts-ignore
-        return editorRef.current?.blocks.getBlockIndex(itemId);
+        return editorRef.current?.blocks.getBlockIndex(itemId?.id);
     }
 
     function getId(item: TemplateItem) {
         const itemId = editorRef.current?.blocks.getById(item.id);
         return itemId?.id;
         
+    }
+
+    function findIndexWhenNextGroupActive (groupOrder: number, itemOrder: number, ifAnyCurrentItemsGroupActive : boolean) : number {
+        let currentBlockIndex : number = 0;
+
+        if (ifAnyCurrentItemsGroupActive) {
+            //Расположение нашего итема среди других активных итемов в текущей группе
+            const GroupActiveItemsArray : TemplateItem[] = template.filter((group) => group.order === groupOrder)[0].TemplateGroup.filter((templateItem) => templateItem.isActive);
+            const moreOrderActiveItemInGroup : boolean = GroupActiveItemsArray.some(
+                (templateItem) => templateItem.order > itemOrder
+            );
+            // присвоить более высокому активному итему
+            if (moreOrderActiveItemInGroup) {
+                // Получение первого активного итема
+                const firstActiveItem : TemplateItem | undefined = GroupActiveItemsArray.find(
+                    (templateItem) => templateItem.order > itemOrder
+                );
+                //@ts-ignore
+                currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
+            }
+            // присвоить первое значение первого объекта из некст группы
+            else {
+                const nextFirstActiveTemplateItem : TemplateItemGroup | undefined = template.find((group) => group.TemplateGroup.some((item) => item.isActive === true) && group.order > groupOrder);
+                const firstActiveItem : TemplateItem | undefined = nextFirstActiveTemplateItem?.TemplateGroup.find((item) => item.isActive);
+                //@ts-ignore
+                currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
+            }
+        }
+        else{
+            // присвоить первое значение первого объекта из некст группы
+            // Поиск первой следующей группы с активными итемами и получением индекса первого активного итема
+            const nextFirstActiveTemplateItem : TemplateItemGroup | undefined = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
+            const firstActiveItem : TemplateItem | undefined = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
+            //@ts-ignore
+            currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
+        }
+        
+
+        return currentBlockIndex;
+    }
+
+    function findIndexWhenNextGroupNoneActive(groupOrder: number, itemOrder: number) : number{
+        let currentBlockIndex : number = 0;
+        //Расположение нашего итема среди других активных итемов в текущей группе
+        const groupActiveItemsArray : TemplateItem[] = template.filter(group => group.order === groupOrder)[0].TemplateGroup.filter(templateItem => templateItem.isActive);
+        const moreOrderActiveItemInGroup : boolean = groupActiveItemsArray.some(templateItem => templateItem.order > itemOrder)
+        // присвоить более высокому активному итему
+        if (moreOrderActiveItemInGroup){
+        // Получение первого активного итема
+            const firstActiveItem : TemplateItem | undefined = groupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
+           //@ts-ignore
+            currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
+        }
+        // присвоить последний индекс блока в редакторе
+         else{
+            //@ts-ignore
+            currentBlockIndex = editorRef.current?.blocks.getBlocksCount();
+        }
+        return currentBlockIndex 
     }
 
     function  getPositionIndexOfTemplateItem(groupOrder: number, itemOrder: number) : number {
@@ -128,56 +188,11 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
             })
         })
 
-        //Некст группа активна
         if (checkIfAnyNextItemsGroupActive){
-            // и текущая  группа активна
-            if (checkIfAnyCurrentItemsGroupActive){
-                //Расположение нашего итема среди других активных итемов в текущей группе
-                const GroupActiveItemsArray = template.filter(group => group.order === groupOrder)[0].TemplateGroup.filter(templateItem => templateItem.isActive);
-                const moreOrderActiveItemInGroup = GroupActiveItemsArray.some(templateItem => templateItem.order > itemOrder)
-                // присвоить более высокому активному итему
-                if (moreOrderActiveItemInGroup){
-                // Получение первого активного итема
-                    const firstActiveItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
-                    //@ts-ignore
-                    currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
-                }
-                // присвоить первое значение первого объекта из некст группы
-                 else{
-                    const nextFirstActiveTemplateItem = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
-                    const firstActiveItem = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
-                    //@ts-ignore
-                    currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
-                }   
-            }
-            // и текущая группа не активна
-            else{
-                // присвоить первое значение первого объекта из некст группы
-                // Поиск первой следующей группы с активными итемами и получением индекса первого активного итема
-                const nextFirstActiveTemplateItem = template.find(group => group.TemplateGroup.some(item => item.isActive === true) && group.order > groupOrder)
-                const firstActiveItem = nextFirstActiveTemplateItem?.TemplateGroup.find(item => item.isActive)
-                //@ts-ignore
-                currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
-            }
+            currentBlockIndex = findIndexWhenNextGroupActive(groupOrder, itemOrder, checkIfAnyCurrentItemsGroupActive)
         }
-
-        //Некст группа не активна
         else {
-            //Расположение нашего итема среди других активных итемов в текущей группе
-            const GroupActiveItemsArray = template.filter(group => group.order === groupOrder)[0].TemplateGroup.filter(templateItem => templateItem.isActive);
-            const moreOrderActiveItemInGroup = GroupActiveItemsArray.some(templateItem => templateItem.order > itemOrder)
-            // присвоить более высокому активному итему
-            if (moreOrderActiveItemInGroup){
-            // Получение первого активного итема
-                const firstActiveItem = GroupActiveItemsArray.find(templateItem => templateItem.order > itemOrder)
-               //@ts-ignore
-                currentBlockIndex = getCurrentBlockIndex(firstActiveItem);
-            }
-            // присвоить последний индекс блока в редакторе
-             else{
-                //@ts-ignore
-                currentBlockIndex = editorRef.current?.blocks.getBlocksCount();
-            } 
+            currentBlockIndex = findIndexWhenNextGroupNoneActive(groupOrder, itemOrder)
         }
         return  currentBlockIndex;
     }
@@ -205,7 +220,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
         // Добавление пукнта
         if (!item.isActive){
             UpdateTemplateItemIsActiveField(template, group.id, item.id);
-            const itemPosition = getPositionIndexOfTemplateItem(group.order, item.order);
+            const itemPosition : number = getPositionIndexOfTemplateItem(group.order, item.order);
             addTemplateItemToEditor(group.id, item.id, itemPosition);
         }
         // Удаление пункта  
@@ -220,6 +235,7 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
         if (!editorRef.current){
             initEditor();
         }
+        console.log("Hhello")
     }, [])
 
     return (
@@ -269,4 +285,4 @@ export default forwardRef(function CiteSwitcherGroupList({editorRef} : CiteProps
             </div>
         </>
     );
-})
+}

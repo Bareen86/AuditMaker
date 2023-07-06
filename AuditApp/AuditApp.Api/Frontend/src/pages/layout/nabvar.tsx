@@ -1,17 +1,17 @@
 import { NavLink, Outlet } from "react-router-dom";
 import "./layout.css"
 
-export default function Layout() {
+export default function Navbar() {
     return (
         <>
             <div className="header">
                 <div className="nav-list">
                     <ul>
                         <li className="first-li">
-                            <NavLink className="nav-bar-link" style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}} to="/HotelAudit">Аудит Отеля</NavLink>
+                            <NavLink className="nav-bar-link" reloadDocument={true} style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}} to="/HotelAudit">Аудит Отеля</NavLink>
                         </li>
                         <li>
-                            <NavLink className="nav-bar-link" style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}} to="/CampAudit">Аудит Лагеря</NavLink>
+                            <NavLink className="nav-bar-link" reloadDocument={true} style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}} to="/CampAudit">Аудит Лагеря</NavLink>
                         </li>
                     </ul>
                 </div>

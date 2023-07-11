@@ -3,7 +3,6 @@ using AuditApp.Application.ImageSaving;
 using AuditApp.Extranet.Modules.Images.Builder;
 using AuditApp.Extranet.Modules.Images.Mappers;
 using AuditApp.Extranet.Modules.Images.Models;
-using AuditApp.Infrastructure.CommonServices.FileStorage;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuditApp.Extranet.Modules.Images.Controllers
@@ -27,7 +26,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         }
 
         [HttpGet("{filename}")]
-        public async Task<IActionResult> GetImage([FromRoute] string filename)
+        public IActionResult GetImage([FromRoute] string filename)
         {
             ResolvedImage resolvedImage = _imageResolver.GetImage(filename);
             if (resolvedImage != null)
@@ -41,7 +40,7 @@ namespace AuditApp.Extranet.Modules.Images.Controllers
         }
 
         [HttpPost("upload-image")]
-        public async Task<IActionResult> UploadImage(IFormFile file)
+        public IActionResult UploadImage(IFormFile file)
         {
             FileToSave imageToSave = _imageBuilder.Build(file);
             var saveResult = _imageSaver.SaveImage(imageToSave);

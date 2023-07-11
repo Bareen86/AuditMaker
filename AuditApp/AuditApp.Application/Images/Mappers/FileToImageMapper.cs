@@ -1,4 +1,4 @@
-﻿namespace AuditApp.Infrastructure.CommonServices.FileStorage.Mappers
+﻿namespace AuditApp.Application.FileToImageMapper
 {
     public static class FileToImageMapper
     {

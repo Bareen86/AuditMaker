@@ -2,16 +2,21 @@ using AuditApp.Application;
 using AuditApp.Application.Settings;
 using AuditApp.Extranet.Modules.Images;
 using AuditApp.Infrastructure;
+using AuditApp.Infrastructure.Foundation;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+var connectionString = builder.Configuration.GetConnectionString( "Audits" );
+builder.Services.AddDbContext<AuditsDbContext>( options => options.UseSqlServer( connectionString ) );
 builder.Services.AddInfrastructure();
-builder.Services.AddSpaStaticFiles(configuration => { configuration.RootPath = "Frontend/build"; });
 builder.Services.AddApplication();
-builder.Services.AddImageModule(); 
+builder.Services.AddImageModule();
+builder.Services.AddSpaStaticFiles( configuration => { configuration.RootPath = "Frontend/build"; } );
 
 var provider  = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();

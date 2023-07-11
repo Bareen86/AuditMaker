@@ -18,7 +18,7 @@ namespace AuditApp.Infrastructure.Data.Audits
             await _audits.AddAsync( audit );
         }
 
-        public async Task DeleteAuditAsynk( Audit audit )
+        public async Task DeleteAuditByIdAsynk( Audit audit )
         {
             _audits.Remove( audit );
         }
@@ -36,13 +36,6 @@ namespace AuditApp.Infrastructure.Data.Audits
         public async Task<List<Audit>> GetUsersAuditsAsynk( Guid id )
         {
             return await _audits.Where( a => a.UserId == id ).ToListAsync();
-        }
-
-        public async Task UpdateAuditAsync( Audit audit )
-        {
-            var searchedAudit = await GetAuditByIdAsynk( audit.Id );
-            searchedAudit.UpdateData( audit.Data );
-            searchedAudit.UpdateLastDate();
         }
     }
 }

@@ -20,22 +20,5 @@ namespace AuditApp.Domain.Audits
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        public void UpdateLocation( string location )
-        {
-            Location = location;
-        }
-        public void UpdateTitle( string title )
-        {
-            Title = title;
-        }
-        public void UpdateData( string data )
-        {
-            Data = data;
-        }
-
-        public void UpdateLastDate()
-        {
-            LastUpdatingDate = DateTime.Now;
-        }
     }
 }

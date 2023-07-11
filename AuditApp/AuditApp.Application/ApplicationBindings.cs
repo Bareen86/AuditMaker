@@ -1,4 +1,6 @@
 ﻿using AuditApp.Application.Audits.AuditsCreating;
+using AuditApp.Application.Audits.AuditsDeleting;
+using AuditApp.Application.Audits.AuditsUpdating;
 using AuditApp.Application.ImageResolving;
 using AuditApp.Application.ImageSaving;
 using AuditApp.Application.LoginService;
@@ -17,6 +19,8 @@ namespace AuditApp.Application
             services.AddLoginHandler();
             services.AddUsersCreator();
             services.AddAuditsCreator();
+            services.AddAuditRemover();
+            services.AddAuditEditor();
             services.AddUserLoginValidator();
             return services;
         }

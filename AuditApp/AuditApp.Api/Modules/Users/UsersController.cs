@@ -52,7 +52,7 @@ namespace AuditApp.Extranet.Modules.Users
             }
             else
             {
-                return BadRequest( "Такой пользователь уже существует!" );
+                return NotFound( "Такой пользователь уже существует!" );
             }
         }
     }

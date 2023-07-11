@@ -26,17 +26,23 @@ namespace AuditApp.Application.LoginService
         public async Task<LoginDto> Login( string login, string password )
         {
             User user = await _userRepository.GetUserByLoginAsync( login );
-            string hashPass = HashPasswordHelper.HashPassword( password );
-            bool isValidPassword = false;
-            if (user.HashPassword == hashPass )
+            if (user == null )
             {
-                isValidPassword = true;
+                LoginDto loginDto = new LoginDto();
+                loginDto.ErrorMessage = "Такого пользователя нет!";
+                return loginDto;
             }
-            if (isValidPassword)
+            string hashPass = HashPasswordHelper.HashPassword( password );
+            if (user.HashPassword == hashPass )
             {
                 return user.Map();
             }
-            return null;
+            else
+            {
+                LoginDto loginDto = new LoginDto();
+                loginDto.ErrorMessage = "Пароли не совпадают!";
+                return loginDto;
+            }
         }
     }
 }

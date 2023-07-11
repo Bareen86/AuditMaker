@@ -11,7 +11,7 @@ namespace AuditApp.Application.Users.UsersLoginValidating
 
     public interface IUserLoginValidator
     {
-        Task<UniqueLogin> LoginUniqueCheck(string login);
+        Task<UniqueUser> LoginUniqueCheck(string login);
     }
     public class UserLoginValidator : IUserLoginValidator
     {
@@ -21,9 +21,9 @@ namespace AuditApp.Application.Users.UsersLoginValidating
         {
             _userRepository = userRepository;
         }
-        public async Task<UniqueLogin> LoginUniqueCheck( string loginToCheck )
+        public async Task<UniqueUser> LoginUniqueCheck( string loginToCheck )
         {
-            UniqueLogin login = new UniqueLogin() { IsUnique = true };
+            UniqueUser login = new UniqueUser() { IsUnique = true };
             User searchedUser = await _userRepository.GetUserByLoginAsync( loginToCheck );
             if ( searchedUser != null )
             {

@@ -8,5 +8,6 @@ namespace AuditApp.Application.LoginService.Dtos
         public string Name { get; set; }
         public string SecondName { get; set; }
         public bool IsAdmin { get; set; }
+        public string ErrorMessage { get; set; } = string.Empty;
     }
 }

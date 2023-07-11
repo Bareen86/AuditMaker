@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AuditApp.Application.Users.UsersLoginValidating
 {
-    public class UniqueLogin
+    public class UniqueUser
     {
         public bool IsUnique { get; set; }
     }

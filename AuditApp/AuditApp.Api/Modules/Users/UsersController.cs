@@ -1,15 +1,11 @@
-﻿using AuditApp.Application.Helpers;
-using AuditApp.Application.LoginService;
+﻿using AuditApp.Application.LoginService;
 using AuditApp.Application.LoginService.Dtos;
 using AuditApp.Application.Users.UsersCreating;
 using AuditApp.Application.Users.UsersLoginValidating;
-using AuditApp.Domain.Audits;
-using AuditApp.Domain.Users;
 using AuditApp.Extranet.Modules.Users.Dtos;
 using AuditApp.Extranet.Modules.Users.Mappers;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
 
 namespace AuditApp.Extranet.Modules.Users
 {
@@ -34,20 +30,20 @@ namespace AuditApp.Extranet.Modules.Users
             _userLoginValidator = userLoginValidator;
         }
         [HttpPost( "login" )]
-        public async Task<IActionResult> GetHashEquality( [FromBody] UserDto userDto )
+        public async Task<IActionResult> Login( [FromBody] CheckUserLoginDto userDto )
         {
             LoginDto user = await _loginHandler.Login( userDto.Login, userDto.Password );
-            if ( user == null )
+            if ( user.ErrorMessage.Length != 0 )
             {
-                return BadRequest();
+                return BadRequest(user.ErrorMessage);
             }
-            return Ok( user );
+            return Ok( user.Map() );
         }
 
         [HttpPost( "createuser" )]
         public async Task<IActionResult> CreateUser( [FromBody] AddUserCommandDto command )
         {
-            UniqueLogin login = await _userLoginValidator.LoginUniqueCheck( command.Login );
+            UniqueUser login = await _userLoginValidator.LoginUniqueCheck( command.Login );
             if ( login.IsUnique )
             {
                 await _userCreator.CreateUser( command.Map() );
@@ -56,16 +52,8 @@ namespace AuditApp.Extranet.Modules.Users
             }
             else
             {
-                return BadRequest( "Такой пользователь уже существует" );
+                return BadRequest( "Такой пользователь уже существует!" );
             }
-            
-        }
-
-        [HttpGet]
-        public IActionResult GetTestData( [FromBody] string password )
-        {
-            string hashPass = HashPasswordHelper.HashPassword( password );
-            return Ok( hashPass );
         }
     }
 }

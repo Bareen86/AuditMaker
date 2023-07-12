@@ -14,36 +14,37 @@ namespace AuditApp.Extranet.Modules.Users
     public class UsersController : ControllerBase
     {
         private readonly IUserCreator _userCreator;
-        private readonly ILoginHandler _loginHandler;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IUserLoginValidator _userLoginValidator;
+        private readonly IAddUserValidator _addUserValidator;
+        private readonly IUserAuthentificator _userAuthentificator;
 
         public UsersController(
             IUserCreator userCreator,
-            ILoginHandler loginHandler,
             IUnitOfWork unitOfWork,
-            IUserLoginValidator userLoginValidator )
+            IAddUserValidator addUserValidator,
+            IUserAuthentificator userAuthentificator )
         {
             _userCreator = userCreator;
-            _loginHandler = loginHandler;
             _unitOfWork = unitOfWork;
-            _userLoginValidator = userLoginValidator;
+            _addUserValidator = addUserValidator;
+            _userAuthentificator = userAuthentificator;
         }
+
         [HttpPost( "login" )]
-        public async Task<IActionResult> Login( [FromBody] CheckUserLoginDto userDto )
+        public async Task<IActionResult> Login( [FromBody] CheckUserAuthentificationDto userDto )
         {
-            LoginDto user = await _loginHandler.Login( userDto.Login, userDto.Password );
-            if ( user.ErrorMessage.Length != 0 )
+            LoginDto LoginResultDto = await _userAuthentificator.Login( userDto.Login, userDto.Password );
+            if ( LoginResultDto.ErrorMessage.Length != 0 )
             {
-                return BadRequest(user.ErrorMessage);
+                return BadRequest( LoginResultDto.ErrorMessage);
             }
-            return Ok( user.Map() );
+            return Ok( LoginResultDto.Map() );
         }
 
         [HttpPost( "createuser" )]
         public async Task<IActionResult> CreateUser( [FromBody] AddUserCommandDto command )
         {
-            UniqueUser login = await _userLoginValidator.LoginUniqueCheck( command.Login );
+            UniqueUser login = await _addUserValidator.Validate( command );
             if ( login.IsUnique )
             {
                 await _userCreator.CreateUser( command.Map() );

@@ -233,10 +233,6 @@ export default function CiteSwitcherGroupList({editorRef} : CiteProps, ref:any) 
         }
     }
 
-    function GetTestData() {
-        
-    }
-      
     useEffect(() => {
         if (!editorRef.current){
             initEditor();
@@ -286,7 +282,7 @@ export default function CiteSwitcherGroupList({editorRef} : CiteProps, ref:any) 
                             Сохранить в PDF
                         </Button>
                         <Button variant="contained">Сохранить аудит</Button>
-                        <Button onClick={() => GetTestData()}>Проверить api</Button>
+                        <Button>Проверить api</Button>
                     </div>
                 </div>
             </div>

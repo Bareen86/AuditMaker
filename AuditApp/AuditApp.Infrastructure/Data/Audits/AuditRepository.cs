@@ -13,27 +13,27 @@ namespace AuditApp.Infrastructure.Data.Audits
         {
             _dbContext = dbContext;
         }
-        public async Task CreateAuditAsyc( Audit audit )
+        public async Task AddAsync( Audit audit )
         {
             await _audits.AddAsync( audit );
         }
 
-        public async Task DeleteAuditByIdAsynk( Audit audit )
+        public async Task DeleteAuditByIdAsync( Audit audit )
         {
             _audits.Remove( audit );
         }
 
-        public async Task<List<Audit>> GetAllAuditsAsynk()
+        public async Task<List<Audit>> GetAllAuditsAsync()
         {
             return await _audits.ToListAsync();
         }
 
-        public async Task<Audit> GetAuditByIdAsynk( Guid id )
+        public async Task<Audit> GetAuditByIdAsync( int id )
         {
             return await _audits.FirstOrDefaultAsync( a => a.Id == id );
         }
 
-        public async Task<List<Audit>> GetUsersAuditsAsynk( Guid id )
+        public async Task<List<Audit>> GetUsersAuditsAsync( int id )
         {
             return await _audits.Where( a => a.UserId == id ).ToListAsync();
         }

@@ -6,7 +6,7 @@ namespace AuditApp.Application.LoginService
     {
         public static IServiceCollection AddLoginHandler(this IServiceCollection services )
         {
-            services.AddScoped<ILoginHandler, LoginHandler>();
+            services.AddScoped<IUserAuthentificator, UserAuthentificator>();
             return services;
         }
     }

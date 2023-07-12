@@ -12,6 +12,7 @@ namespace AuditApp.Application.Users.UsersCreating
     {
         Task CreateUser( AddUserCommand command );
     }
+
     public class UserCreator : IUserCreator
     {
         private readonly IUserRepository _userRepository;
@@ -20,10 +21,11 @@ namespace AuditApp.Application.Users.UsersCreating
         {
             _userRepository = userRepository;
         }
+
         public async Task CreateUser( AddUserCommand command )
         {
+            command.Password = HashPasswordHelper.HashPassword( command.Password );
             User user = new User( command.Name, command.SecondName, command.Login, command.Password, command.IsAdmin );
-            user.HashPassword = HashPasswordHelper.HashPassword( command.Password );
             await _userRepository.CreateUserAsync( user );
         }
     }   

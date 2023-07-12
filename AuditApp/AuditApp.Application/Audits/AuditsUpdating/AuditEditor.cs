@@ -11,6 +11,7 @@ namespace AuditApp.Application.Audits.AuditsUpdating
     {
         Task Update(UpdateAuditCommand command);
     }
+
     public class AuditEditor : IAuditEditor
     {
         private readonly IAuditRepository _auditRepository;
@@ -22,15 +23,8 @@ namespace AuditApp.Application.Audits.AuditsUpdating
 
         public async Task Update( UpdateAuditCommand command )
         {
-            Audit audit = await _auditRepository.GetAuditByIdAsynk( command.AuditId );
-            UpdateFields( audit, command);
-        }
-        private void UpdateFields(Audit audit, UpdateAuditCommand command )
-        {
-            audit.Data = command.Data;
-            audit.LastUpdatingDate = command.LastUpdatingDate;
-            audit.Location = command.Location;
-            audit.Title = command.Title;
+            Audit audit = await _auditRepository.GetAuditByIdAsync( command.AuditId );
+            audit.UpdateFields( audit.Title, audit.Location );
         }
     }
 }

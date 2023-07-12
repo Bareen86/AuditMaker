@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuditApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AuditsDbContext))]
-    [Migration("20230711155924_updateAudits")]
-    partial class updateAudits
+    [Migration("20230712120444_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,40 +27,44 @@ namespace AuditApp.Infrastructure.Migrations
 
             modelBuilder.Entity("AuditApp.Domain.Audits.Audit", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationdDate")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Data")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("LastUpdatingDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ModifiedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Audits", (string)null);
+                    b.ToTable("Audit", (string)null);
                 });
 
             modelBuilder.Entity("AuditApp.Domain.Users.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("HashPassword")
                         .HasColumnType("nvarchar(max)");
@@ -79,18 +83,16 @@ namespace AuditApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("User", (string)null);
                 });
 
             modelBuilder.Entity("AuditApp.Domain.Audits.Audit", b =>
                 {
-                    b.HasOne("AuditApp.Domain.Users.User", "User")
+                    b.HasOne("AuditApp.Domain.Users.User", null)
                         .WithMany("Audits")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("AuditApp.Domain.Users.User", b =>

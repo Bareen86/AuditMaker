@@ -8,7 +8,7 @@ namespace AuditApp.Application.Audits.AuditsUpdating
 {
     public class UpdateAuditCommand
     {
-        public Guid AuditId { get; set; }
+        public int AuditId { get; set; }
         public string Title { get; set; }
         public string Location { get; set; }
         public string Data { get; set; }

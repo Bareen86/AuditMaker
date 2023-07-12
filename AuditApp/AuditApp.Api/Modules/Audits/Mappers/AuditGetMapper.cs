@@ -6,17 +6,15 @@ namespace AuditApp.Extranet.Modules.Audits.Mappers
 {
     public static class AuditGetMapper
     {
-        public static AuditCommandDto Map(this Audit audit)
+        public static AuditDto Map(this Audit audit)
         {
             AuditTextBlocks auditTextBlocks = JsonSerializer.Deserialize<AuditTextBlocks>( audit.Data );
-            return new AuditCommandDto
+            return new AuditDto
             {
                 Title = audit.Title,
-                UserId = audit.UserId,
-                Data = auditTextBlocks,
+                Id = audit.UserId,
+                TextBlocks = auditTextBlocks,
                 Location = audit.Location,
-                CreationdDate = audit.CreationDate,
-                LastUpdatingDate = audit.LastUpdatingDate,
             };
         }
     }

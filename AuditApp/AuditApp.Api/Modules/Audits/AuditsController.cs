@@ -33,13 +33,18 @@ namespace AuditApp.Extranet.Modules.Audits
             _unitOfWork = unitOfWork;
             _auditRepository = auditRepository;
         }
+
         [HttpGet( "{id}" )]
-        public async Task<IActionResult> GetAudit( [FromRoute] string id )
+        public async Task<IActionResult> GetAudit( [FromRoute] int id )
         {
-            Guid auditId = new( id );
-            Audit audit = await _auditRepository.GetAuditByIdAsynk( auditId );
+            Audit audit = await _auditRepository.GetAuditByIdAsync( id );
+            if ( audit == null )
+            {
+                return BadRequest("Аудит не был найден!");
+            }
             return Ok( audit.Map() );
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateAudit( [FromBody] AddAuditCommandDto command )
         {
@@ -47,15 +52,17 @@ namespace AuditApp.Extranet.Modules.Audits
             await _unitOfWork.CommitAsync();
             return Ok();
         }
+
         [HttpPut]
         public async Task<IActionResult> EditAudit( UpdateAuditCommandDto command )
         {
-            await _auditEditor.Update( command.Map(command.AuditId) );
+            await _auditEditor.Update( command.Map() );
             await _unitOfWork.CommitAsync();
             return Ok();
         }
+
         [HttpDelete( "auditid" )]
-        public async Task<IActionResult> RemoveAudit( string auditid )
+        public async Task<IActionResult> RemoveAudit( int auditid )
         {
             await _auditRemover.Remove( auditid );
             await _unitOfWork.CommitAsync();

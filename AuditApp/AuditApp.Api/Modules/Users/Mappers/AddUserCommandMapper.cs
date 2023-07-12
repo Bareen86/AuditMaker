@@ -12,8 +12,7 @@ namespace AuditApp.Extranet.Modules.Users.Mappers
                 SecondName = command.SecondName,
                 Name = command.Name,
                 Login = command.Login,
-                Password = command.Password,
-                IsAdmin = command.IsAdmin
+                Password = command.Password
             };
         }
     }

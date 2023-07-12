@@ -9,8 +9,9 @@ namespace AuditApp.Application.Audits.AuditsDeleting
 {
     public interface IAuditRemover
     {
-        Task Remove( string auditId );
+        Task Remove( int auditId );
     }
+
     public class AuditRemover : IAuditRemover
     {
         private readonly IAuditRepository _auditRepository;
@@ -19,11 +20,11 @@ namespace AuditApp.Application.Audits.AuditsDeleting
         {
             _auditRepository = auditRepository;
         }
-        public async Task Remove( string id )
+
+        public async Task Remove( int id )
         {
-            Guid auditId = new Guid( id );
-            var searchedAudit = await _auditRepository.GetAuditByIdAsynk( auditId );
-            await _auditRepository.DeleteAuditByIdAsynk( searchedAudit );
+            Audit searchedAudit = await _auditRepository.GetAuditByIdAsync( id );
+            await _auditRepository.DeleteAuditByIdAsync( searchedAudit );
         }
     }
 }

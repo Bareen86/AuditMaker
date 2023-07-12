@@ -13,7 +13,7 @@ namespace AuditApp.Infrastructure.Data.Audits
     {
         public void Configure(EntityTypeBuilder<Audit> builder)
         {
-            builder.ToTable("Audits");
+            builder.ToTable("Audit");
         }
     }
 }

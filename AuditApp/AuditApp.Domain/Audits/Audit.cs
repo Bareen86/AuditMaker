@@ -4,21 +4,27 @@ namespace AuditApp.Domain.Audits
 {
     public class Audit
     {
-        public Audit( string title, string location, string data, Guid userId )
+        public int Id { get; private set; }
+        public int UserId { get; private set; }
+        public string Title { get; private set; }
+        public string Location { get; private set; }
+        public string Data { get; private set; }
+        public DateTime CreatedOn { get; private set; } = DateTime.Now;
+        public DateTime ModifiedOn { get; private set; } = DateTime.Now;
+
+        public Audit( string title, string location, string data, int userId )
         {
             Title = title;
             Location = location;
             Data = data;
             UserId = userId;
         }
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Location { get; set; }
-        public string Data { get; set; }
-        public DateTime CreationDate { get; set; } = DateTime.Now;
-        public DateTime LastUpdatingDate { get; set; } = DateTime.Now;
-        public Guid UserId { get; set; }
-        public User User { get; set; }
 
+        public void UpdateFields( string title, string location)
+        {
+            Title = title;
+            Location = location;
+            ModifiedOn = DateTime.Now;
+        }
     }
 }

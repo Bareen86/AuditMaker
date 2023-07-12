@@ -29,7 +29,7 @@ namespace AuditApp.Infrastructure.Data.Users
             var searchedUser = await GetUserByIdAsync( user.Id );
         }
 
-        public async Task<User> GetUserByIdAsync( Guid id )
+        public async Task<User> GetUserByIdAsync( int id )
         {
             return await _users.FirstOrDefaultAsync( u => u.Id == id );
         }

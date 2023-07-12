@@ -5,26 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using AuditApp.Application.LoginService.Dtos;
 using AuditApp.Domain.Users;
+using AuditApp.Extranet.Modules.Users.Dtos;
 
 namespace AuditApp.Application.Users.UsersLoginValidating
 {
-
-    public interface IUserLoginValidator
+    public interface IAddUserValidator
     {
-        Task<UniqueUser> LoginUniqueCheck(string login);
+        Task<UniqueUser> Validate( AddUserCommandDto command );
     }
-    public class UserLoginValidator : IUserLoginValidator
+
+    public class AddUserValidator : IAddUserValidator
     {
         private readonly IUserRepository _userRepository;
 
-        public UserLoginValidator( IUserRepository userRepository )
+        public AddUserValidator( IUserRepository userRepository )
         {
             _userRepository = userRepository;
         }
-        public async Task<UniqueUser> LoginUniqueCheck( string loginToCheck )
+
+        public async Task<UniqueUser> Validate( AddUserCommandDto command )
         {
             UniqueUser login = new UniqueUser() { IsUnique = true };
-            User searchedUser = await _userRepository.GetUserByLoginAsync( loginToCheck );
+            User searchedUser = await _userRepository.GetUserByLoginAsync( command.Login );
             if ( searchedUser != null )
             {
                 login.IsUnique = false;

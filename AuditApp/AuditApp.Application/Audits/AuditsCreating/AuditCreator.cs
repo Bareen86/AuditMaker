@@ -11,6 +11,7 @@ namespace AuditApp.Application.Audits.AuditsCreating
     {
         Task CreateAudit(AddAuditCommand command);
     }
+
     public class AuditCreator : IAuditorCreator
     {
         private readonly IAuditRepository _auditRepository;
@@ -19,10 +20,11 @@ namespace AuditApp.Application.Audits.AuditsCreating
         {
             _auditRepository = auditRepository;
         }
+
         public async Task CreateAudit( AddAuditCommand command )
         {
             Audit audit = new Audit(command.Title, command.Location, command.Data, command.UserId);
-            await _auditRepository.CreateAuditAsyc( audit );
+            await _auditRepository.AddAsync( audit );
         }
     }
 }

@@ -10,15 +10,16 @@ using AuditApp.Domain.Users;
 
 namespace AuditApp.Application.LoginService
 {
-    public interface ILoginHandler
+    public interface IUserAuthentificator
     {
-        Task<LoginDto> Login(string usernameId, string password);
+        Task<LoginDto> Login( string usernameId, string password );
     }
-    public class LoginHandler : ILoginHandler
+
+    public class UserAuthentificator : IUserAuthentificator
     {
         private readonly IUserRepository _userRepository;
 
-        public LoginHandler( IUserRepository userRepository )
+        public UserAuthentificator( IUserRepository userRepository )
         {
             _userRepository = userRepository;
         }
@@ -26,21 +27,19 @@ namespace AuditApp.Application.LoginService
         public async Task<LoginDto> Login( string login, string password )
         {
             User user = await _userRepository.GetUserByLoginAsync( login );
-            if (user == null )
+            if ( user == null )
             {
-                LoginDto loginDto = new LoginDto();
-                loginDto.ErrorMessage = "Такого пользователя нет!";
+                LoginDto loginDto = new LoginDto( "Такого пользователя нет!" );
                 return loginDto;
             }
-            string hashPass = HashPasswordHelper.HashPassword( password );
-            if (user.HashPassword == hashPass )
+            string passwordHash = HashPasswordHelper.HashPassword( password );
+            if ( user.IsCorrectPassword( passwordHash ) )
             {
                 return user.Map();
             }
             else
             {
-                LoginDto loginDto = new LoginDto();
-                loginDto.ErrorMessage = "Пароли не совпадают!";
+                LoginDto loginDto = new LoginDto( "Пароли не совпадают!" );
                 return loginDto;
             }
         }

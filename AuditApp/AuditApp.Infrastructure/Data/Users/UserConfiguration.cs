@@ -1,4 +1,5 @@
-﻿using AuditApp.Domain.Users;
+﻿using AuditApp.Domain.Audits;
+using AuditApp.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -14,13 +15,13 @@ namespace AuditApp.Infrastructure.Data.Users
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("Users");
-            builder.HasKey(x => x.Id);
+            builder.ToTable("User");
 
             builder.HasMany(u => u.Audits)
-                .WithOne(a => a.User)
-                .HasForeignKey(a => a.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .WithOne()
+                .HasForeignKey( a => a.UserId )
+                .OnDelete( DeleteBehavior.Cascade )
+                .IsRequired();
         }
     }
 }

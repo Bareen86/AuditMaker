@@ -21,7 +21,7 @@ namespace AuditApp.Application
             services.AddAuditsCreator();
             services.AddAuditRemover();
             services.AddAuditEditor();
-            services.AddUserLoginValidator();
+            services.AddUserValidator();
             return services;
         }
     }

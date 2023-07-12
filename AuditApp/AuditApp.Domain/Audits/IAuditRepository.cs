@@ -2,10 +2,10 @@
 {
     public interface IAuditRepository
     {
-        Task CreateAuditAsyc(Audit audit);
-        Task DeleteAuditByIdAsynk(Audit audit);
-        Task<Audit> GetAuditByIdAsynk(Guid id);
-        Task<List<Audit>> GetUsersAuditsAsynk(Guid id);
-        Task<List<Audit>> GetAllAuditsAsynk();
+        Task AddAsync(Audit audit);
+        Task DeleteAuditByIdAsync(Audit audit);
+        Task<Audit> GetAuditByIdAsync(int id);
+        Task<List<Audit>> GetUsersAuditsAsync(int id);
+        Task<List<Audit>> GetAllAuditsAsync();
     }
 }

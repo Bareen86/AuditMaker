@@ -25,4 +25,8 @@
     <ProjectReference Include="..\AuditApp.Infrastructure\AuditApp.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Modules\Users\Validator\" />
+  </ItemGroup>
+
 </Project>

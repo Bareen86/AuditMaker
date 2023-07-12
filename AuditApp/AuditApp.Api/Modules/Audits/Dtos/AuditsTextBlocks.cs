@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AuditApp.Domain.Audits
+﻿namespace AuditApp.Extranet.Modules.Audits.Dtos
 {
     public class AuditTextBlocks
     {

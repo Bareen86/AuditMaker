@@ -10,10 +10,12 @@ import { TemplateItem, TemplateItemGroup } from "../../../types/template";
 import { group } from "console";
 import { isTemplateExpression } from "typescript";
 import { Outlet } from "react-router-dom";
+import api from "../../../api/posts"
 const Header = require('@editorjs/header');
 const FontSize = require("editorjs-inline-font-size-tool");
 const FontFamily = require("editorjs-inline-font-family-tool");
 const ImageTool = require('@editorjs/image')
+
 
 interface CiteProps {
     editorRef : React.MutableRefObject<EditorJS | null>
@@ -230,7 +232,7 @@ export default function CiteSwitcherGroupList({editorRef} : CiteProps, ref:any) 
             editorRef.current?.blocks.delete(currentBlockIndex)
         }
     }
-      
+
     useEffect(() => {
         if (!editorRef.current){
             initEditor();
@@ -280,6 +282,7 @@ export default function CiteSwitcherGroupList({editorRef} : CiteProps, ref:any) 
                             Сохранить в PDF
                         </Button>
                         <Button variant="contained">Сохранить аудит</Button>
+                        <Button>Проверить api</Button>
                     </div>
                 </div>
             </div>

@@ -6,11 +6,12 @@ using AuditApp.Domain.Audits;
 using AuditApp.Extranet.Modules.Audits.Dtos;
 using AuditApp.Extranet.Modules.Audits.Mappers;
 using AuditApp.Infrastructure.Foundation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuditApp.Extranet.Modules.Audits
 {
-    [Route( "api/[controller]" )]
+    [Route( "api/audits" )]
     [ApiController]
     public class AuditsController : ControllerBase
     {
@@ -43,6 +44,14 @@ namespace AuditApp.Extranet.Modules.Audits
                 return BadRequest("Аудит не был найден!");
             }
             return Ok( audit.Map() );
+        }
+
+        [HttpGet ("users/{id}")]
+        public async Task<IActionResult> GetUserAudits( [FromRoute] int id )
+        {
+            var audits = await _auditRepository.GetUsersAuditsAsync( id );
+            var result = audits.Select(a => a.Map()).ToList();
+            return Ok( result );
         }
 
         [HttpPost]

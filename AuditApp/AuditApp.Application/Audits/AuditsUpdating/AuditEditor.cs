@@ -24,7 +24,7 @@ namespace AuditApp.Application.Audits.AuditsUpdating
         public async Task Update( UpdateAuditCommand command )
         {
             Audit audit = await _auditRepository.GetAuditByIdAsync( command.AuditId );
-            audit.UpdateFields( audit.Title, audit.Location );
+            audit.UpdateFields( command.Title, command.Location, command.Url, command.Data );
         }
     }
 }

@@ -1,17 +1,21 @@
 import { useRef } from "react";
 import "./cite-audit-page.css";
-import CiteSwitcherGroupList from "./citeSideBar/cite-switcher-list";
 import EditorJS from "@editorjs/editorjs";
 import { Outlet } from "react-router-dom";
+import CiteSwitcherGroupList from "./cite-switcher-list";
 
-export default function CiteAuditPage() {
+interface props {
+    title: string;
+}
+
+export default function AuditReactor({title} : props) {
 
     const EditorRef = useRef<EditorJS>(null);
 
     return (
         <>
             <div className="content-wrapper">
-                <CiteSwitcherGroupList editorRef={EditorRef} />
+                <CiteSwitcherGroupList title={title} editorRef={EditorRef} />
                 <Outlet />
             </div>
         </>

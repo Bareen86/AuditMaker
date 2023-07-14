@@ -1,6 +1,7 @@
 ﻿using AuditApp.Domain.Audits;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
+using static AuditApp.Domain.Audits.AuditTypeEnum;
 
 namespace AuditApp.Infrastructure.Data.Audits
 {
@@ -36,6 +37,16 @@ namespace AuditApp.Infrastructure.Data.Audits
         public async Task<List<Audit>> GetUsersAuditsAsync( int id )
         {
             return await _audits.Where( a => a.UserId == id ).ToListAsync();
+        }
+
+        public async Task<List<Audit>> GetUserHotelAuditsAsync( int id )
+        {
+            return await _audits.Where( a => a.UserId == id && a.AuditType == AuditType.Hotel ).ToListAsync();
+        }
+
+        public async Task<List<Audit>> GetUserCampAuditsAsync( int id )
+        {
+            return await _audits.Where( a => a.UserId == id && a.AuditType == AuditType.Camp ).ToListAsync();
         }
     }
 }

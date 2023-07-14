@@ -1,16 +1,15 @@
-﻿
-using AuditApp.Domain.Audits;
-using static AuditApp.Domain.Audits.AuditTypeEnum;
+﻿using static AuditApp.Domain.Audits.AuditTypeEnum;
 
 namespace AuditApp.Extranet.Modules.Audits.Dtos
 {
-    public class AddAuditCommandDto
+    public class UserAuditsDto
     {
+        public int Id { get; set; }
         public string Title { get; set; }
         public string Location { get; set; }
         public string Url { get; set; }
-        public int UserId { get; set; }
         public AuditType AuditType { get; set; }
-        public AuditTextBlocks Data { get; set; }
+        public DateTime ModifiedOn { get; set; }
+        public AuditTextBlocks TextBlocks { get; set; }
     }
 }

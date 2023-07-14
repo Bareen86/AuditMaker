@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuditApp.Infrastructure.Migrations
 {
     [DbContext(typeof(AuditsDbContext))]
-    [Migration("20230712120444_init")]
+    [Migration("20230714095536_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -33,6 +33,9 @@ namespace AuditApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("AuditType")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -46,6 +49,9 @@ namespace AuditApp.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Url")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")

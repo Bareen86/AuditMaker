@@ -1,16 +1,15 @@
 import "./cite-switcher-list.css";
 import { Button, Switch } from "@mui/material";
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
-import { useTypedSelector } from "../../../hooks/use-typed-selector";
-import { useActions } from "../../../hooks/use-action";
 import EditorJS from "@editorjs/editorjs";
 import axios from "axios";
 import { useReactToPrint } from "react-to-print";
-import { TemplateItem, TemplateItemGroup } from "../../../types/template";
 import { group } from "console";
 import { isTemplateExpression } from "typescript";
 import { Outlet } from "react-router-dom";
-import api from "../../../api/posts"
+import { useTypedSelector } from "../../hooks/use-typed-selector";
+import { useActions } from "../../hooks/use-action";
+import { TemplateItem, TemplateItemGroup } from "../../types/template";
 const Header = require('@editorjs/header');
 const FontSize = require("editorjs-inline-font-size-tool");
 const FontFamily = require("editorjs-inline-font-family-tool");
@@ -18,12 +17,13 @@ const ImageTool = require('@editorjs/image')
 
 
 interface CiteProps {
-    editorRef : React.MutableRefObject<EditorJS | null>
+    editorRef : React.MutableRefObject<EditorJS | null>,
+    title : string
 }
 
 enum ResponseStatus { Failure, Success };
 
-export default function CiteSwitcherGroupList({editorRef} : CiteProps, ref:any) {
+export default function CiteSwitcherGroupList({editorRef, title} : CiteProps, ref:any) {
     
     function initEditor(){
         const editor = new EditorJS({
@@ -243,7 +243,7 @@ export default function CiteSwitcherGroupList({editorRef} : CiteProps, ref:any) 
     return (
         <>
             <div className="side-bar">
-                <p className="side-bar-p">Аудит отеля</p>
+                <p className="side-bar-p">{title}</p>
                 <hr></hr>
                 <div className="switcher-list">
                     {template.map((temlpateItemGroup) => (

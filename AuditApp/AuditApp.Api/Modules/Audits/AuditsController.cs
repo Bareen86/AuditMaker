@@ -46,11 +46,19 @@ namespace AuditApp.Extranet.Modules.Audits
             return Ok( audit.Map() );
         }
 
-        [HttpGet ("users/{id}")]
-        public async Task<IActionResult> GetUserAudits( [FromRoute] int id )
+        [HttpGet ( "hotel/users/{userId}" )]
+        public async Task<IActionResult> GetUserHotelAudits( [FromRoute] int userId )
         {
-            var audits = await _auditRepository.GetUsersAuditsAsync( id );
-            var result = audits.Select(a => a.Map()).ToList();
+            var audits = await _auditRepository.GetUserHotelAuditsAsync( userId );
+            var result = audits.Select(a => a.AuditMap()).ToList();
+            return Ok( result );
+        }
+
+        [HttpGet( "camp/users/{userId}" )]
+        public async Task<IActionResult> GetUserCampAudits( [FromRoute] int userId )
+        {
+            var audits = await _auditRepository.GetUserCampAuditsAsync( userId );
+            var result = audits.Select( a => a.AuditMap() ).ToList();
             return Ok( result );
         }
 

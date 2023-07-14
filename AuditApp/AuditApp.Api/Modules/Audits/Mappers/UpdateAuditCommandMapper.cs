@@ -12,6 +12,7 @@ namespace AuditApp.Extranet.Modules.Audits.Mappers
             return new UpdateAuditCommand
             {
                 Data = textblock,
+                Url = command.Url,
                 AuditId = command.AuditId,
                 LastUpdatingDate = DateTime.Now,
                 Location = command.Location,

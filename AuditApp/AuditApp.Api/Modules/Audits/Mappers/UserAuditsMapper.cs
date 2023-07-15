@@ -8,7 +8,6 @@ namespace AuditApp.Extranet.Modules.Audits.Mappers
     {
         public static UserAuditsDto AuditMap(this Audit audit )
         {
-            AuditTextBlocks auditTextBlocks = JsonSerializer.Deserialize<AuditTextBlocks>( audit.Data );
             return new UserAuditsDto
             {
                 Id = audit.Id,
@@ -17,7 +16,6 @@ namespace AuditApp.Extranet.Modules.Audits.Mappers
                 Url = audit.Url,
                 AuditType = audit.AuditType,
                 ModifiedOn = audit.ModifiedOn,
-                TextBlocks = auditTextBlocks,
             };
         }
     }

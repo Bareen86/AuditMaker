@@ -10,6 +10,5 @@ namespace AuditApp.Extranet.Modules.Audits.Dtos
         public string Url { get; set; }
         public AuditType AuditType { get; set; }
         public DateTime ModifiedOn { get; set; }
-        public AuditTextBlocks TextBlocks { get; set; }
     }
 }

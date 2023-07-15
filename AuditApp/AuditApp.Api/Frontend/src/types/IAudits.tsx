@@ -8,3 +8,11 @@ export interface IAudit {
 export interface TextBlock  {
   data: any[]
 }
+
+export  interface IUserCampAudits {
+  id : number,
+  title :  string,
+  location : string
+  url  : string
+  modifiedOn : Date
+}

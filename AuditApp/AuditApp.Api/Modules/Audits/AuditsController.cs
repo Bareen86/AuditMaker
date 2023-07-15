@@ -46,7 +46,7 @@ namespace AuditApp.Extranet.Modules.Audits
             return Ok( audit.Map() );
         }
 
-        [HttpGet ( "hotel/users/{userId}" )]
+        [HttpGet ( "user/{userId}/hotels" )]
         public async Task<IActionResult> GetUserHotelAudits( [FromRoute] int userId )
         {
             var audits = await _auditRepository.GetUserHotelAuditsAsync( userId );
@@ -54,7 +54,7 @@ namespace AuditApp.Extranet.Modules.Audits
             return Ok( result );
         }
 
-        [HttpGet( "camp/users/{userId}" )]
+        [HttpGet( "user/{userId}/camps" )]
         public async Task<IActionResult> GetUserCampAudits( [FromRoute] int userId )
         {
             var audits = await _auditRepository.GetUserCampAuditsAsync( userId );

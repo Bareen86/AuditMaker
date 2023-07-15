@@ -14,7 +14,6 @@ namespace AuditApp.Extranet.Modules.Audits.Mappers
                 Title = audit.Title,
                 Location = audit.Location,
                 Url = audit.Url,
-                AuditType = audit.AuditType,
                 ModifiedOn = audit.ModifiedOn,
             };
         }

@@ -1,0 +1,8 @@
+th {
+  height: 72px;
+}
+
+td {
+  width: 150px;
+  text-overflow: ellipsis;
+}

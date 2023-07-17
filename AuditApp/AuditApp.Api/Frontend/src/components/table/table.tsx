@@ -1,19 +1,23 @@
 import React, { useState } from "react";
+import { IUserCampAudits } from "../../types/IAudits";
+import { DateToStringFormat } from "../../helpers/data-to-string";
+import "./table.css"
 
 interface TableProps {
-    data: any[];
+    data: IUserCampAudits[];
     itemsPerPage: number;
 }
 
 export default function Table({ data, itemsPerPage }: TableProps) {
+
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [searchText, setSearchText] = useState<string>("");
 
     const filteredData = data.filter((item) =>
-        (typeof item.property1 === "string" &&
-            item.property1.toLowerCase().includes(searchText.toLowerCase())) ||
-        (typeof item.property2 === "string" &&
-            item.property2.toLowerCase().includes(searchText.toLowerCase()))
+        (typeof item.location === "string" &&
+            item.location.toLowerCase().includes(searchText.toLowerCase())) ||
+        (typeof item.title === "string" &&
+            item.title.toLowerCase().includes(searchText.toLowerCase()))
     );
 
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
@@ -38,17 +42,26 @@ export default function Table({ data, itemsPerPage }: TableProps) {
             <table>
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Email</th>
+                        <th>Название</th>
+                        <th>Локация</th>
+                        <th>Url сайта</th>
+                        <th>Дата изменения</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody>
                     {currentItems.map((item) => (
                         <tr key={item.id}>
-                            <td>{item.name}</td>
-                            <td>{item.age}</td>
-                            <td>{item.email}</td>
+                            <td>{item.title}</td>
+                            <td>{item.location}</td>
+                            <td>{item.url}</td>
+                            <td>{DateToStringFormat(item.modifiedOn)}</td>
+                            <td>
+                                <div>
+                                    <img src="./images/editAudit.png" alt="Изменить аудит" />
+                                    <img src="./images/deleteAudit.png" alt="Удалить аудит" />
+                                </div>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

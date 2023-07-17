@@ -1,8 +1,16 @@
-export interface IAudit {
+export interface IUserAuditToGet {
   id : number,
   title : string,
   location : string,
   textBlock : TextBlock
+}
+
+export interface IUserAudit {
+  id : number,
+  title : string,
+  location : string,
+  Url : string
+  Date : Date
 }
 
 export interface TextBlock  {
@@ -12,7 +20,7 @@ export interface TextBlock  {
 export  interface IUserCampAudits {
   id : number,
   title :  string,
-  location : string
-  url  : string
+  location : string,
+  url  : string,
   modifiedOn : Date
 }

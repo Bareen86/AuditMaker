@@ -1,34 +1,30 @@
-import React, { useState } from 'react'
-import { AuditService } from '../../services/AuditService'
-import { IAudit, TextBlock } from '../../types/IAudits';
+import React, { useEffect, useState } from 'react'
+import { IUserAuditToGet, IUserCampAudits, TextBlock } from '../../types/IAudits';
 import axios from 'axios';
 import { Outlet } from 'react-router-dom';
+import Table from '../../components/table/table';
 
 export default function CampAudits() {
 
-  const [event, setEvent] = useState<IAudit[]>([{
-    id : 2,
-    location : "russin",
-    title : "egor",
-    textBlock : {
-      data : []
-    }
-  }]);
+  const [campAudits, setCampAudits] = useState<IUserCampAudits[]>([]);
+
+  const user = JSON.parse(localStorage.getItem("user") || "");
 
   const fetchDefault = async (id : Number) => {
-    const result = (await axios.get("/api/audits/users/" + id)).data;
-    setEvent(result)
-    console.log(await result)
-    console.log(event)
+    const result : IUserCampAudits[] = (await axios.get("/api/audits/user/" + user.id + "/camps")).data;
+    setCampAudits(result)
   }
 
-  console.log("userpage")
+  useEffect(() =>{
+    fetchDefault(user.id);
+    console.log(campAudits);
+  }, [])
 
   return (
     <div>
-      <button onClick={() => fetchDefault(2)}>Click on me</button>
-      <h1>Camp  Audits page</h1>
+      <Table data={campAudits} itemsPerPage={5}/>
     </div>
     
   )
+
 }

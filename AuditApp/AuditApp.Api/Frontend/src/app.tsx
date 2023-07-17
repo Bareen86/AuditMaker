@@ -27,6 +27,7 @@ function App() {
                         </Route>
                     </Route>
                     <Route path="*" element={<h1>Такой страницы не существует</h1>}></Route>
+                    <Route path="/asd" element={<AuditReactor title="Аудит отеля"/>}></Route>
                 </Routes>
             </BrowserRouter>
             </div>

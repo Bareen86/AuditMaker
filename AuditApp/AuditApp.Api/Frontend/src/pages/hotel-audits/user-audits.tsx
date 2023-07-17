@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { IAudit, IUserCampAudits, TextBlock } from '../../types/IAudits';
+import { IUserCampAudits, TextBlock } from '../../types/IAudits';
 import axios from 'axios';
 import { Navigate, Outlet, useNavigate } from 'react-router-dom';
 import { DateToStringFormat } from '../../helpers/data-to-string';

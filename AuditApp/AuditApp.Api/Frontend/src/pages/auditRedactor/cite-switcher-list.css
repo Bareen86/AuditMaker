@@ -27,8 +27,9 @@
 }
 
 #editorjs {
-  min-width: 712px;
+  width: 1000px;
   min-height: 700px;
+  word-wrap: break-word;
 }
 
 .editorWrapper{

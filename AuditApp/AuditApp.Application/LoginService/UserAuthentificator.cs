@@ -29,7 +29,7 @@ namespace AuditApp.Application.LoginService
             User user = await _userRepository.GetUserByLoginAsync( login );
             if ( user == null )
             {
-                LoginDto loginDto = new LoginDto( "Неверное имя пользователя" );
+                LoginDto loginDto = new LoginDto( "Неверное имя пользователя или пароль" );
                 return loginDto;
             }
             string passwordHash = HashPasswordHelper.HashPassword( password );
@@ -39,7 +39,7 @@ namespace AuditApp.Application.LoginService
             }
             else
             {
-                LoginDto loginDto = new LoginDto( "Неверный пароль" );
+                LoginDto loginDto = new LoginDto( "Неверное имя пользователя или пароль" );
                 return loginDto;
             }
         }

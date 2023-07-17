@@ -27,7 +27,7 @@ export default function CampAudits() {
   return (
     <div>
       <button onClick={() => fetchDefault(2)}>Click on me</button>
-      <Outlet />
+      <h1>Camp  Audits page</h1>
     </div>
     
   )

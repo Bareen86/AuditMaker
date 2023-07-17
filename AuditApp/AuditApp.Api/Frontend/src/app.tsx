@@ -1,10 +1,13 @@
 import "./app.css";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import TodoList from "./components/todo-list";
 import Navbar from "./pages/layout/nabvar";
 import AuditReactor from "./pages/auditRedactor/cite-audit-page";
 import HotelAudits from "./pages/hotel-audits/user-audits";
 import CampAudits from "./pages/camp-audits/user-audits";
+import LoginPage from "./pages/login/login-page";
+import ProtectedRoutes from "./components/routes/ProtectedRoutes";
+import PublicRoutes from "./components/routes/PublicRoutes";
 
 function App() {
 
@@ -13,15 +16,17 @@ function App() {
             <div className="wrapper">
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Navbar/>}>
-                        <Route index element={<HotelAudits/>}/>
-                        <Route path="HotelAudits" element={<HotelAudits/>}/>
-                        <Route path="CampAudits" element={<CampAudits/>}/>
-                        <Route path="HotelRedactor" element={<AuditReactor title="Аудит Отеля"/>}/>
-                        <Route path="CampRedactor" element={<AuditReactor title="Аудит Лашеря"/>}/>
-                        <Route path="*" element={<h1>Resource not found</h1>}/>
-                        <Route path="todos" element={<TodoList/>}/>
-                    </Route>    
+                    <Route path="/login" element={<PublicRoutes/>}>
+                        <Route index path="/login"  element={<LoginPage/>}/>
+                    </Route>
+                    <Route path="/" element={<ProtectedRoutes/>}>
+                        <Route path="/" element={<Navbar/>}>
+                            <Route path="/" element={<Navigate replace to="/hotelaudits"/>}/>
+                            <Route path="/hotelaudits" element={<HotelAudits/>}/>
+                            <Route path="/campaudits" element={<CampAudits/>}/>
+                        </Route>
+                    </Route>
+                    <Route path="*" element={<h1>Такой страницы не существует</h1>}></Route>
                 </Routes>
             </BrowserRouter>
             </div>

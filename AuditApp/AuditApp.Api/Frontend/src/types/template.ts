@@ -25,7 +25,6 @@ export enum TemplateActionType {
 interface FetchTemplateAction {
   type : TemplateActionType.FETCH_TEMPLATE,
   payload: TemplateItemGroup[]
-  
 }
 
 interface UpdateTemplateAction {

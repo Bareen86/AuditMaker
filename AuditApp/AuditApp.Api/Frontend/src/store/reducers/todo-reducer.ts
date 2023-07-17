@@ -9,7 +9,7 @@ const initialState : TodoState = {
 }
 
 export const todoReducer = (state = initialState, action: TodoAction): TodoState => {
-  switch (action.type) {
+  switch (action.type) {    
       case TodoActionTypes.FETCH_TODOS:
           return {...state, loading: true};
       case TodoActionTypes.FETCH_TODOS_SUCCESS:

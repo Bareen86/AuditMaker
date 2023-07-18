@@ -8,10 +8,11 @@ export default function Navbar() {
                 <div className="nav-list">
                     <ul>
                         <li className="first-li">
-                            <NavLink className="nav-bar-link" reloadDocument={true} style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}} to="hotelaudits">Аудиты Отеля</NavLink>
+                            <NavLink className="nav-bar-link" reloadDocument={true} to="hotelaudits" style={({isActive}) => ({color : isActive ? "#296DCB" : ""})}>Аудиты Отеля</NavLink>
                         </li>
                         <li>
-                            <NavLink className="nav-bar-link" reloadDocument={true} style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}} to="campaudits">Аудиты Лагеря</NavLink>
+                            
+                            <NavLink className="nav-bar-link" reloadDocument={true} to="campaudits" style={({isActive}) => ({color : isActive ? "#296DCB" : ""})}>Аудиты Лагеря</NavLink>
                         </li>
                     </ul>
                 </div>
@@ -21,3 +22,5 @@ export default function Navbar() {
         </>
     );
 }
+//style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}}
+//style={({isActive}) => {return {color: isActive? "#296DCB" :  ""}}}

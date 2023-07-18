@@ -68,7 +68,7 @@ const LoginPage = () => {
                             <Grid container direction="column" spacing={2}>
 
                                 <Grid item>
-                                    <TextField onChange={handleLoginFieldChange}
+                                    <TextField autoComplete="off" onChange={handleLoginFieldChange}
                                         type="text"
                                         fullWidth
                                         label="Введите логин"

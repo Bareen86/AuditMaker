@@ -56,6 +56,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@editorjs/image": "^2.8.1",
     "editorjs-inline-font-family-tool": "^1.0.4",
     "editorjs-inline-font-size-tool": "^1.0.1"

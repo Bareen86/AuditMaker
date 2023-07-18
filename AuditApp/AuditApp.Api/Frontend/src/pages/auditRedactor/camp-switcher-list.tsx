@@ -1,4 +1,4 @@
-import "./cite-switcher-list.css";
+import "./camp-switcher-list.css";
 import { Button, Switch } from "@mui/material";
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import EditorJS from "@editorjs/editorjs";
@@ -6,7 +6,7 @@ import axios from "axios";
 import { useReactToPrint } from "react-to-print";
 import { group } from "console";
 import { isTemplateExpression } from "typescript";
-import { Outlet } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import { useTypedSelector } from "../../hooks/use-typed-selector";
 import { useActions } from "../../hooks/use-action";
 import { TemplateItem, TemplateItemGroup } from "../../types/template";
@@ -23,8 +23,12 @@ interface CiteProps {
 
 enum ResponseStatus { Failure, Success };
 
-export default function CiteSwitcherGroupList({editorRef, title} : CiteProps, ref:any) {
+export default function CampAuditEditor({editorRef, title} : CiteProps, ref:any) {
     
+    const params = useParams();
+    const prodId = params.id;
+    console.log(prodId);
+
     function initEditor(){
         const editor = new EditorJS({
             holder: "editorjs",

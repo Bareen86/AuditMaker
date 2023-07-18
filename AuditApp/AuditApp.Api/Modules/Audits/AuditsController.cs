@@ -75,11 +75,11 @@ namespace AuditApp.Extranet.Modules.Audits
         {
             await _auditEditor.Update( command.Map() );
             await _unitOfWork.CommitAsync();
-            return Ok();
+            return Ok();    
         }
 
-        [HttpDelete( "auditid" )]
-        public async Task<IActionResult> RemoveAudit( int auditid )
+        [HttpDelete( "{auditid}" )]
+        public async Task<IActionResult> RemoveAudit([FromRoute] int auditid )
         {
             await _auditRemover.Remove( auditid );
             await _unitOfWork.CommitAsync();

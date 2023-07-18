@@ -1,21 +1,21 @@
 import { useRef } from "react";
-import "./cite-audit-page.css";
+import "./camp-audit-page.css";
 import EditorJS from "@editorjs/editorjs";
 import { Outlet } from "react-router-dom";
-import CiteSwitcherGroupList from "./cite-switcher-list";
+import CampAuditEditor from "./camp-switcher-list";
 
 interface props {
     title: string;
 }
 
-export default function AuditReactor({title} : props) {
+export default function CampAuditRedactor({title} : props) {
 
     const EditorRef = useRef<EditorJS>(null);
 
     return (
         <>
             <div className="content-wrapper">
-                <CiteSwitcherGroupList title={title} editorRef={EditorRef} />
+                <CampAuditEditor title={title} editorRef={EditorRef} />
                 <Outlet />
             </div>
         </>

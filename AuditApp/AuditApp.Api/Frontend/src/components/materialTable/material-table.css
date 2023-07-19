@@ -1,18 +1,17 @@
-.ellipsis span {
-  position: absolute;
-  left: 0;
-  right: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.container {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  margin-top: 200px
 }
 
-.css-q34dxg span {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+.css-r8u8y9 {
+  display: block;
 }
 
-table {
-  margin-top: 20px;
+.css-twdmtu {
+  margin: 8px 0px 10px
 }

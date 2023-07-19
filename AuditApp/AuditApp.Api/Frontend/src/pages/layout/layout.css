@@ -47,3 +47,8 @@ li {
   color: #414c59;
   text-decoration: none;
 }
+
+.MuiPaper-elevation8{
+  width: 150px;
+  height: 93px;
+  }

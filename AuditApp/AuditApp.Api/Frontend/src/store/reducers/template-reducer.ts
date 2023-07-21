@@ -97,6 +97,8 @@ export const templateReducer = (state = initialState, action: TemplateAction) : 
       return {...state, template: action.payload}
     case TemplateActionType.UPDATE_TEMPLATE:
       return {...state, template: action.payload}
+    case TemplateActionType.CLEAR_TEMPLATE:
+        return {...state, ...initialState}
     default:
       return state;
   }

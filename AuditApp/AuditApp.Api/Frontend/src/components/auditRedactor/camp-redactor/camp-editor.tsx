@@ -1,4 +1,4 @@
-import "./camp-switcher-list.css";
+import "../redactor.css";
 import { Button, Switch } from "@mui/material";
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import EditorJS from "@editorjs/editorjs";
@@ -6,10 +6,11 @@ import axios from "axios";
 import { useReactToPrint } from "react-to-print";
 import { group } from "console";
 import { isTemplateExpression } from "typescript";
-import { Outlet, useParams } from "react-router-dom";
-import { useTypedSelector } from "../../hooks/use-typed-selector";
-import { useActions } from "../../hooks/use-action";
-import { TemplateItem, TemplateItemGroup } from "../../types/template";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { useTypedSelector } from "../../../hooks/use-typed-selector";
+import { useActions } from "../../../hooks/use-action";
+import { TemplateItem, TemplateItemGroup } from "../../../types/template";
+import { CampAuditData, IAudit } from "../../../types/IAudits";
 const Header = require('@editorjs/header');
 const FontSize = require("editorjs-inline-font-size-tool");
 const FontFamily = require("editorjs-inline-font-family-tool");
@@ -17,31 +18,35 @@ const ImageTool = require('@editorjs/image')
 
 
 interface CiteProps {
-    editorRef : React.MutableRefObject<EditorJS | null>,
-    title : string
+    editorRef : React.MutableRefObject<EditorJS | null>
 }
 
 enum ResponseStatus { Failure, Success };
 
-export default function CampAuditEditor({editorRef, title} : CiteProps, ref:any) {
-    
+export default function CampAuditEditor({editorRef} : CiteProps, ref:any) {
+
+    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user") || "");
+    const editAuditData = JSON.parse(localStorage.getItem("editAuditData") || "");
     const params = useParams();
-    const prodId = params.id;
-    console.log(prodId);
+    const auditId = Number(params.id)
+    
+    const loadDataFromServer = async () => {
+        const result : IAudit = (await axios.get("/api/audits/" + auditId)).data;
+        const data = {
+            blocks: result.textBlocks.blocks
+        };
+        editorRef.current?.render(data);
+    }
 
     function initEditor(){
         const editor = new EditorJS({
             holder: "editorjs",
             onReady: () => {
                 editorRef.current = editor;
-                onInitAddTemplateToEditor()
+                loadDataFromServer()
             },
             autofocus: false,
-            onChange: async () => {
-                let content = await editor.saver.save();
-    
-                console.log(content);
-            },
             tools: {
                 header: Header,
                 fontSize: FontSize,
@@ -75,21 +80,18 @@ export default function CampAuditEditor({editorRef, title} : CiteProps, ref:any)
     }
      
 
+
     const { template } = useTypedSelector(state => state.template)
 
-    const  { UpdateTemplateItemIsActiveField } = useActions();
+    const  { UpdateTemplateItemIsActiveField, ClearTemplate } = useActions();
 
     const componentRef = useRef(null);
 
     const handlePdfPrint = useReactToPrint({
         content: () => componentRef.current,
         documentTitle: "pdfTitle",
-        onAfterPrint: saveData
+        // onAfterPrint: saveData
     });
-
-    function saveData(){
-        console.log(editorRef.current)
-    }
 
     function onInitAddTemplateToEditor() : void {
 
@@ -113,10 +115,25 @@ export default function CampAuditEditor({editorRef, title} : CiteProps, ref:any)
         return editorRef.current?.blocks.getBlockIndex(itemId?.id);
     }
 
-    function getId(item: TemplateItem) {
-        const itemId = editorRef.current?.blocks.getById(item.id);
-        return itemId?.id;
-        
+    const backToAudits = () => {
+        navigate("/campaudits");
+    }
+
+    const handleSaveAudit = async () => {
+        const editorData = await editorRef?.current?.save();
+        const auditData = {
+            blocks: editorData?.blocks
+        };
+        const result = {
+            auditId: auditId,
+            title: editAuditData.title,
+            location:editAuditData.location,
+            url : editAuditData.url,
+            data : auditData,
+            userId : user.id
+        };
+        const response = await axios.put("/api/audits", result );
+        navigate(-1);
     }
 
     function findIndexWhenNextGroupActive (groupOrder: number, itemOrder: number, ifAnyCurrentItemsGroupActive : boolean) : number {
@@ -238,17 +255,15 @@ export default function CampAuditEditor({editorRef, title} : CiteProps, ref:any)
     }
 
     useEffect(() => {
+        ClearTemplate(template);
         if (!editorRef.current){
             initEditor();
         }
-        console.log("Hhello")
     }, [])
 
     return (
         <>
             <div className="side-bar">
-                <p className="side-bar-p">{title}</p>
-                <hr></hr>
                 <div className="switcher-list">
                     {template.map((temlpateItemGroup) => (
                         <div className="" key={temlpateItemGroup.id}>
@@ -272,7 +287,7 @@ export default function CampAuditEditor({editorRef, title} : CiteProps, ref:any)
                 </div>
                 <div className="buttonsBlock">
                     <div className="backToAudits">
-                        <Button variant="outlined">Вернуться к аудитам</Button>
+                        <Button variant="outlined" onClick={backToAudits}>Вернуться к аудитам</Button>
                     </div>
                     <div className="saveButtonsBlock">
                         <Button
@@ -285,8 +300,7 @@ export default function CampAuditEditor({editorRef, title} : CiteProps, ref:any)
                         >
                             Сохранить в PDF
                         </Button>
-                        <Button variant="contained">Сохранить аудит</Button>
-                        <Button>Проверить api</Button>
+                        <Button variant="contained" onClick={handleSaveAudit}>Сохранить аудит</Button>
                     </div>
                 </div>
             </div>

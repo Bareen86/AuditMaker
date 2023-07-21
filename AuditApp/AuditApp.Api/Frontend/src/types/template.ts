@@ -19,7 +19,8 @@ export interface TemplateItem{
 
 export enum TemplateActionType {
   FETCH_TEMPLATE = "FETCH_TEMPLATE",
-  UPDATE_TEMPLATE = "UPDATE_TEMPLATE"
+  UPDATE_TEMPLATE = "UPDATE_TEMPLATE",
+  CLEAR_TEMPLATE = "CLEAR_TEMPLATE"
 }
 
 interface FetchTemplateAction {
@@ -32,4 +33,8 @@ interface UpdateTemplateAction {
   payload: TemplateItemGroup[]
 }
 
-export type TemplateAction = FetchTemplateAction | UpdateTemplateAction
+interface ClearTemplateAction {
+  type : TemplateActionType.CLEAR_TEMPLATE,
+}
+
+export type TemplateAction = FetchTemplateAction | UpdateTemplateAction | ClearTemplateAction

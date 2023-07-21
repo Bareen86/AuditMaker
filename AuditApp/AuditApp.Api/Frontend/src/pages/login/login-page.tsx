@@ -17,6 +17,7 @@ const LoginPage = () => {
 
   const [Login, SetUserLogin] = useState("");
   const [Password, SetUserPassword] = useState("");
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
@@ -49,7 +50,7 @@ const LoginPage = () => {
           navigate("/hotelaudits");
       }
       } catch(error: any){
-        console.log(error.response.data)
+        setError(error.response.data)
       }
   }
 
@@ -75,6 +76,8 @@ const LoginPage = () => {
                                         placeholder="Логин"
                                         variant="outlined"
                                         required
+                                        error={Boolean(error)}
+                                        helperText={error}
                                     />
                                 </Grid>
 
@@ -90,6 +93,8 @@ const LoginPage = () => {
                                         placeholder="Пароль"
                                         variant="outlined"
                                         required
+                                        error={Boolean(error)}
+                                        helperText={error}
                                         InputProps={{
                                             endAdornment: (
                                                 <InputAdornment position="end">

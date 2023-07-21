@@ -26,7 +26,7 @@ export default function Navbar() {
     const navigate = useNavigate();
 
     function handleLogout() {
-        localStorage.removeItem("user");
+        localStorage.clear();
         navigate("/login");
     }
 

@@ -27,15 +27,21 @@ import {
     Typography,
     styled,
     tooltipClasses,
+    useMediaQuery,
     useTheme,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { IUserCampAudits } from "../../types/IAudits";
+import {
+    IUserCampAudits,
+    createCampAuditData,
+    editCampAuditData,
+} from "../../types/IAudits";
 import { DateToStringFormat } from "../../helpers/data-to-string";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import MenuIcon from "@mui/icons-material/Menu";
 import "./material-table.css";
+import RowMenu from "./raw-menu";
 
 interface TablePaginationActionsProps {
     count: number;
@@ -170,22 +176,19 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
     },
 }));
 
-interface CustomPaginationActionsTableProps {
-    rows: IUserCampAudits[];
-}
-
-export default function CustomPaginationActionsTable({
-    rows,
-}: CustomPaginationActionsTableProps) {
+export default function MaterialHotelsTable() {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [show, setShow] = useState<boolean>(false);
     const [title, setTitle] = useState<string>("");
     const [location, setLocation] = useState<string>("");
     const [url, setUrl] = useState<string>("");
+    const [hotelAudits, setHotelAudits] = useState<IUserCampAudits[]>([]);
 
     const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+        page > 0
+            ? Math.max(0, (1 + page) * rowsPerPage - hotelAudits.length)
+            : 0;
 
     const handleChangePage = (
         event: React.MouseEvent<HTMLButtonElement> | null,
@@ -197,20 +200,16 @@ export default function CustomPaginationActionsTable({
     const handleChangeRowsPerPage = (
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        const newRowsPerPage = parseInt(event.target.value, 10);
         setPage(0);
+        if (newRowsPerPage === -1) {
+            setRowsPerPage(Number.MAX_SAFE_INTEGER);
+        } else {
+            setRowsPerPage(newRowsPerPage);
+        }
     };
 
     const navigate = useNavigate();
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleCloseForTable = () => {
-        setAnchorEl(null);
-    };
 
     const handleDialogClose = () => {
         setShow(false);
@@ -219,19 +218,36 @@ export default function CustomPaginationActionsTable({
         setUrl("");
     };
 
-    function handleEdit(id: number) {
-        setAnchorEl(null);
-        navigate("/editcampaudit/" + id);
+    function handleEdit(row: IUserCampAudits) {
+        const auditData = createEditHotelAuditData(
+            row.title,
+            row.location,
+            row.url
+        );
+        localStorage.setItem("editAuditData", JSON.stringify(auditData));
+        navigate("/hotelaudits/edit/" + row.id);
     }
 
-    function handleDelete(id: number) {
-        setAnchorEl(null);
-        axios.delete("/api/audits/" + id);
+    async function handleDelete() {
+        const auditId = JSON.parse(localStorage.getItem("auditId") || "");
+        setDeleteConfirmation(false);
+        console.log(auditId)
+        await axios.delete("/api/audits/" + auditId);
+        fetchUserHotelAudits(user.id);
     }
+
+    const user = JSON.parse(localStorage.getItem("user") || "");
+
+    const fetchUserHotelAudits = async (id: Number) => {
+        const result: IUserCampAudits[] = (
+            await axios.get("/api/audits/user/" + user.id + "/hotels")
+        ).data;
+        setHotelAudits(result);
+    };
 
     const [searchText, setSearchText] = useState<string>("");
 
-    const filteredRows = rows.filter(
+    const filteredRows = hotelAudits.filter(
         (item) =>
             (typeof item.location === "string" &&
                 item.location
@@ -247,35 +263,57 @@ export default function CustomPaginationActionsTable({
 
     const handleAuditAdd = () => {
         setShow(false);
-        const auditData = createCampAuditData(title, location, url, 1);
+        const auditData = createHotelAuditData(title, location, url, 0);
         localStorage.setItem("auditData", JSON.stringify(auditData));
-        //navigate("/addcampaudit")
+        navigate("/hotelaudits/add");
     };
 
     const openDialog = () => {
         setShow(true);
     };
 
-    interface HotelAuditData {
-        title: string;
-        location: string;
-        url: string;
-        auditType: number;
-    }
+    const [openDeleteConfirmation, setDeleteConfirmation] = React.useState(false);
+    const theme = useTheme();
+    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-    function createCampAuditData(
+    const handleClickOpen = (id : number) => {
+        localStorage.setItem("auditId", `${id}`)
+        setDeleteConfirmation(true);
+      };
+    
+      const handleClose = () => {
+        setDeleteConfirmation(false);
+      };
+
+    function createEditHotelAuditData(
         title: string,
         location: string,
-        url: string,
-        auditType: number
-    ): HotelAuditData {
+        url: string
+    ): editCampAuditData {
         return {
             title: title,
             location: location,
             url: url,
-            auditType: 1,
         };
     }
+
+    function createHotelAuditData(
+        title: string,
+        location: string,
+        url: string,
+        auditType: number
+    ): createCampAuditData {
+        return {
+            title: title,
+            location: location,
+            url: url,
+            auditType: auditType,
+        };
+    }
+
+    useEffect(() => {
+        fetchUserHotelAudits(user.id);
+    }, []);
 
     return (
         <>
@@ -346,6 +384,7 @@ export default function CustomPaginationActionsTable({
                                         placement="top"
                                         title={
                                             <a
+                                                target="_blank"
                                                 className="link-text"
                                                 href={row.url}
                                             >
@@ -369,45 +408,12 @@ export default function CustomPaginationActionsTable({
                                     }}
                                     align="center"
                                 >
-                                    <IconButton
-                                        aria-label="more"
-                                        id="menu-button"
-                                        aria-controls={
-                                            open ? "basic-menu" : undefined
-                                        }
-                                        aria-expanded={
-                                            open ? "true" : undefined
-                                        }
-                                        aria-haspopup="true"
-                                        onClick={handleClick}
-                                    >
-                                        <MenuIcon fontSize="large" />
-                                    </IconButton>
-                                    <Menu
-                                        id="basic-menu"
-                                        anchorEl={anchorEl}
-                                        open={open}
-                                        onClose={handleCloseForTable}
-                                        anchorOrigin={{
-                                            vertical: "top",
-                                            horizontal: "left",
-                                        }}
-                                        transformOrigin={{
-                                            vertical: "top",
-                                            horizontal: "left",
-                                        }}
-                                    >
-                                        <MenuItem
-                                            onClick={() => handleEdit(row.id)}
-                                        >
-                                            Изменить
-                                        </MenuItem>
-                                        <MenuItem
-                                            onClick={() => handleDelete(row.id)}
-                                        >
-                                            Удалить
-                                        </MenuItem>
-                                    </Menu>
+                                    <RowMenu
+                                        state={openDeleteConfirmation}
+                                        row={row}
+                                        handleEdit={handleEdit}
+                                        handleDeleteConfirmation={handleClickOpen}
+                                    />
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -427,7 +433,7 @@ export default function CustomPaginationActionsTable({
                                     { label: "Все", value: -1 },
                                 ]}
                                 colSpan={3}
-                                count={rows.length}
+                                count={hotelAudits.length}
                                 rowsPerPage={rowsPerPage}
                                 page={page}
                                 SelectProps={{
@@ -451,22 +457,22 @@ export default function CustomPaginationActionsTable({
                 </Table>
             </TableContainer>
             <Dialog open={show} onClose={handleDialogClose}>
-                <DialogTitle variant="h4">Создание аудита лагеря</DialogTitle>
+                <DialogTitle variant="h4">Создание аудита Отеля</DialogTitle>
                 <DialogContent>
                     <Typography
                         style={{ width: "500px" }}
                         id="audit-title"
                         variant="h6"
                     >
-                        Название Объекта аудита
+                        Название объекта аудита
                     </Typography>
                     <TextField
-                        placeholder="Пример: лагерь Дубинина..."
+                        placeholder="Пример: отель Винтерфелл..."
                         onChange={(t) => setTitle(t.target.value)}
                         margin="dense"
                         style={{ margin: "8px 0px 10px" }}
                         id="audit-title-field"
-                        type="email"
+                        type="text"
                         fullWidth
                         variant="standard"
                     />
@@ -480,7 +486,7 @@ export default function CustomPaginationActionsTable({
                         margin="dense"
                         style={{ margin: "8px 0px 10px" }}
                         id="audit-location-field"
-                        type="email"
+                        type="text"
                         fullWidth
                         variant="standard"
                     />
@@ -494,16 +500,34 @@ export default function CustomPaginationActionsTable({
                         margin="dense"
                         style={{ margin: "8px 0px 10px" }}
                         id="audit-url-field"
-                        type="email"
+                        type="text"
                         fullWidth
                         variant="standard"
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleDialogClose}>
-                        Вурнуться к аудитам
+                    <Button onClick={handleDialogClose} variant="contained">
+                        Вернуться к аудитам
                     </Button>
-                    <Button onClick={handleAuditAdd}>Продолжить</Button>
+                    <Button onClick={handleAuditAdd} variant="contained">Продолжить</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                fullScreen={fullScreen}
+                open={openDeleteConfirmation}
+                onClose={handleClose}
+                aria-labelledby="responsive-dialog-title"
+            >
+                <DialogTitle id="responsive-dialog-title">
+                    {"Вы уверены что хотите удалить аудит?"}
+                </DialogTitle>
+                <DialogActions style={{justifyContent: "space-around"}}>
+                    <Button variant="contained" onClick={handleClose}>
+                        Нет
+                    </Button>
+                    <Button onClick={handleDelete} autoFocus variant="contained">
+                        Да
+                    </Button>
                 </DialogActions>
             </Dialog>
         </>

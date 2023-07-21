@@ -9,7 +9,7 @@
 }
 
 .side-bar {
-  margin: 117px 0 0 54px;
+  margin: 117px 0 0 0;
   width: 650px;
 }
 
@@ -24,21 +24,24 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-top: 5px;
 }
 
 #editorjs {
-  width: 1000px;
+  width: 800px;
   min-height: 700px;
   word-wrap: break-word;
 }
 
 .editorWrapper{
+  margin-top: 100px;
   border:1px solid black;
 }
 
 .textRedactor{
   display: flex;
   flex-direction: column;
+  margin-left: 30px;
 }
 
 .backToAudits {

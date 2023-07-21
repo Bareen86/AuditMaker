@@ -24,3 +24,36 @@ export  interface IUserCampAudits {
   url  : string,
   modifiedOn : Date
 }
+
+export  interface IAudit {
+  id : number,
+  title : string,
+  location : string,
+  textBlocks :  AuditBlockData
+}
+
+interface AuditBlockData {
+  blocks : any[]
+}
+
+export interface CampAuditData {
+  title: string;
+  location: string;
+  url: string;
+  userId : number;
+  auditType: number;
+  data : any[]
+}
+
+export interface editCampAuditData {
+  title: string;
+  location : string;
+  url: string;
+}
+
+export interface createCampAuditData {
+    title: string;
+    location: string;
+    url: string;
+    auditType: number;
+}

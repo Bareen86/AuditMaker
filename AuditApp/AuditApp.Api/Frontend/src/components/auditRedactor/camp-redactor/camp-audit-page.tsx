@@ -2,7 +2,7 @@ import { useRef } from "react";
 import "../audit-page.css";
 import EditorJS from "@editorjs/editorjs";
 import { Outlet } from "react-router-dom";
-import AuditEditor from "../add-audit-redactor/audit-editor";
+import CampAuditEditor from "./camp-editor";
 
 export default function CampAuditRedactor() {
 
@@ -11,7 +11,7 @@ export default function CampAuditRedactor() {
     return (
         <>
             <div className="content-wrapper">
-                <AuditEditor editorRef={EditorRef} />
+                <CampAuditEditor editorRef={EditorRef} />
                 <Outlet />
             </div>
         </>

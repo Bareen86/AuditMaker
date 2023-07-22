@@ -6,9 +6,9 @@ import CampAudits from "./pages/camp-audits/camp-audits";
 import LoginPage from "./pages/login/login-page";
 import ProtectedRoutes from "./components/routes/ProtectedRoutes";
 import PublicRoutes from "./components/routes/PublicRoutes";
-import HotelAuditRedactor from "./components/auditRedactor/hotel-redactor/hotel-editor-page";
 import CampAuditRedactor from "./components/auditRedactor/camp-redactor/camp-audit-page";
-import AuditRedactor from "./components/auditRedactor/add-audit-redactor/audit-page";
+import HotelAuditRedactor from "./components/auditRedactor/hotel-redactor/hotel-editor-page";
+import Redactor from "./components/auditRedactor/add-audit-redactor/audit-page";
 
 function App() {
 
@@ -27,8 +27,8 @@ function App() {
                             <Route path="/campaudits" element={<CampAudits/>}/>
                             <Route path="/campaudits/edit/:id" element={<CampAuditRedactor/>}/>
                             <Route path="/hotelaudits/edit/:id" element={<HotelAuditRedactor/>}/>
-                            <Route path="/hotelaudits/add" element={<AuditRedactor/>}/>
-                            <Route path="/campaudits/add" element={<AuditRedactor/>}/>
+                            <Route path="/hotelaudits/add" element={<Redactor/>}/>
+                            <Route path="/campaudits/add" element={<Redactor/>}/>
                         </Route>
                     </Route>
                     <Route path="*" element={<h1>Такой страницы не существует</h1>}></Route>

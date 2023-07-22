@@ -23,7 +23,7 @@ interface CiteProps {
 
 enum ResponseStatus { Failure, Success };
 
-export default function AuditEditor({editorRef} : CiteProps) {
+export default function BasicRedactor({editorRef} : CiteProps) {
 
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("user") || "");

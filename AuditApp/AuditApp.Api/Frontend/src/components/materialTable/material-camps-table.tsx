@@ -225,6 +225,8 @@ export default function MaterialCampsTable() {
             row.url
         );
         localStorage.setItem("editAuditData", JSON.stringify(auditData));
+        const editAuditData = JSON.parse(localStorage.getItem("editAuditData") || "");
+        console.log(editAuditData);
         navigate("/campaudits/edit/" + row.id);
     }
 

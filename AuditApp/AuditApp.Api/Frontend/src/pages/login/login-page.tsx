@@ -76,8 +76,6 @@ const LoginPage = () => {
                                         placeholder="Логин"
                                         variant="outlined"
                                         required
-                                        error={Boolean(error)}
-                                        helperText={error}
                                     />
                                 </Grid>
 

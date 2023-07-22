@@ -518,14 +518,14 @@ export default function MaterialCampsTable() {
                 aria-labelledby="responsive-dialog-title"
             >
                 <DialogTitle id="responsive-dialog-title">
-                    {"Вы уверены что хотите удалить аудит?"}
+                    {"Вы уверены, что хотите удалить аудит?"}
                 </DialogTitle>
-                <DialogActions style={{justifyContent: "space-around"}}>
-                    <Button variant="contained" onClick={handleClose}>
-                        Нет
-                    </Button>
-                    <Button onClick={handleDelete} autoFocus variant="contained">
+                <DialogActions style={{justifyContent: "center"}}>
+                    <Button variant="contained" style={{marginRight : "10px"}} onClick={handleClose}>
                         Да
+                    </Button>
+                    <Button onClick={handleDelete} style={{marginLeft : "25px"}} autoFocus variant="contained">
+                        Нет
                     </Button>
                 </DialogActions>
             </Dialog>

@@ -1,11 +1,6 @@
 ﻿using AuditApp.Domain.Users;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AuditApp.Infrastructure.Data.Users
 {
@@ -37,6 +32,11 @@ namespace AuditApp.Infrastructure.Data.Users
         public async Task<User> GetUserByLoginAsync( string login )
         {
            return await _users.FirstOrDefaultAsync(u => u.Login == login); 
+        }
+
+        public async Task<List<User>> GetAllUsersAsync()
+        {
+            return await _users.ToListAsync();
         }
     }
 }   

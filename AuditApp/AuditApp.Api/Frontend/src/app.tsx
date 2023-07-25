@@ -6,8 +6,7 @@ import CampAudits from "./pages/camp-audits/camp-audits";
 import LoginPage from "./pages/login/login-page";
 import ProtectedRoutes from "./components/routes/ProtectedRoutes";
 import PublicRoutes from "./components/routes/PublicRoutes";
-import CampAuditRedactor from "./components/auditRedactor/camp-redactor/camp-audit-page";
-import HotelAuditRedactor from "./components/auditRedactor/hotel-redactor/hotel-editor-page";
+import AuditRedactor from "./components/auditRedactor/audit-redactor/audit-redactor";
 import Redactor from "./components/auditRedactor/add-audit-redactor/audit-page";
 
 function App() {
@@ -22,13 +21,13 @@ function App() {
                     </Route>
                     <Route path="/" element={<ProtectedRoutes/>}>
                         <Route path="/" element={<Navbar/>}>
-                            <Route path="/" element={<Navigate replace to="/hotelaudits"/>}/>
-                            <Route path="/hotelaudits" element={<HotelAudits/>}/>
-                            <Route path="/campaudits" element={<CampAudits/>}/>
-                            <Route path="/campaudits/edit/:id" element={<CampAuditRedactor/>}/>
-                            <Route path="/hotelaudits/edit/:id" element={<HotelAuditRedactor/>}/>
-                            <Route path="/hotelaudits/add" element={<Redactor/>}/>
-                            <Route path="/campaudits/add" element={<Redactor/>}/>
+                            <Route path="/" element={<Navigate replace to="/HotelAudits"/>}/>
+                            <Route path="/HotelAudits" element={<HotelAudits/>}/>
+                            <Route path="/CampAudits" element={<CampAudits/>}/>
+                            <Route path="/CampAudits/:id" element={<AuditRedactor/>}/>
+                            <Route path="/HotelAudits/:id" element={<AuditRedactor/>}/>
+                            <Route path="/HotelAudits/Add" element={<Redactor/>}/>
+                            <Route path="/CampAudits/Add" element={<Redactor/>}/>
                         </Route>
                     </Route>
                     <Route path="*" element={<h1>Такой страницы не существует</h1>}></Route>

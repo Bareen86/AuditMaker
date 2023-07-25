@@ -47,7 +47,7 @@ const LoginPage = () => {
         const response = await axios.post("/api/users/login", { Login, Password });
       if (response.status === 200) {
           localStorage.setItem("user", JSON.stringify(response.data));
-          navigate("/hotelaudits");
+          navigate("/HotelAudits");
       }
       } catch(error: any){
         setError(error.response.data)

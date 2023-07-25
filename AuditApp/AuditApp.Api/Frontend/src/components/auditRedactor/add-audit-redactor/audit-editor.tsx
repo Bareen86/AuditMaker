@@ -68,9 +68,9 @@ export default function BasicRedactor({editorRef} : CiteProps) {
         });
     }
 
-    const { template } = useTypedSelector(state => state.template)
+    const { template } = useTypedSelector(state => state.hotelTemplate)
 
-    const  { UpdateTemplateItemIsActiveField, ClearTemplate } = useActions();
+    const  { UpdateTemplateItemIsActiveField, clearTemplate } = useActions();
 
     const componentRef = useRef(null);
 
@@ -104,7 +104,7 @@ export default function BasicRedactor({editorRef} : CiteProps) {
     }
 
     const backToAudits = () => {
-        auditData.auditType === 0 ? navigate("/hotelaudits") : navigate("/campaudits");
+        auditData.auditType === 0 ? navigate("/HotelAudits") : navigate("/CampAudits");
     }
 
     const handleSaveAudit = async () => {
@@ -112,7 +112,7 @@ export default function BasicRedactor({editorRef} : CiteProps) {
         const auditEditorData = {
             blocks: editorData?.blocks
         };
-        const result = {
+        const request = {
             title : auditData.title,
             location : auditData.location,
             url : auditData.url,
@@ -120,7 +120,7 @@ export default function BasicRedactor({editorRef} : CiteProps) {
             auditType : auditData.auditType,
             data : auditEditorData,
         };
-        const response = await axios.post("/api/audits", result );
+        const response = await axios.post("/api/audits", request );
         navigate(-1);
     }
 
@@ -243,7 +243,7 @@ export default function BasicRedactor({editorRef} : CiteProps) {
     }
 
     useEffect(() => {
-        ClearTemplate(template)
+        clearTemplate(template)
         if (!editorRef.current){
             initEditor();
         }

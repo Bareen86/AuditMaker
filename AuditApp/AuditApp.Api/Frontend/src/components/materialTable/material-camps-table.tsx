@@ -32,7 +32,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
-    IUserCampAudits,
+    IUserAudits,
     createCampAuditData,
     editCampAuditData,
 } from "../../types/IAudits";
@@ -183,7 +183,7 @@ export default function MaterialCampsTable() {
     const [title, setTitle] = useState<string>("");
     const [location, setLocation] = useState<string>("");
     const [url, setUrl] = useState<string>("");
-    const [campAudits, setCampAudits] = useState<IUserCampAudits[]>([]);
+    const [campAudits, setCampAudits] = useState<IUserAudits[]>([]);
 
     const emptyRows =
         page > 0
@@ -218,7 +218,7 @@ export default function MaterialCampsTable() {
         setUrl("");
     };
 
-    function handleEdit(row: IUserCampAudits) {
+    function handleEdit(row: IUserAudits) {
         const auditData = createEditCampAuditData(
             row.title,
             row.location,
@@ -227,7 +227,7 @@ export default function MaterialCampsTable() {
         localStorage.setItem("editAuditData", JSON.stringify(auditData));
         const editAuditData = JSON.parse(localStorage.getItem("editAuditData") || "");
         console.log(editAuditData);
-        navigate("/campaudits/edit/" + row.id);
+        navigate("/CampAudits/" + row.id);
     }
 
     async function handleDelete() {
@@ -240,8 +240,8 @@ export default function MaterialCampsTable() {
     const user = JSON.parse(localStorage.getItem("user") || "");
 
     const fetchUserCampAudits = async (id: Number) => {
-        const result: IUserCampAudits[] = (
-            await axios.get("/api/audits/user/" + user.id + "/camps")
+        const result: IUserAudits[] = (
+            await axios.get("/api/audits/camps")
         ).data;
         setCampAudits(result);
     };
@@ -266,7 +266,7 @@ export default function MaterialCampsTable() {
         setShow(false);
         const auditData = createCampAuditData(title, location, url, 1);
         localStorage.setItem("auditData", JSON.stringify(auditData));
-        navigate("/campaudits/add");
+        navigate("/CampAudits/add");
     };
 
     const openDialog = () => {

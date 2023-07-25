@@ -41,7 +41,7 @@ export default function Navbar() {
                             <NavLink
                                 className="nav-bar-link"
                                 reloadDocument={true}
-                                to="hotelaudits"
+                                to="HotelAudits"
                                 style={({ isActive }) => ({
                                     color: isActive ? "#296DCB" : "",
                                 })}
@@ -53,7 +53,7 @@ export default function Navbar() {
                             <NavLink
                                 className="nav-bar-link"
                                 reloadDocument={true}
-                                to="campaudits"
+                                to="CampAudits"
                                 style={({ isActive }) => ({
                                     color: isActive ? "#296DCB" : "",
                                 })}

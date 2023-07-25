@@ -1,13 +1,12 @@
-﻿using AuditApp.Application.LoginService.Dtos;
-using AuditApp.Domain.Users;
+﻿using AuditApp.Domain.Users;
 
 namespace AuditApp.Application.LoginService.Mappers
 {
     public static class UserMapper
     {
-        public static LoginDto Map(this User user )
+        public static LoginResult Map(this User user )
         {
-            return new LoginDto
+            return new LoginResult
             {
                 Id = user.Id,
                 IsAdmin = user.IsAdmin,

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AuditApp.Application.LoginService.Dtos;
 using AuditApp.Domain.Users;
 using AuditApp.Extranet.Modules.Users.Dtos;
 

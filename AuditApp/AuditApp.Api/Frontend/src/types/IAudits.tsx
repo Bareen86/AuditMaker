@@ -17,12 +17,13 @@ export interface TextBlock  {
   data: any[]
 }
 
-export  interface IUserCampAudits {
+export  interface IUserAudits {
   id : number,
   title :  string,
   location : string,
   url  : string,
-  modifiedOn : Date
+  modifiedOn : Date,
+  userName : string
 }
 
 export  interface IAudit {

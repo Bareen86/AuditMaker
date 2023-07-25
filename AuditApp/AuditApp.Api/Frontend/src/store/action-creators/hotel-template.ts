@@ -40,7 +40,7 @@ export function fetchTemplate()  {
   }
 }
 
-export function ClearTemplate(template: TemplateItemGroup[]) {
+export function clearTemplate(template: TemplateItemGroup[]) {
   const clearedTemplate = setTemplateItemUnactiveFiled(template);
   return {type : TemplateActionType.UPDATE_TEMPLATE, payload: clearedTemplate}
 }

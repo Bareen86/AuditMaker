@@ -1,5 +1,4 @@
 ﻿using AuditApp.Application.LoginService;
-using AuditApp.Application.LoginService.Dtos;
 using AuditApp.Application.Users.UsersCreating;
 using AuditApp.Application.Users.UsersLoginValidating;
 using AuditApp.Extranet.Modules.Users.Dtos;
@@ -33,12 +32,12 @@ namespace AuditApp.Extranet.Modules.Users
         [HttpPost( "login" )]
         public async Task<IActionResult> Login( [FromBody] CheckUserAuthentificationDto userDto )
         {
-            LoginDto LoginResultDto = await _userAuthentificator.Login( userDto.Login, userDto.Password );
-            if ( LoginResultDto.ErrorMessage.Length != 0 )
+            LoginResult loginResult = await _userAuthentificator.Login( userDto.Login, userDto.Password );
+            if ( loginResult.ErrorMessage.Length != 0 )
             {
-                return BadRequest( LoginResultDto.ErrorMessage);
+                return BadRequest( loginResult.ErrorMessage);
             }
-            return Ok( LoginResultDto.Map() );
+            return Ok( loginResult.Map() );
         }
 
         [HttpPost( "createuser" )]

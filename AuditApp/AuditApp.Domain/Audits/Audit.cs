@@ -26,7 +26,7 @@ namespace AuditApp.Domain.Audits
             UserId = userId;
         }
 
-        public void UpdateFields( string title, string location, string url, string data)
+        public void Update( string title, string location, string url, string data)
         {
             Title = title;
             Location = location;

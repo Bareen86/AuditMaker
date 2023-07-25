@@ -2,6 +2,7 @@
 {
     public interface IUserRepository
     {
+        public Task<List<User>> GetAllUsersAsync();
         public Task CreateUserAsync(User user);
         public Task UpdateUserAsync(User user); 
         public Task<User> GetUserByIdAsync(int id);

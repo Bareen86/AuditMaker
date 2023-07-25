@@ -2,7 +2,7 @@ import "../redactor.css";
 import { Button, Switch } from "@mui/material";
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
 import EditorJS from "@editorjs/editorjs";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { useReactToPrint } from "react-to-print";
 import { group } from "console";
 import { isTemplateExpression } from "typescript";
@@ -16,23 +16,25 @@ const FontSize = require("editorjs-inline-font-size-tool");
 const FontFamily = require("editorjs-inline-font-family-tool");
 const ImageTool = require('@editorjs/image')
 
-
-interface CiteProps {
-    editorRef : React.MutableRefObject<EditorJS | null>
-}
-
 enum ResponseStatus { Failure, Success };
 
-export default function CampAuditEditor({editorRef} : CiteProps, ref:any) {
+export default function AuditEditor() {
 
     const navigate = useNavigate();
     const user = JSON.parse(localStorage.getItem("user") || "");
     const editAuditData = JSON.parse(localStorage.getItem("editAuditData") || "");
+    const auditData = JSON.parse(localStorage.getItem("auditData") || "");
     const params = useParams();
     const auditId = Number(params.id)
+    const editorRef = useRef<EditorJS>();
     
     const loadDataFromServer = async () => {
-        const result : IAudit = (await axios.get("/api/audits/" + auditId)).data;
+        const result : IAudit = await axios.get("/api/audits/" + auditId)
+        .then((response : AxiosResponse) => {
+            return response.data
+        }).catch((error : AxiosError) => {
+            console.log(error.message)
+        })
         const data = {
             blocks: result.textBlocks.blocks
         };
@@ -78,19 +80,16 @@ export default function CampAuditEditor({editorRef} : CiteProps, ref:any) {
             },
         });
     }
-     
 
+    const { template } = useTypedSelector(state => state.hotelTemplate)
 
-    const { template } = useTypedSelector(state => state.template)
-
-    const  { UpdateTemplateItemIsActiveField, ClearTemplate } = useActions();
+    const  { UpdateTemplateItemIsActiveField, clearTemplate } = useActions();
 
     const componentRef = useRef(null);
 
     const handlePdfPrint = useReactToPrint({
         content: () => componentRef.current,
-        documentTitle: "pdfTitle",
-        // onAfterPrint: saveData
+        documentTitle: "pdfTitle"
     });
 
     function onInitAddTemplateToEditor() : void {
@@ -116,7 +115,7 @@ export default function CampAuditEditor({editorRef} : CiteProps, ref:any) {
     }
 
     const backToAudits = () => {
-        navigate("/campaudits");
+        navigate(-1);
     }
 
     const handleSaveAudit = async () => {
@@ -124,7 +123,7 @@ export default function CampAuditEditor({editorRef} : CiteProps, ref:any) {
         const auditData = {
             blocks: editorData?.blocks
         };
-        const result = {
+        const request = {
             auditId: auditId,
             title: editAuditData.title,
             location:editAuditData.location,
@@ -132,7 +131,7 @@ export default function CampAuditEditor({editorRef} : CiteProps, ref:any) {
             data : auditData,
             userId : user.id
         };
-        const response = await axios.put("/api/audits", result );
+        const response = await axios.put("/api/audits", request );
         navigate(-1);
     }
 
@@ -255,7 +254,7 @@ export default function CampAuditEditor({editorRef} : CiteProps, ref:any) {
     }
 
     useEffect(() => {
-        ClearTemplate(template);
+        clearTemplate(template);
         if (!editorRef.current){
             initEditor();
         }

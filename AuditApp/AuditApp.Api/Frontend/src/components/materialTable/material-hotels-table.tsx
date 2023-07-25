@@ -32,7 +32,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import {
-    IUserCampAudits,
+    IUserAudits,
     createCampAuditData,
     editCampAuditData,
 } from "../../types/IAudits";
@@ -183,7 +183,7 @@ export default function MaterialHotelsTable() {
     const [title, setTitle] = useState<string>("");
     const [location, setLocation] = useState<string>("");
     const [url, setUrl] = useState<string>("");
-    const [hotelAudits, setHotelAudits] = useState<IUserCampAudits[]>([]);
+    const [hotelAudits, setHotelAudits] = useState<IUserAudits[]>([]);
 
     const emptyRows =
         page > 0
@@ -218,14 +218,14 @@ export default function MaterialHotelsTable() {
         setUrl("");
     };
 
-    function handleEdit(row: IUserCampAudits) {
+    function handleEdit(row: IUserAudits) {
         const auditData = createEditHotelAuditData(
             row.title,
             row.location,
             row.url
         );
         localStorage.setItem("editAuditData", JSON.stringify(auditData));
-        navigate("/hotelaudits/edit/" + row.id);
+        navigate("/HotelAudits/" + row.id);
     }
 
     async function handleDelete() {
@@ -239,8 +239,8 @@ export default function MaterialHotelsTable() {
     const user = JSON.parse(localStorage.getItem("user") || "");
 
     const fetchUserHotelAudits = async (id: Number) => {
-        const result: IUserCampAudits[] = (
-            await axios.get("/api/audits/user/" + user.id + "/hotels")
+        const result: IUserAudits[] = (
+            await axios.get("/api/audits/hotels" , {  })
         ).data;
         setHotelAudits(result);
     };
@@ -265,7 +265,7 @@ export default function MaterialHotelsTable() {
         setShow(false);
         const auditData = createHotelAuditData(title, location, url, 0);
         localStorage.setItem("auditData", JSON.stringify(auditData));
-        navigate("/hotelaudits/add");
+        navigate("/HotelAudits/add");
     };
 
     const openDialog = () => {

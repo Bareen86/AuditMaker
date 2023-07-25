@@ -5,7 +5,7 @@ import { userReducer } from "./user-reducer";
 
 export const rootReducer = combineReducers({
   todo: todoReducer,
-  template: templateReducer,
+  hotelTemplate: templateReducer,
   user: userReducer
 });
 

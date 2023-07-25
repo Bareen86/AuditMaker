@@ -3,11 +3,12 @@ using AuditApp.Application.Audits.AuditsCreating;
 using AuditApp.Application.Audits.AuditsDeleting;
 using AuditApp.Application.Audits.AuditsUpdating;
 using AuditApp.Domain.Audits;
+using AuditApp.Extranet.Modules.Audits.Builder;
 using AuditApp.Extranet.Modules.Audits.Dtos;
 using AuditApp.Extranet.Modules.Audits.Mappers;
 using AuditApp.Infrastructure.Foundation;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using static AuditApp.Domain.Audits.AuditTypeEnum;
 
 namespace AuditApp.Extranet.Modules.Audits
 {
@@ -20,19 +21,22 @@ namespace AuditApp.Extranet.Modules.Audits
         private readonly IAuditEditor _auditEditor;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAuditRepository _auditRepository;
+        private readonly IAuditBuilder _auditBuilder;
 
         public AuditsController(
             IAuditorCreator auditorCreator,
             IAuditRemover auditRemover,
             IAuditEditor auditEditor,
             IUnitOfWork unitOfWork,
-            IAuditRepository auditRepository )
+            IAuditRepository auditRepository,
+            IAuditBuilder auditBuilder )
         {
             _auditorCreator = auditorCreator;
             _auditRemover = auditRemover;
             _auditEditor = auditEditor;
             _unitOfWork = unitOfWork;
             _auditRepository = auditRepository;
+            _auditBuilder = auditBuilder;
         }
 
         [HttpGet( "{id}" )]
@@ -41,24 +45,24 @@ namespace AuditApp.Extranet.Modules.Audits
             Audit audit = await _auditRepository.GetAuditByIdAsync( id );
             if ( audit == null )
             {
-                return BadRequest("Аудит не был найден!");
+                return BadRequest( "Аудит не был найден!" );
             }
             return Ok( audit.Map() );
         }
 
-        [HttpGet ( "user/{userId}/hotels" )]
-        public async Task<IActionResult> GetUserHotelAudits( [FromRoute] int userId )
+        [HttpGet( "hotels" )]
+        public async Task<IActionResult> GetUserHotelAudits()
         {
-            var audits = await _auditRepository.GetUserHotelAuditsAsync( userId );
-            var result = audits.Select(a => a.AuditMap()).ToList();
+            var audits = await _auditRepository.GetAuditsByType( AuditType.Hotel );
+            var result = audits.Select( a => a.AuditMap("egor") ).ToList();
             return Ok( result );
         }
 
-        [HttpGet( "user/{userId}/camps" )]
-        public async Task<IActionResult> GetUserCampAudits( [FromRoute] int userId )
+        [HttpGet( "camps" )]
+        public async Task<IActionResult> GetUserCampAudits()
         {
-            var audits = await _auditRepository.GetUserCampAuditsAsync( userId );
-            var result = audits.Select( a => a.AuditMap() ).ToList();
+            var audits = await _auditRepository.GetAuditsByType( AuditType.Camp );
+            var result = audits.Select( a => a.AuditMap("egor") ).ToList();
             return Ok( result );
         }
 
@@ -75,11 +79,11 @@ namespace AuditApp.Extranet.Modules.Audits
         {
             await _auditEditor.Update( command.Map() );
             await _unitOfWork.CommitAsync();
-            return Ok();    
+            return Ok();
         }
 
         [HttpDelete( "{auditid}" )]
-        public async Task<IActionResult> RemoveAudit([FromRoute] int auditid )
+        public async Task<IActionResult> RemoveAudit( [FromRoute] int auditid )
         {
             await _auditRemover.Remove( auditid );
             await _unitOfWork.CommitAsync();

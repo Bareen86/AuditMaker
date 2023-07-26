@@ -22,8 +22,7 @@ export  interface IUserAudits {
   title :  string,
   location : string,
   url  : string,
-  modifiedOn : Date,
-  userName : string
+  modifiedOn : Date
 }
 
 export  interface IAudit {

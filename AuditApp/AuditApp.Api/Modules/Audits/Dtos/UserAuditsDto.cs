@@ -9,6 +9,5 @@ namespace AuditApp.Extranet.Modules.Audits.Dtos
         public string Location { get; set; }
         public string Url { get; set; }
         public DateTime ModifiedOn { get; set; }
-        public string UserName { get; set; }
     }
 }

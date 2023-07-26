@@ -81,7 +81,7 @@ export default function AuditEditor() {
         });
     }
 
-    const { template } = useTypedSelector(state => state.hotelTemplate)
+    const { template } =  useTypedSelector(state => state.hotelTemplate)
 
     const  { UpdateTemplateItemIsActiveField, clearTemplate } = useActions();
 

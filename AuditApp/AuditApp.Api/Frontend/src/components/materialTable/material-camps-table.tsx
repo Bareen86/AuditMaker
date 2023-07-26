@@ -523,10 +523,10 @@ export default function MaterialCampsTable() {
                     {"Вы уверены, что хотите удалить аудит?"}
                 </DialogTitle>
                 <DialogActions style={{justifyContent: "center"}}>
-                    <Button variant="contained" style={{marginRight : "10px"}} onClick={handleClose}>
+                    <Button variant="contained" style={{marginRight : "10px"}} onClick={handleDelete}>
                         Да
                     </Button>
-                    <Button onClick={handleDelete} style={{marginLeft : "25px"}} autoFocus variant="contained">
+                    <Button onClick={handleClose} style={{marginLeft : "25px"}} autoFocus variant="contained">
                         Нет
                     </Button>
                 </DialogActions>

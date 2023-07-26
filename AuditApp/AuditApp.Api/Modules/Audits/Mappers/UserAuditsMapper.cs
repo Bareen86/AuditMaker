@@ -7,7 +7,7 @@ namespace AuditApp.Extranet.Modules.Audits.Mappers
 {
     public static class UserAuditsMapper
     {
-        public static UserAuditsDto AuditMap(this Audit audit, string userName )
+        public static UserAuditsDto AuditMap( this Audit audit )
         {
             return new UserAuditsDto
             {
@@ -16,7 +16,6 @@ namespace AuditApp.Extranet.Modules.Audits.Mappers
                 Location = audit.Location,
                 Url = audit.Url,
                 ModifiedOn = audit.ModifiedOn,
-                UserName = userName
             };
         }
     }

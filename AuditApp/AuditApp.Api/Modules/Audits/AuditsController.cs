@@ -54,7 +54,7 @@ namespace AuditApp.Extranet.Modules.Audits
         public async Task<IActionResult> GetUserHotelAudits()
         {
             var audits = await _auditRepository.GetAuditsByType( AuditType.Hotel );
-            var result = audits.Select( a => a.AuditMap("egor") ).ToList();
+            var result = audits.Select( a => a.AuditMap() ).ToList();
             return Ok( result );
         }
 
@@ -62,7 +62,7 @@ namespace AuditApp.Extranet.Modules.Audits
         public async Task<IActionResult> GetUserCampAudits()
         {
             var audits = await _auditRepository.GetAuditsByType( AuditType.Camp );
-            var result = audits.Select( a => a.AuditMap("egor") ).ToList();
+            var result = audits.Select( a => a.AuditMap() ).ToList();
             return Ok( result );
         }
 

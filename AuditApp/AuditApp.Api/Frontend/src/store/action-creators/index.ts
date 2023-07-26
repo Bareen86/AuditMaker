@@ -1,5 +1,5 @@
 import * as TodoActionCreators from './todo';
-import * as TemplateActionCreators from './hotel-template'
+import * as TemplateActionCreators from './template'
 
 export default {
   ...TodoActionCreators,

@@ -6,7 +6,7 @@ import CampAudits from "./pages/camp-audits/camp-audits";
 import LoginPage from "./pages/login/login-page";
 import ProtectedRoutes from "./components/routes/ProtectedRoutes";
 import PublicRoutes from "./components/routes/PublicRoutes";
-import AuditRedactor from "./components/auditRedactor/audit-redactor/audit-redactor";
+import AuditRedactor from "./components/auditRedactor/audit-editor-redactor/audit-redactor";
 import Redactor from "./components/auditRedactor/add-audit-redactor/audit-page";
 
 function App() {

@@ -26,7 +26,7 @@ namespace AuditApp.Extranet.Modules.Audits.Builder
             {
                 if (user.Id == audit.UserId )
                 {
-                    return audit.AuditMap(user.Name + " " + user.SecondName);
+                    return audit.AuditMap();
                 }
             }
             return null;

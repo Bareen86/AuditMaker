@@ -233,14 +233,15 @@ export default function MaterialHotelsTable() {
         setDeleteConfirmation(false);
         console.log(auditId)
         await axios.delete("/api/audits/" + auditId);
-        fetchUserHotelAudits(user.id);
+        fetchUserHotelAudits(0);
     }
 
     const user = JSON.parse(localStorage.getItem("user") || "");
 
-    const fetchUserHotelAudits = async (id: Number) => {
+        
+    const fetchUserHotelAudits = async (auditType: Number) => {
         const result: IUserAudits[] = (
-            await axios.get("/api/audits/hotels" , {  })
+            await axios.get("/api/audits/hotels")
         ).data;
         setHotelAudits(result);
     };
@@ -312,7 +313,7 @@ export default function MaterialHotelsTable() {
     }
 
     useEffect(() => {
-        fetchUserHotelAudits(user.id);
+        fetchUserHotelAudits(0);
     }, []);
 
     return (
@@ -522,10 +523,10 @@ export default function MaterialHotelsTable() {
                     {"Вы уверены, что хотите удалить аудит?"}
                 </DialogTitle>
                 <DialogActions style={{justifyContent: "center"}}>
-                    <Button variant="contained" style={{marginRight : "10px"}} onClick={handleClose}>
+                    <Button variant="contained" style={{marginRight : "10px"}} onClick={handleDelete}>
                         Да
                     </Button>
-                    <Button onClick={handleDelete} style={{marginLeft : "25px"}} autoFocus variant="contained">
+                    <Button onClick={handleClose} style={{marginLeft : "25px"}} autoFocus variant="contained">
                         Нет
                     </Button>
                 </DialogActions>

@@ -91,7 +91,7 @@ const initialState : TemplateAll = {
   ]
 }
 
-export const templateReducer = (state = initialState, action: TemplateAction) : TemplateAll => {
+export const templateHotelReducer = (state = initialState, action: TemplateAction) : TemplateAll => {
   switch (action.type){
     case TemplateActionType.FETCH_TEMPLATE:
       return {...state, template: action.payload}

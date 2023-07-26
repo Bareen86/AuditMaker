@@ -77,7 +77,6 @@ export default function BasicRedactor({editorRef} : CiteProps) {
     const handlePdfPrint = useReactToPrint({
         content: () => componentRef.current,
         documentTitle: "pdfTitle",
-        // onAfterPrint:
     });
 
     function onInitAddTemplateToEditor() : void {

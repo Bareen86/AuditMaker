@@ -23,7 +23,7 @@ namespace AuditApp.Application.Audits.AuditsCreating
 
         public async Task CreateAudit( AddAuditCommand command )
         {
-            Audit audit = new Audit(command.Title, command.Location, command.Data, command.UserId);
+            Audit audit = new Audit(command.Title, command.Location, command.Data, command.UserId, command.AuditType, command.Url);
             await _auditRepository.AddAsync( audit );
         }
     }

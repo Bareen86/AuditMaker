@@ -17,7 +17,7 @@ namespace AuditApp.Application
             services.AddTemplateImageSaving();
             services.AddTemplateImageResolving();
             services.AddLoginHandler();
-            services.AddUsersCreator();
+            services.AddScoped<IUserCreator, UserCreator>();
             services.AddAuditsCreator();
             services.AddAuditRemover();
             services.AddAuditEditor();

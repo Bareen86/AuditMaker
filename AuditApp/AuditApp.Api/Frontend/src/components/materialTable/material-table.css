@@ -1,0 +1,17 @@
+.container {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  margin-top: 200px
+}
+
+.css-r8u8y9 {
+  display: block;
+}
+
+.css-twdmtu {
+  margin: 8px 0px 10px
+}

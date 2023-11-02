@@ -1,6 +1,7 @@
 ﻿using AuditApp.Domain.Audits;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
+using static AuditApp.Domain.Audits.AuditTypeEnum;
 
 namespace AuditApp.Infrastructure.Data.Audits
 {
@@ -23,19 +24,14 @@ namespace AuditApp.Infrastructure.Data.Audits
             _audits.Remove( audit );
         }
 
-        public async Task<List<Audit>> GetAllAuditsAsync()
-        {
-            return await _audits.ToListAsync();
-        }
-
         public async Task<Audit> GetAuditByIdAsync( int id )
         {
             return await _audits.FirstOrDefaultAsync( a => a.Id == id );
         }
 
-        public async Task<List<Audit>> GetUsersAuditsAsync( int id )
+        public async Task<List<Audit>> GetAuditsByType( AuditType auditType )
         {
-            return await _audits.Where( a => a.UserId == id ).ToListAsync();
+            return await _audits.Where( a => a.AuditType == auditType ).ToListAsync();
         }
     }
 }

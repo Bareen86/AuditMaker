@@ -1,5 +1,4 @@
 .header {
-  min-width: 1920px;
   height: 90px;
   background-color: #FFFFFF;
   display: flex;
@@ -8,7 +7,7 @@
 
 ul {
   list-style-type: none;
-  padding: 25px 0 0 54px;
+  padding: 25px 0 0 0px;
   display: flex;
 }
 
@@ -48,3 +47,8 @@ li {
   color: #414c59;
   text-decoration: none;
 }
+
+.MuiPaper-elevation8{
+  width: 150px;
+  height: 93px;
+  }

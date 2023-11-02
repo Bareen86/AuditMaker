@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AuditApp.Application.Helpers;
-using AuditApp.Application.LoginService.Dtos;
 using AuditApp.Application.LoginService.Mappers;
 using AuditApp.Domain.Users;
 
@@ -12,7 +11,7 @@ namespace AuditApp.Application.LoginService
 {
     public interface IUserAuthentificator
     {
-        Task<LoginDto> Login( string usernameId, string password );
+        Task<LoginResult> Login( string usernameId, string password );
     }
 
     public class UserAuthentificator : IUserAuthentificator
@@ -24,13 +23,13 @@ namespace AuditApp.Application.LoginService
             _userRepository = userRepository;
         }
 
-        public async Task<LoginDto> Login( string login, string password )
+        public async Task<LoginResult> Login( string login, string password )
         {
             User user = await _userRepository.GetUserByLoginAsync( login );
             if ( user == null )
             {
-                LoginDto loginDto = new LoginDto( "Такого пользователя нет!" );
-                return loginDto;
+                LoginResult loginResult = new LoginResult( "Неверное имя пользователя или пароль" );
+                return loginResult;
             }
             string passwordHash = HashPasswordHelper.HashPassword( password );
             if ( user.IsCorrectPassword( passwordHash ) )
@@ -39,8 +38,8 @@ namespace AuditApp.Application.LoginService
             }
             else
             {
-                LoginDto loginDto = new LoginDto( "Пароли не совпадают!" );
-                return loginDto;
+                LoginResult loginResult = new LoginResult( "Неверное имя пользователя или пароль" );
+                return loginResult;
             }
         }
     }

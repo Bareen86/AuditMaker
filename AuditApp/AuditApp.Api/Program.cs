@@ -1,5 +1,6 @@
 using AuditApp.Application;
 using AuditApp.Application.Settings;
+using AuditApp.Extranet.Modules.Audits;
 using AuditApp.Extranet.Modules.Images;
 using AuditApp.Infrastructure;
 using AuditApp.Infrastructure.Foundation;
@@ -16,6 +17,7 @@ builder.Services.AddDbContext<AuditsDbContext>( options => options.UseSqlServer(
 builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 builder.Services.AddImageModule();
+builder.Services.AddAuditModule();
 builder.Services.AddSpaStaticFiles( configuration => { configuration.RootPath = "Frontend/build"; } );
 
 var provider  = builder.Services.BuildServiceProvider();

@@ -1,6 +1,4 @@
-﻿
-
-namespace AuditApp.Application
+﻿namespace AuditApp.Application
 {
     public interface IFileStorage
     {

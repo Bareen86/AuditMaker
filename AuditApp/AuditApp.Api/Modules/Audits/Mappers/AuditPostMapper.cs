@@ -13,7 +13,9 @@ namespace AuditApp.Extranet.Modules.Audits.Mappers
             {
                 Location = command.Location,
                 Data = textblock,
+                Url = command.Url,
                 Title = command.Title,
+                AuditType = command.AuditType,
                 UserId = command.UserId,
             };
         }

@@ -8,6 +8,7 @@ import ProtectedRoutes from "./components/routes/ProtectedRoutes";
 import PublicRoutes from "./components/routes/PublicRoutes";
 import AuditRedactor from "./components/auditRedactor/audit-editor-redactor/audit-redactor";
 import Redactor from "./components/auditRedactor/add-audit-redactor/audit-page";
+import Test from "./components/test/test";
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
                             <Route path="/HotelAudits/:id" element={<AuditRedactor/>}/>
                             <Route path="/HotelAudits/Add" element={<Redactor/>}/>
                             <Route path="/CampAudits/Add" element={<Redactor/>}/>
+                            <Route path="/Test" element={<Test/>}/>
                         </Route>
                     </Route>
                     <Route path="*" element={<h1>Такой страницы не существует</h1>}></Route>

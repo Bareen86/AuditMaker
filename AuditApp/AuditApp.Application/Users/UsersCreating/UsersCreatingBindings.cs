@@ -9,10 +9,10 @@ namespace AuditApp.Application.Users.UsersCreating
 {
     public static class UsersCreatingBindings
     {
-        public static IServiceCollection AddUsersCreator(this IServiceCollection services)
-        {
-            services.AddScoped<IUserCreator, UserCreator>();
-            return services;
-        }
+        //public static IServiceCollection AddUsersCreator(this IServiceCollection services)
+        //{
+        //    services.AddScoped<IUserCreator, UserCreator>();
+        //    return services;
+        //}
     }
 }

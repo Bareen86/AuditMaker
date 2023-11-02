@@ -62,7 +62,7 @@ namespace AuditApp.Extranet.Modules.Audits
         public async Task<IActionResult> GetUserCampAudits()
         {
             var audits = await _auditRepository.GetAuditsByType( AuditType.Camp );
-            var result = audits.Select( a => a.AuditMap() ).ToList();
+            var result = audits.Select( a => a.AuditMap() );
             return Ok( result );
         }
 

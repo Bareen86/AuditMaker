@@ -29,5 +29,10 @@ namespace AuditApp.Domain.Users
             }
             return false;
         }
+
+        public void UpdateName(string name )
+        {
+            Name = name;
+        }
     }
 }

@@ -5,7 +5,7 @@ using static AuditApp.Domain.Audits.AuditTypeEnum;
 
 namespace AuditApp.Infrastructure.Data.Audits
 {
-    internal class AuditRepository : IAuditRepository
+    public class AuditRepository : IAuditRepository
     {
         private readonly AuditsDbContext _dbContext;
 

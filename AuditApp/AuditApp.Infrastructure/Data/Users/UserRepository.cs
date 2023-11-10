@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AuditApp.Infrastructure.Data.Users
 {
-    internal class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly AuditsDbContext _auditsDbContext;
         private DbSet<User> _users => _auditsDbContext.Set<User>();

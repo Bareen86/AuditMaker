@@ -10,7 +10,7 @@ namespace AuditApp.Infrastructure.Foundation
     {
         Task CommitAsync();
     }
-    internal class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         private readonly AuditsDbContext _dbContext;
 

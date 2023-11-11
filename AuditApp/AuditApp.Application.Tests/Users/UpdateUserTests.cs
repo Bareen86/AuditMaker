@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AuditApp.Domain.Users;
+﻿using AuditApp.Domain.Users;
 using AuditApp.Infrastructure.Data.Users;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +26,18 @@ namespace AuditApp.Application.Tests.Users
         [Test]
         public async Task UserRepository_UpdateUser_NoException()
         {
+            // arrange 
+            User user = new User( "Egor", "Komarov", "dobeuser", "hashpassword", true );
 
+            // act
+            await _userRepository.CreateUserAsync( user );
+            await _unitOfWork.CommitAsync();
+            User userToUpdate =  await _userRepository.GetUserByLoginAsync( user.Login );
+            userToUpdate.UpdateName( "Ilya" );
+            await _unitOfWork.CommitAsync();
+            User updatedUser = await _userRepository.GetUserByLoginAsync( user.Login );
+            // assert
+            Assert.AreEqual( "Ilya" , updatedUser.Name );
         }
     }
 }

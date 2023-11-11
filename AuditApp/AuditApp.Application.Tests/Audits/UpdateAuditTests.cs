@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AuditApp.Domain.Audits;
+﻿using AuditApp.Domain.Audits;
 using AuditApp.Infrastructure.Data.Audits;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using NUnit.Framework;
 
 namespace AuditApp.Application.Tests.Audits
@@ -36,6 +30,7 @@ namespace AuditApp.Application.Tests.Audits
             Audit audit = new Audit( "Отель Элеон", "Россия", "initdata", 1, AuditTypeEnum.AuditType.Hotel, "some_url" );
 
             // act
+            
             audit.Update( "Винтерфелл", "США", "someUrl", "someData" );
 
             // assert

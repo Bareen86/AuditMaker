@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AuditApp.Domain.Audits;
+﻿using AuditApp.Domain.Audits;
 using AuditApp.Infrastructure.Data.Audits;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
@@ -32,9 +27,8 @@ namespace AuditApp.Application.Tests.Audits
         }
 
         [Test]
-        public async  Task AuditRepository_deleteAudit_Success()
+        public async Task AuditRepository_DeleteAudit_Success()
         {
-
             // arrange & act
             Audit auditToDelete = await _auditRepository.GetAuditByIdAsync( 1 );
             await _auditRepository.DeleteAuditByIdAsync( auditToDelete );

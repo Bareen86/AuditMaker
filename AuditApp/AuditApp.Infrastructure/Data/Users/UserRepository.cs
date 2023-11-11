@@ -19,11 +19,6 @@ namespace AuditApp.Infrastructure.Data.Users
             await _users.AddAsync( user );
         }
 
-        public async Task UpdateUserAsync( User user )
-        {
-            var searchedUser = await GetUserByIdAsync( user.Id );
-        }
-
         public async Task<User> GetUserByIdAsync( int id )
         {
             return await _users.FirstOrDefaultAsync( u => u.Id == id );

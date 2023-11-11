@@ -10,7 +10,7 @@ namespace AuditApp.Domain.Users
         public string SecondName { get; private set; }
         public string HashPassword { get; private set; }
         public bool IsAdmin { get; private set; }
-        public  List<Audit> Audits { get; } = new List<Audit>();
+        public List<Audit> Audits { get; } = new List<Audit>();
 
         public User( string name, string secondName, string login, string hashPassword, bool isAdmin )
         {
@@ -23,14 +23,14 @@ namespace AuditApp.Domain.Users
 
         public bool IsCorrectPassword( string password )
         {
-            if (password == HashPassword )
+            if ( password == HashPassword )
             {
                 return true;
             }
             return false;
         }
 
-        public void UpdateName(string name )
+        public void UpdateName( string name )
         {
             Name = name;
         }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AuditApp.Domain.Audits;
+﻿using AuditApp.Domain.Audits;
 using AuditApp.Infrastructure.Data.Audits;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +11,7 @@ namespace AuditApp.Application.Tests.Audits
         private AuditsDbContext _dbContext;
         private IUnitOfWork _unitOfWork;
         private IAuditRepository _auditRepository;
+
         [SetUp]
         public async Task Setup()
         {
@@ -34,8 +30,15 @@ namespace AuditApp.Application.Tests.Audits
             // arrange
             Audit audit = new Audit( "Отель Элеон", "Россия", "initdata", 1, AuditTypeEnum.AuditType.Hotel, "some_url" );
 
+            // act
+            await _auditRepository.AddAsync( audit );
+            await _unitOfWork.CommitAsync();
+            Audit auditToGet = (await _auditRepository.GetAuditsByType( AuditTypeEnum.AuditType.Hotel )).FirstOrDefault();
+
             // act & assert
-            Assert.DoesNotThrow(() => _auditRepository.AddAsync(audit));
+            Assert.AreEqual( audit.AuditType, auditToGet.AuditType );
+            Assert.AreEqual( audit.Location, auditToGet.Location);
+            Assert.AreEqual( audit.Url, auditToGet.Url);
         }
     }
 }

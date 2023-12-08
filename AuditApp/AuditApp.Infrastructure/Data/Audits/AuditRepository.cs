@@ -1,7 +1,9 @@
-﻿using AuditApp.Domain.Audits;
+﻿using System.Runtime.CompilerServices;
+using AuditApp.Domain.Audits;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
 using static AuditApp.Domain.Audits.AuditTypeEnum;
+
 
 namespace AuditApp.Infrastructure.Data.Audits
 {

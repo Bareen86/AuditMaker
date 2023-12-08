@@ -1,7 +1,9 @@
-﻿using AuditApp.Domain.Users;
+﻿using System.Runtime.CompilerServices;
+using AuditApp.Domain.Users;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
 
+[assembly : InternalsVisibleTo("AuditApp.Application.Tests")]
 namespace AuditApp.Infrastructure.Data.Users
 {
     internal class UserRepository : IUserRepository
@@ -17,11 +19,6 @@ namespace AuditApp.Infrastructure.Data.Users
         public async Task CreateUserAsync( User user )
         {
             await _users.AddAsync( user );
-        }
-
-        public async Task UpdateUserAsync( User user )
-        {
-            var searchedUser = await GetUserByIdAsync( user.Id );
         }
 
         public async Task<User> GetUserByIdAsync( int id )

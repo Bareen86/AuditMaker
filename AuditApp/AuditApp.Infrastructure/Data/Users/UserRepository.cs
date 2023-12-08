@@ -1,10 +1,12 @@
-﻿using AuditApp.Domain.Users;
+﻿using System.Runtime.CompilerServices;
+using AuditApp.Domain.Users;
 using AuditApp.Infrastructure.Foundation;
 using Microsoft.EntityFrameworkCore;
 
+[assembly : InternalsVisibleTo("AuditApp.Application.Tests")]
 namespace AuditApp.Infrastructure.Data.Users
 {
-    public class UserRepository : IUserRepository
+    internal class UserRepository : IUserRepository
     {
         private readonly AuditsDbContext _auditsDbContext;
         private DbSet<User> _users => _auditsDbContext.Set<User>();

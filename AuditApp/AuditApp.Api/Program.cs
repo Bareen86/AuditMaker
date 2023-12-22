@@ -18,10 +18,10 @@ builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 builder.Services.AddImageModule();
 builder.Services.AddAuditModule();
-builder.Services.AddSpaStaticFiles( configuration => { configuration.RootPath = "Frontend/build"; } );
 
 var provider  = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();
+
 builder.Services.AddSingleton(configuration.GetSection("StorageConfiguration").Get<FileStorageConfiguration>());
 
 var app = builder.Build();
@@ -31,14 +31,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseStaticFiles();
-app.UseSpaStaticFiles();
-
-app.UseSpa(spa =>
-{
-    spa.Options.SourcePath = "Frontend";
-});
 
 app.UseAuthorization();
 

@@ -19,6 +19,16 @@ builder.Services.AddApplication();
 builder.Services.AddImageModule();
 builder.Services.AddAuditModule();
 
+builder.Services.AddCors( options => options.AddPolicy( "CorsPolicy",
+
+    builder =>
+    {
+        builder.WithOrigins("http://localhost:5001")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    } ) );
+
 var provider  = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();
 
@@ -31,6 +41,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors( "CorsPolicy" );
 
 app.UseAuthorization();
 

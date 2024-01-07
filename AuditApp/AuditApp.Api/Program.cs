@@ -18,10 +18,20 @@ builder.Services.AddInfrastructure();
 builder.Services.AddApplication();
 builder.Services.AddImageModule();
 builder.Services.AddAuditModule();
-builder.Services.AddSpaStaticFiles( configuration => { configuration.RootPath = "Frontend/build"; } );
+
+builder.Services.AddCors( options => options.AddPolicy( "CorsPolicy",
+
+    builder =>
+    {
+        builder.WithOrigins("http://localhost:5001")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    } ) );
 
 var provider  = builder.Services.BuildServiceProvider();
 var configuration = provider.GetRequiredService<IConfiguration>();
+
 builder.Services.AddSingleton(configuration.GetSection("StorageConfiguration").Get<FileStorageConfiguration>());
 
 var app = builder.Build();
@@ -32,13 +42,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseStaticFiles();
-app.UseSpaStaticFiles();
-
-app.UseSpa(spa =>
-{
-    spa.Options.SourcePath = "Frontend";
-});
+app.UseCors( "CorsPolicy" );
 
 app.UseAuthorization();
 
